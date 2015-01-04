@@ -33,47 +33,7 @@
 
 <script>
     $(document).ready(function() {
-
-
-        var editor = ace.edit("editor");
-        if (SANDBOX.core.viewId == null) {
-            $('#progress').show();
-            setTimeout(function() {
-                $.post('/save-code', {code: editor.getValue(), output:
-                            SANDBOX.core.output, create_time: SANDBOX.core.create_time,
-                    version: SANDBOX.core.version, vType: 'c1'}, function(data) {
-                    data = JSON.parse(data);
-                    SANDBOX.core.viewId = data.viewId;
-                    SANDBOX.core.viewLink = data.viewLink + data.viewId;
-                    $('#view-link').text(SANDBOX.core.viewLink);
-                    $('#view-link').attr('href', SANDBOX.core.viewLink);
-                    $('#view-link-zone').show();
-                    $('#progress').hide();
-                    $('#save_share').text('Share');
-                    $('#modal-view-link-zone').show();
-                    $('#modal-view-link').text(SANDBOX.core.viewLink);
-                    $('#modal-view-link').attr('href', SANDBOX.core.viewLink);
-                    $('#social-zone').share({
-                        networks: ['facebook', 'pinterest', 'googleplus', 'twitter', 'linkedin', 'tumblr', 'in1', 'email', 'stumbleupon', 'digg'],
-                        urlToShare: SANDBOX.core.viewLink,
-                    });
-                    $('#social-links').show();
-                }).fail(function() {
-                    $('#progress').hide();
-                    SANDBOX.utils.closeModal(4000);
-                    $('#social-error').show();
-                });
-            }, 2000);
-        } else {
-            $('#modal-view-link-zone').show();
-            $('#modal-view-link').text(SANDBOX.core.viewLink);
-            $('#modal-view-link').attr('href', SANDBOX.core.viewLink);
-            $('#social-zone').share({
-                networks: ['facebook', 'pinterest', 'googleplus', 'twitter', 'linkedin', 'tumblr', 'in1', 'email', 'stumbleupon', 'digg'],
-                urlToShare: SANDBOX.core.viewLink,
-            });
-            $('#social-links').show();
-        }
+       SANDBOX.core.socialTab();
     });
 </script>
 
