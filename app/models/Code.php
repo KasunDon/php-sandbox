@@ -5,7 +5,7 @@ class Code extends MongoModel {
     const STATUS_EXPIRED = 'expired';
     const STATUS_PRIVATE = 'private';
     
-    const VIEW_LINK = 'http://178.62.121.73/share/';
+    const VIEW_LINK = 'http://phpbox.info/share/';
 
 
     public static $REQUIRED_PARMS = array(
