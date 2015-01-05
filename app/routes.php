@@ -51,6 +51,9 @@ Route::get('/view-social', function() {
     return View::make('social');
 });
 
+Route::get('/view-terms', function() {
+    return View::make('terms');
+});
 
 Route::post('/report-issue', array('before' => 'postParams', 'uses' => 'HomeController@reportIssue'));
 

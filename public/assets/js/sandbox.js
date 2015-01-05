@@ -1,9 +1,9 @@
 var SANDBOX = {};
 
-
 SANDBOX.validation = {};
 SANDBOX.utils = {};
 SANDBOX.core = {};
+SANDBOX.core.content = {};
 
 SANDBOX.core.defaultCode = null;
 SANDBOX.core.viewId = null;
@@ -13,6 +13,11 @@ SANDBOX.core.version = null;
 SANDBOX.core.output = null;
 SANDBOX.core.views = null;
 
+SANDBOX.core.content.reportContent = null;
+SANDBOX.core.content.feedbackContent = null;
+SANDBOX.core.content.serviceContent = null;
+SANDBOX.core.content.socialContent = null;
+SANDBOX.core.content.termsContent = null;
 
 SANDBOX.utils.loadData = function() {
     if ($("#view-code").length) {
@@ -31,6 +36,24 @@ SANDBOX.utils.loadData = function() {
         $('#view-link').attr('href', SANDBOX.core.viewLink);
         $('#view-link-zone').show();
     }
+};
+
+SANDBOX.core.serviceView = function(e) {
+    $(e).on("click", function(e) {
+        bootbox.dialog({
+            message: SANDBOX.core.content.serviceContent,
+            title: "<span class='glyphicon glyphicon-wrench' style='padding-left:5px;'></span> Service Status",
+            buttons: {
+                close: {
+                    label: "Close",
+                    className: "btn-default",
+                    callback: function() {
+
+                    }
+                }
+            }
+        });
+    });
 };
 
 SANDBOX.core.socialTab = function() {
@@ -111,31 +134,29 @@ SANDBOX.core.setup = function() {
 
     });
 
-    //load content
-    var reportContent = null;
-    var feedbackContent = null;
-    var serviceContent = null;
-    var socialContent = null;
-
     $.get('/view-report-issue', function(data) {
-        reportContent = data;
+        SANDBOX.core.content.reportContent = data;
     });
 
     $.get('/view-feedback', function(data) {
-        feedbackContent = data;
+        SANDBOX.core.content.feedbackContent = data;
     });
 
     $.get('/view-service', function(data) {
-        serviceContent = data;
+        SANDBOX.core.content.serviceContent = data;
     });
 
     $.get('/view-social', function(data) {
-        socialContent = data;
+        SANDBOX.core.content.socialContent = data;
+    });
+
+    $.get('/view-terms', function(data) {
+        SANDBOX.core.content.termsContent = data;
     });
 
     setInterval(function() {
         $.get('/view-service', function(data) {
-            serviceContent = data;
+            SANDBOX.core.content.serviceContent = data;
         });
     }, 5000);
 
@@ -143,7 +164,7 @@ SANDBOX.core.setup = function() {
 
     $('#report').on("click", function(e) {
         bootbox.dialog({
-            message: reportContent,
+            message: SANDBOX.core.content.reportContent,
             title: "<span class='glyphicon glyphicon-exclamation-sign' style='padding-left:5px;'></span> Report a issue",
             buttons: {
                 report: {
@@ -167,7 +188,7 @@ SANDBOX.core.setup = function() {
 
     $('#feedback').on("click", function(e) {
         bootbox.dialog({
-            message: feedbackContent,
+            message: SANDBOX.core.content.feedbackContent,
             title: "<span class='glyphicon glyphicon-hand-up' style='padding-left:5px;'></span> Send Feedback",
             buttons: {
                 feedback: {
@@ -189,10 +210,18 @@ SANDBOX.core.setup = function() {
         });
     });
 
-    $('#service').on("click", function(e) {
+    SANDBOX.core.serviceView('#service');
+
+    $("#save_share").on("click", function() {
+        var shareTitle = "<span class='glyphicon glyphicon-globe' style='padding-left:5px;'></span> Save & Share";
+
+        if (SANDBOX.core.viewId != null) {
+            shareTitle = "<span class='glyphicon glyphicon-globe' style='padding-left:5px;'></span> Share";
+        }
+
         bootbox.dialog({
-            message: serviceContent,
-            title: "<span class='glyphicon glyphicon-wrench' style='padding-left:5px;'></span> Service Status",
+            message: SANDBOX.core.content.socialContent,
+            title: shareTitle,
             buttons: {
                 close: {
                     label: "Close",
@@ -205,16 +234,10 @@ SANDBOX.core.setup = function() {
         });
     });
 
-    $("#save_share").on("click", function() {
-        var shareTitle = "<span class='glyphicon glyphicon-globe' style='padding-left:5px;'></span> Save & Share";
-
-        if (SANDBOX.core.viewId != null) {
-            shareTitle = "<span class='glyphicon glyphicon-globe' style='padding-left:5px;'></span> Share";
-        }
-
+    $('#terms').on("click", function(e) {
         bootbox.dialog({
-            message: socialContent,
-            title: shareTitle,
+            message: SANDBOX.core.content.termsContent,
+            title: "<span class='glyphicon glyphicon-th-list' style='padding-left:5px;'></span> Terms & Conditions",
             buttons: {
                 close: {
                     label: "Close",

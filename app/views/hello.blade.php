@@ -89,12 +89,15 @@ echo 'hello world!';</pre>
         </div>
 
         <footer class="footer">
+            <div class="container-fluid">
             <div class="row show-grid" style="margin-top: 5px;">
                 <div class="col-md-1"></div>
                 <div class="col-md-2 text-muted"><strong>PHPBox</strong> Sandbox</div>
                 <div class="col-md-2"><a id="service" style="cursor: pointer;">Service Status</a><span class="label label-success" style="margin-left: 10px;">OK</span></div>
                 <div class="col-md-2"><a id="feedback" style="cursor: pointer;">Send Feedback</a></div>
-                <div class="col-md-3" style="float: right"><small><strong class="text-muted">Hosting Provider </strong> <a href="https://www.digitalocean.com/?refcode=2fdebfd067c7">DigitalOcean</a></small></div>
+                <div class="col-md-2"><a id="terms" style="cursor: pointer;">Terms & Conditions</a></div>
+                <div class="col-md-2"><small><strong class="text-muted">Hosting Provider </strong> <a href="https://www.digitalocean.com/?refcode=2fdebfd067c7">DigitalOcean</a></small></div>
+            </div>
             </div>
         </div>
     </footer>
@@ -107,7 +110,7 @@ echo 'hello world!';</pre>
     <script src="/assets/js/bootbox.min.js"></script>
     <script src="/assets/js/jquery.share.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
-    <script src="/assets/js/sandbox.min.js"></script>
+    <script src="/assets/js/sandbox.js"></script>
     <script>
 $(function() {
     SANDBOX.core.setup();
