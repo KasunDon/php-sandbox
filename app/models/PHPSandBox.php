@@ -73,8 +73,8 @@ class PHPSandBox {
         file_put_contents($file, str_replace("\r\n\r\n\r\n", "", $this->getSourceCode()));
 
         $output = shell_exec($this->getSystemPath() . " " . $file);
-
         $output = str_replace($file, "SandBox-Request", $output);
+        $output = str_replace($tmpFolder, "SandBox-Request", $output);
         
         //clearing up signatures
         $output = str_replace(array("Content-type: text/html", "X-Powered-By: PHP/" . $this->getVersion(), "\r\n\r\n\r\n"), "", $output);
