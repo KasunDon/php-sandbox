@@ -1,7 +1,8 @@
 <?php
 
 class PHPSandBox {
-
+    const INI_FILE = "/var/www/html/sandbox/sanbox-php.ini";
+    
     public static $VERSIONS = array(
         '4.4.0' => '/opt/phpfarm/inst/bin/php-4.4.0',
         '4.4.1' => '/opt/phpfarm/inst/bin/php-4.4.1',
@@ -65,14 +66,23 @@ class PHPSandBox {
         mkdir($tmpFolder);
         
         $file = $tmpFolder . "/" . $checksum . ".php";
-
-        //add ini settings
-        $iniSettings = " ini_set('open_basedir', '$tmpFolder');";
-        $this->setSourceCode(substr_replace($this->getSourceCode(), $iniSettings, strpos($this->getSourceCode(), "<?php") + 5, 0));
-
+        
+        $tempIni = $tmpFolder . "/" . $checksum . ".ini";
+        
+        //copy default php.ini to temp location
+        if(! copy("/opt/phpfarm/inst/php-" . $this->getVersion() . "/lib/php.ini", $tempIni)){
+            throw new Exception("Couldn't copy ini file");
+        }
+        
+        $customIniContent = "\n". file_get_contents(self::INI_FILE) . "\n";
+        $customIniContent .= 'open_basedir = "' . $tmpFolder . '"'. "\n";
+        
+        //adding custom ini settings to temp ini file
+        file_put_contents($tempIni, $customIniContent, FILE_APPEND);
+                              
         file_put_contents($file, str_replace("\r\n\r\n\r\n", "", $this->getSourceCode()));
 
-        $output = shell_exec($this->getSystemPath() . " " . $file);
+        $output = shell_exec($this->getSystemPath() . " -c " . $tempIni . " ". $file);
         $output = str_replace($file, "SandBox-Request", $output);
         $output = str_replace($tmpFolder, "SandBox-Request", $output);
         
@@ -84,6 +94,7 @@ class PHPSandBox {
         }
 
         unlink($file);
+        unlink($tempIni);
         rmdir($tmpFolder);
 
         return $output;
