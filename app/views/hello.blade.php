@@ -110,7 +110,7 @@ echo 'hello world!';</pre>
     <script src="/assets/js/bootbox.min.js"></script>
     <script src="/assets/js/jquery.share.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
-    <script src="/assets/js/sandbox.js"></script>
+    <script src="/assets/js/sandbox.min.js"></script>
     <script>
 $(function() {
     SANDBOX.core.setup();

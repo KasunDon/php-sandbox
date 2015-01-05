@@ -158,7 +158,7 @@ SANDBOX.core.setup = function() {
         $.get('/view-service', function(data) {
             SANDBOX.core.content.serviceContent = data;
         });
-    }, 5000);
+    }, (600000));
 
     SANDBOX.utils.loadData();
 
@@ -341,6 +341,6 @@ SANDBOX.validation.feedback = function() {
                     $('#feedback-error').show();
                     $('#feedback-form').hide();
                     SANDBOX.utils.closeModal(5000);
-                })
+                });
     });
 };
