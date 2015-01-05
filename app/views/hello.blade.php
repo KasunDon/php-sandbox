@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="PHP Legacy versions. Run-Test-Debug-Share. Anywhere-Anytime PHP Sandbox running versions of {{ implode(', ', array_keys(PHPSandBox::$VERSIONS)) }}">
         <meta name="author" content="Kasun Don">
-        <title>PHP sandbox - Beta version</title>
+        <title>PHPBox sandbox - Beta version - Debug, Test and Share!</title>
         <link href="/assets/css/bootstrap.css" rel="stylesheet">
         <link href="/assets/css/sticky-footer.css" rel="stylesheet">
         <link href="/assets/css/grid.css" rel="stylesheet">
@@ -30,7 +30,7 @@
                 @if (isset($meta))
                 <input type="hidden" id="view-code"  value="{{{$meta}}}">
                 @endif
-                <h1>Sandbox - DEBUG, TEST and SHARE!</h1>
+                <h1>PHPBox  - DEBUG, TEST and SHARE!</h1>
             </div>
             <p class="lead">Any PHP runtime can be used anytime/anywhere. Also share your code snippet and their output.</p>
             <p>Easy as <b>1-2-3</b>. Place your code. Select runtime. Hit '<b><i>Run</i></b>' Button</p>
@@ -89,16 +89,12 @@ echo 'hello world!';</pre>
         </div>
 
         <footer class="footer">
-            <div class="container">
-                <table  style="border: none;" >
-                    <tr>
-                        <td  valign="middle" class="col-md-3 text-muted">Cloud Sandbox</td>
-                        <td valign="middle" class="col-md-3"><a id="service" style="cursor: pointer;">Service Status</a><span class="label label-success" style="margin-left: 10px;">OK</span></td>
-                        <td  valign="middle" class="col-md-2"><a id="feedback" style="cursor: pointer;">Send Feedback</a></td>
-                        <td  valign="middle" class="col-md-1"></td>
-                    </tr>
-                </table>
-
+            <div class="row show-grid" style="margin-top: 5px;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2 text-muted"><strong>PHPBox</strong> Sandbox</div>
+                <div class="col-md-2"><a id="service" style="cursor: pointer;">Service Status</a><span class="label label-success" style="margin-left: 10px;">OK</span></div>
+                <div class="col-md-2"><a id="feedback" style="cursor: pointer;">Send Feedback</a></div>
+                <div class="col-md-3" style="float: right"><small><strong class="text-muted">Hosting Provider </strong> <a href="https://www.digitalocean.com/?refcode=2fdebfd067c7">DigitalOcean</a></small></div>
             </div>
         </div>
     </footer>
