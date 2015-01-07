@@ -23,8 +23,10 @@ Route::get('/share/{codeId}', function($codeId) {
     $document = Storage::instance('phpsources')->getCollection()->findOne(array(
         '_id' => new MongoId($codeId)));
     
-    Storage::instance('views')->getCollection()->update(array('_id' => new MongoId($document['_id']->{'$id'})), array('$inc' => array('views' => 1)));
-    
+    if (! Session::has('visit-' . $codeId)) {
+        Session::put('visit-' . $codeId, true);
+        Storage::instance('views')->getCollection()->update(array('_id' => new MongoId($document['_id']->{'$id'})), array('$inc' => array('views' => 1)));
+    }
     $views = Storage::instance('views')->getCollection()->findOne(array(
         '_id' => new MongoId($document['_id']->{'$id'})));
     

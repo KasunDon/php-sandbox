@@ -38,7 +38,6 @@ class PHPSandBox {
         '5.3.22' => '/opt/phpfarm/inst/bin/php-5.3.22',
         '5.4.0' => '/opt/phpfarm/inst/bin/php-5.4.0',
         '5.4.13' => '/opt/phpfarm/inst/bin/php-5.4.13',
-        '5.5.0' => '/opt/phpfarm/inst/bin/php-5.5.0',
         '5.5.1' => '/opt/phpfarm/inst/bin/php-5.5.1',
         '5.5.6' => '/opt/phpfarm/inst/bin/php-5.5.6',
         '5.6.2' => '/opt/phpfarm/inst/bin/php-5.6.2'
