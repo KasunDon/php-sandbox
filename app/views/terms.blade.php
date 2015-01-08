@@ -11,7 +11,7 @@
             <h3>Service</h3>
             <p>Please refer to <a id="term-status" style="cursor: pointer">Service Status</a> for latest service status and downtime notifications</p>
             <h3>Report / Feedbacks</h3>
-            <p>We're dependent on community for feedbacks/report any issues within the service.</p>
+            <p>We're dependent on community for feedbacks/report any issues within the service. Alternatively you can send us a email on <a>shout@phpbox.info</a></p>
         </div>
     </div>
 </div>
