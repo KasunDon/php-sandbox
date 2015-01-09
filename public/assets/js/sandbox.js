@@ -64,7 +64,6 @@ SANDBOX.core.socialTab = function() {
             $.post('/save-code', {code: editor.getValue(), output:
                         SANDBOX.core.output, create_time: SANDBOX.core.create_time,
                 version: SANDBOX.core.version, vType: 'c1'}, function(data) {
-                data = JSON.parse(data);
                 SANDBOX.core.viewId = data.viewId;
                 SANDBOX.core.viewLink = data.viewLink + data.viewId;
                 $('#view-link').text(SANDBOX.core.viewLink);
@@ -121,7 +120,6 @@ SANDBOX.core.setup = function() {
 
         $.post('/api/php/' + version + '/run',
                 {v: version, code: editor.getValue()}, function(output) {
-            output = JSON.parse(output);
             $('#output').text(output.output);
             SANDBOX.core.create_time = output.datetime.date;
             SANDBOX.core.output = output.output;

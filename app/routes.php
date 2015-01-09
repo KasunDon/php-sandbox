@@ -22,14 +22,14 @@ Route::get('/view-report-issue', function() {
 Route::get('/share/{codeId}', function($codeId) {
     $document = Storage::instance('phpsources')->getCollection()->findOne(array(
         '_id' => new MongoId($codeId)));
-    
-    if (! Session::has('visit-' . $codeId)) {
+
+    if (!Session::has('visit-' . $codeId)) {
         Session::put('visit-' . $codeId, true);
         Storage::instance('views')->getCollection()->update(array('_id' => new MongoId($document['_id']->{'$id'})), array('$inc' => array('views' => 1)));
     }
     $views = Storage::instance('views')->getCollection()->findOne(array(
         '_id' => new MongoId($document['_id']->{'$id'})));
-    
+
     $document['meta'] = json_encode(array(
         'version' => $document['version'],
         'id' => $document['_id']->{'$id'},
@@ -37,7 +37,7 @@ Route::get('/share/{codeId}', function($codeId) {
         'view_link' => Code::VIEW_LINK,
         'views' => $views['views']
     ));
-        
+
     return View::make('hello', $document);
 });
 
@@ -64,7 +64,7 @@ $document = Code::doc();
 $id = $document['_id']->{'$id'};
 Storage::instance('phpsources')->getCollection()->insert($document);
 Storage::instance('views')->getCollection()->insert(Views::doc($id));
-return json_encode(array('viewId' => $id, 'viewLink' => Code::VIEW_LINK));
+return Response::json(array('viewId' => $id, 'viewLink' => Code::VIEW_LINK));
 }));
 
 Route::post('/send-feedback', array('before' => 'postParams', 'uses' => 'HomeController@sendFeedback'));

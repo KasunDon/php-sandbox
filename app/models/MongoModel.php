@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * Abstract Class for Mongo Models
+ */
 abstract class MongoModel {
 
+    /**
+     * Returns preapred document
+     * 
+     * @param array $params
+     * @return array
+     */
     public function getDocument(array $params) {
         $document = array();
 
