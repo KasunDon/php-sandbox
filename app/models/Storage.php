@@ -1,4 +1,5 @@
 <?php
+namespace App\Models;
 
 /**
  * Class for Mongo Storage
@@ -55,7 +56,9 @@ class Storage {
      * @param int $port
      */
     public function __construct($collection = null, $hostname = "localhost", $port = 27017) {
-        $this->setClient(new MongoClient("mongodb://$hostname:$port"));
+        
+        
+        $this->setClient(new \MongoClient("mongodb://$hostname:$port"));
 
         $this->setHostname($hostname);
         $this->setPort($port);

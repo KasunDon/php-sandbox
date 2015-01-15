@@ -59,6 +59,8 @@ $framework = $app['path.base'].
 
 require $framework.'/Illuminate/Foundation/start.php';
 
+               
+\App\Models\PHPSandBox::$VERSIONS = \App\Models\Utils::parseJson(App::make('app.config.env')->PHP_SANDBOX_VERSIONS, true, true);
 /*
 |--------------------------------------------------------------------------
 | Return The Application

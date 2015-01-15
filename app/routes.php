@@ -11,23 +11,26 @@
   |
  */
 
-Route::get('/', function() {
-    return View::make('hello');
-});
+
+Route::get('/', 'HomeController@index');
+
 
 Route::get('/view-report-issue', function() {
     return View::make('report');
 });
 
 Route::get('/share/{codeId}', function($codeId) {
-    $document = Storage::instance('phpsources')->getCollection()->findOne(array(
+    $document = \App\Models\Storage::instance('phpsources')->getCollection()->findOne(array(
         '_id' => new MongoId($codeId)));
 
     if (!Session::has('visit-' . $codeId)) {
         Session::put('visit-' . $codeId, true);
-        Storage::instance('views')->getCollection()->update(array('_id' => new MongoId($document['_id']->{'$id'})), array('$inc' => array('views' => 1)));
+
+        \App\Models\Storage::instance('views')
+                ->getCollection()
+                ->update(array('_id' => new MongoId($document['_id']->{'$id'})), array('$inc' => array('views' => 1)));
     }
-    $views = Storage::instance('views')->getCollection()->findOne(array(
+    $views = \App\Models\Storage::instance('views')->getCollection()->findOne(array(
         '_id' => new MongoId($document['_id']->{'$id'})));
 
     $document['meta'] = json_encode(array(
@@ -45,6 +48,11 @@ Route::get('/view-feedback', function() {
     return View::make('feedback');
 });
 
+Route::get('/view-testing', function() {
+  $nodes = \App\Models\Utils::parseJson(App::make('app.config.env')->PHP_SANDBOX_SERVERS, true, true);
+        var_dump($nodes);
+});
+
 Route::get('/view-service', function() {
     return View::make('service');
 });
@@ -60,20 +68,23 @@ Route::get('/view-terms', function() {
 Route::post('/report-issue', array('before' => 'postParams', 'uses' => 'HomeController@reportIssue'));
 
 Route::post('/save-code', array('before' => 'postParams', function() {
-$document = Code::doc();
+$document = \App\Models\Code::doc();
 $id = $document['_id']->{'$id'};
-Storage::instance('phpsources')->getCollection()->insert($document);
-Storage::instance('views')->getCollection()->insert(Views::doc($id));
-return Response::json(array('viewId' => $id, 'viewLink' => Code::VIEW_LINK));
-}));
+
+\App\Models\Storage::instance('phpsources')->getCollection()->insert($document);
+\App\Models\Storage::instance('views')->getCollection()->insert(\App\Models\Views::doc($id));
+
+return Response::json(array('viewId' => $id, 'viewLink' => \App\Models\Code::VIEW_LINK));
+})
+);
 
 Route::post('/send-feedback', array('before' => 'postParams', 'uses' => 'HomeController@sendFeedback'));
 
 Route::filter('postParams', function() {
     $config = array(
-        't1' => Issues::$REQUIRED_PARMS,
-        'f1' => Feedback::$REQUIRED_PARMS,
-        'c1' => Code::$REQUIRED_PARMS
+        't1' => \App\Models\Issues::$REQUIRED_PARMS,
+        'f1' => \App\Models\Feedback::$REQUIRED_PARMS,
+        'c1' => \App\Models\Code::$REQUIRED_PARMS
     );
 
     if (empty(Input::get('vType'))) {

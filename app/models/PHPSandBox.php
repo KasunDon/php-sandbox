@@ -1,59 +1,20 @@
 <?php
 
+namespace App\Models;
+
+use App\Models\Utils;
+
 /**
  * Class for PHP Sandbox runtime access
  */
 class PHPSandBox {
 
     /**
-     * Constant declaration for INI file
-     */
-    const INI_FILE = "/var/www/html/sandbox/sanbox-php.ini";
-
-    /**
      * Available PHP runtime versions
      * 
      * @var array 
      */
-    public static $VERSIONS = array(
-        '4.4.0' => '/opt/phpfarm/inst/bin/php-4.4.0',
-        '4.4.1' => '/opt/phpfarm/inst/bin/php-4.4.1',
-        '4.4.3' => '/opt/phpfarm/inst/bin/php-4.4.3',
-        '4.4.5' => '/opt/phpfarm/inst/bin/php-4.4.5',
-        '4.4.9' => '/opt/phpfarm/inst/bin/php-4.4.9',
-        '5.0.5' => '/opt/phpfarm/inst/bin/php-5.0.5',
-        '5.1.0' => '/opt/phpfarm/inst/bin/php-5.1.0',
-        '5.1.5' => '/opt/phpfarm/inst/bin/php-5.1.5',
-        '5.1.6' => '/opt/phpfarm/inst/bin/php-5.1.6',
-        '5.2.0' => '/opt/phpfarm/inst/bin/php-5.2.0',
-        '5.2.3' => '/opt/phpfarm/inst/bin/php-5.2.3',
-        '5.2.5' => '/opt/phpfarm/inst/bin/php-5.2.5',
-        '5.2.8' => '/opt/phpfarm/inst/bin/php-5.2.8',
-        '5.3.0' => '/opt/phpfarm/inst/bin/php-5.3.0',
-        '5.3.1' => '/opt/phpfarm/inst/bin/php-5.3.1',
-        '5.3.2' => '/opt/phpfarm/inst/bin/php-5.3.2',
-        '5.3.3' => '/opt/phpfarm/inst/bin/php-5.3.3',
-        '5.3.5' => '/opt/phpfarm/inst/bin/php-5.3.5',
-        '5.3.8' => '/opt/phpfarm/inst/bin/php-5.3.8',
-        '5.3.10' => '/opt/phpfarm/inst/bin/php-5.3.10',
-        '5.3.11' => '/opt/phpfarm/inst/bin/php-5.3.11',
-        '5.3.12' => '/opt/phpfarm/inst/bin/php-5.3.12',
-        '5.3.13' => '/opt/phpfarm/inst/bin/php-5.3.13',
-        '5.3.14' => '/opt/phpfarm/inst/bin/php-5.3.14',
-        '5.3.15' => '/opt/phpfarm/inst/bin/php-5.3.15',
-        '5.3.16' => '/opt/phpfarm/inst/bin/php-5.3.16',
-        '5.3.17' => '/opt/phpfarm/inst/bin/php-5.3.17',
-        '5.3.18' => '/opt/phpfarm/inst/bin/php-5.3.18',
-        '5.3.19' => '/opt/phpfarm/inst/bin/php-5.3.19',
-        '5.3.20' => '/opt/phpfarm/inst/bin/php-5.3.20',
-        '5.3.21' => '/opt/phpfarm/inst/bin/php-5.3.21',
-        '5.3.22' => '/opt/phpfarm/inst/bin/php-5.3.22',
-        '5.4.0' => '/opt/phpfarm/inst/bin/php-5.4.0',
-        '5.4.13' => '/opt/phpfarm/inst/bin/php-5.4.13',
-        '5.5.1' => '/opt/phpfarm/inst/bin/php-5.5.1',
-        '5.5.6' => '/opt/phpfarm/inst/bin/php-5.5.6',
-        '5.6.2' => '/opt/phpfarm/inst/bin/php-5.6.2'
-    );
+    public static $VERSIONS;
 
     /**
      * Version
@@ -107,42 +68,11 @@ class PHPSandBox {
     public function execute() {
         $checksum = sha1($this->getSourceCode() . $this->getVersion() . time());
 
-        //create directory
-        $tmpFolder = '/data/temp/' . $checksum;
+        $files = $this->prepareSandbox($checksum);
 
-        mkdir($tmpFolder);
+        $output = $this->getOutput($files);
 
-        $file = $tmpFolder . "/" . $checksum . ".php";
-
-        $tempIni = $tmpFolder . "/" . $checksum . ".ini";
-
-        //copy default php.ini to temp location
-        if (!copy("/opt/phpfarm/inst/php-" . $this->getVersion() . "/lib/php.ini", $tempIni)) {
-            throw new Exception("Couldn't copy ini file");
-        }
-
-        $customIniContent = "\n" . file_get_contents(self::INI_FILE) . "\n";
-        $customIniContent .= 'open_basedir = "' . $tmpFolder . '"' . "\n";
-
-        //adding custom ini settings to temp ini file
-        file_put_contents($tempIni, $customIniContent, FILE_APPEND);
-
-        file_put_contents($file, str_replace("\r\n\r\n\r\n", "", $this->getSourceCode()));
-
-        $output = shell_exec($this->getSystemPath() . " -c " . $tempIni . " " . $file);
-        $output = str_replace($file, "SandBox-Request", $output);
-        $output = str_replace($tmpFolder, "SandBox-Request", $output);
-
-        //clearing up signatures
-        $output = str_replace(array("Content-type: text/html", "X-Powered-By: PHP/" . $this->getVersion(), "\r\n\r\n\r\n"), "", $output);
-
-        if (preg_match("/^\s*$/", $output)) {
-            $output = "No output!";
-        }
-
-        unlink($file);
-        unlink($tempIni);
-        rmdir($tmpFolder);
+        $this->clear($files);
 
         return $output;
     }
@@ -162,6 +92,81 @@ class PHPSandBox {
         }
 
         $this->setSystemPath(self::$VERSIONS[$this->getVersion()]);
+    }
+
+    /**
+     * Removing all files
+     * 
+     * @param array $files
+     */
+    private function clear($files) {
+        $sandbox = $files['sandbox'];
+
+        unset($files['sandbox']);
+
+        foreach ($files as $file) {
+            unlink($file);
+        }
+
+        rmdir($sandbox);
+    }
+
+    /**
+     * Preparing sandbox
+     * 
+     * @param array $checksum
+     * @return string
+     * @throws \App\Exception\FileCopyException
+     */
+    private function prepareSandbox($checksum) {
+
+        $files = array('sandbox' => \App::make('app.config.env')->SANDBOX . $checksum);
+
+        $files['php'] = $files['sandbox'] . "/" . $checksum . ".php";
+        $files['ini'] = $files['sandbox'] . "/" . $checksum . ".ini";
+
+        // create sandbox path
+        mkdir($files['sandbox']);
+
+        //copy default php.ini to sandbox
+        if (!copy(sprintf(\App::make('app.config.env')->PHP_SANDBOX_PATH, $this->getVersion()), $files['ini'])) {
+            throw new \App\Exception\FileCopyException();
+        }
+
+        $ini_settings = "\n" . file_get_contents(\App::make('app.config.env')->INI_FILE) . "\n";
+        $ini_settings .= 'open_basedir = "' . $files['sandbox'] . '"' . "\n";
+
+        //adding custom ini settings to temp ini file
+        file_put_contents($files['ini'], $ini_settings, FILE_APPEND);
+
+        //replacing empty spaces
+        file_put_contents($files['php'], str_replace("\r\n\r\n\r\n", "", $this->getSourceCode()));
+
+        return $files;
+    }
+
+    /**
+     * Returns output
+     * 
+     * @param array $files
+     * @return string
+     */
+    private function getOutput($files) {
+
+        $output = shell_exec($this->getSystemPath() . " -c " . $files['ini'] . " " . $files['php']);
+
+        foreach ($files as $file) {
+            $output = str_replace($file, "SandBox-Request", $output);
+        }
+
+        //clearing up signatures
+        $output = str_replace(array("Content-type: text/html", "X-Powered-By: PHP/" .
+            $this->getVersion(), "\r\n\r\n\r\n"), "", $output);
+
+        if (preg_match("/^\s*$/", $output)) {
+            $output = "No output!";
+        }
+        return $output;
     }
 
     /**
@@ -215,6 +220,11 @@ class PHPSandBox {
      */
     public function setSourceCode($sourceCode) {
         $this->sourceCode = $sourceCode;
+    }
+    
+    private function sandboxAccess() {
+        $nodes = Utils::parseJson(\App::make('app.config.env')->PHP_SANDBOX_SERVERS, true, true);
+        var_dump($nodes);
     }
 
 }

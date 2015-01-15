@@ -69,6 +69,15 @@ App::down(function()
 
 /*
 |--------------------------------------------------------------------------
+| Loading PHP Runtime Versions
+|--------------------------------------------------------------------------
+| Initializing PHP Runtime versions when app loads
+*/
+
+\App\Models\PHPSandBox::$VERSIONS = \App\Models\Utils::parseJson(App::make('app.config.env')->PHP_SANDBOX_VERSIONS, true, true);
+
+/*
+|--------------------------------------------------------------------------
 | Require The Filters File
 |--------------------------------------------------------------------------
 |

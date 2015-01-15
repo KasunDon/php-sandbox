@@ -1,4 +1,5 @@
 <?php
+namespace App\Models;
 
 /**
  * Document Class for Mongo-Code Mondel

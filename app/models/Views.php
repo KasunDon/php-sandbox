@@ -1,4 +1,5 @@
 <?php
+namespace App\Models;
 
 /**
  * Document Class for Mongo-Views Mondel
@@ -45,7 +46,7 @@ class Views extends MongoModel {
      */
     public function getDocument(array $params) {
         return array_merge(parent::getDocument($params), array(
-            '_id' => new MongoId($this->getId()),
+            '_id' => new \MongoId($this->getId()),
             'views' => 0
         ));
     }

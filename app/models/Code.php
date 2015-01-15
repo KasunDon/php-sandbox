@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Models;
+
 /**
  * Document Class for Mongo-Code Mondel
  */
@@ -34,7 +36,7 @@ class Code extends MongoModel {
             'ip' => $_SERVER['REMOTE_ADDR'],
             'theme' => 'xcode',
             'status' => self::STATUS_ACTIVE,
-            '_id' => new MongoId()
+            '_id' => new \MongoId()
         ));
     }
 

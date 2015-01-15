@@ -4,8 +4,8 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="PHP Legacy versions. Run-Test-Debug-Share. Anywhere-Anytime PHP Sandbox running versions of {{ implode(', ', array_keys(PHPSandBox::$VERSIONS)) }}">
-        <meta name="author" content="Kasun Don">
+        <meta name="description" content="PHP Legacy versions. Run-Test-Debug-Share. Anywhere-Anytime PHP Sandbox running versions of {{ implode(', ', $versions) }}">
+        <meta name="author" content="">
         <title>PHPBox sandbox - Beta version - Debug, Test and Share!</title>
         <link href="/assets/css/bootstrap.css" rel="stylesheet">
         <link href="/assets/css/sticky-footer.css" rel="stylesheet">
@@ -53,7 +53,7 @@ echo 'hello world!';</pre>
 
                     <div class="col-md-2">
                         <select id="version-selector" class="selectpicker" data-width="110px" multiple data-max-options="1">
-                            @foreach (array_keys(PHPSandBox::$VERSIONS) as $lang_version)
+                            @foreach ($versions as $lang_version)
                             <option value='{{$lang_version}}' {{{ isset($version) && $lang_version == $version  ? 'selected' : '' }}}  >PHP {{$lang_version}}</option>
                             @endforeach
                         </select>

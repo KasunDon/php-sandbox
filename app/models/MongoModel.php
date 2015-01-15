@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Models;
+
 /**
  * Abstract Class for Mongo Models
  */
@@ -16,10 +18,10 @@ abstract class MongoModel {
 
         foreach ($params as $value) {
             if ($value === "code") {
-                $document[$value] = htmlentities(Input::get($value));
+                $document[$value] = htmlentities(\Input::get($value));
                 continue;
             }
-            $document[$value] = Input::get($value);
+            $document[$value] = \Input::get($value);
         }
 
         return $document;

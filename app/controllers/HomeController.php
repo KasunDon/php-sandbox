@@ -1,9 +1,18 @@
 <?php
 
+use App\Models\PHPSandBox;
+
 /**
  * HomeConroller Class
  */
 class HomeController extends BaseController {
+
+    /**
+     * Index Controller
+     */
+    public function index() {
+        return View::make('hello', array('versions' => array_keys(PHPSandBox::$VERSIONS)));
+    }
 
     /**
      *  Run Controller

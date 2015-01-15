@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Models;
+
 /**
  * Document Class for Mongo-Feedback Mondel
  */
