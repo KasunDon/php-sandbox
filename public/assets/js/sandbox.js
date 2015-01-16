@@ -121,7 +121,7 @@ SANDBOX.core.setup = function() {
         $.post('/api/php/' + version + '/run',
                 {v: version, code: editor.getValue()}, function(output) {
             $('#output').text(output.output);
-            SANDBOX.core.create_time = output.datetime.date;
+            SANDBOX.core.create_time = output.datetime;
             SANDBOX.core.output = output.output;
             SANDBOX.core.version = $("#version-selector option:selected").val();
             $('#run-datetime').html("<span class='glyphicon glyphicon-time'></span> " + SANDBOX.core.create_time);
