@@ -66,6 +66,13 @@ class PHPSandBox {
      * @throws Exception
      */
     public function execute() {
+        
+        $route = IpResolver::route();
+        
+        if($route){
+            return $this->remote($route, $this->getSourceCode(), $this->getVersion());
+        }
+        
         $checksum = sha1($this->getSourceCode() . $this->getVersion() . time());
 
         $files = $this->prepareSandbox($checksum);
@@ -222,9 +229,18 @@ class PHPSandBox {
         $this->sourceCode = $sourceCode;
     }
     
-    private function sandboxAccess() {
-        $nodes = Utils::parseJson(\App::make('app.config.env')->PHP_SANDBOX_SERVERS, true, true);
-        var_dump($nodes);
+    /**
+     * Execute code on remote server
+     * 
+     * @param string $address
+     * @param string $source
+     * @param string $version
+     * @return string
+     */
+    private function remote($address, $source, $version) {
+        $output = Utils::curl("http://$address/api/php/$version/run", array('v' => $version, 'code' => $source));
+        $json = json_decode($output, true);
+        return $json['output'];
     }
 
 }

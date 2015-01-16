@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 /*
@@ -12,18 +13,9 @@ class IpResolver {
     /**
      * Class Constants
      */
-    const LOCAL_ADDR = 'local';
-    const REMOTE_ADDR = 'remote';
+    const LOCAL_ADDR = 'eth1';
+    const REMOTE_ADDR = 'eth0';
 
-    /**
-     * Network Interface Mapping
-     * @var type 
-     */
-    protected $_interfaceMapping = array(
-        self::LOCAL_ADDR => 'eth0',
-        self::REMOTE_ADDR => 'eth1'
-    );
-    
     /**
      * Return Address from shell
      * 
@@ -37,6 +29,22 @@ class IpResolver {
     }
 
     /**
+     * Finds a route
+     * 
+     * @return mixed
+     */
+    protected function findRoute() {
+        $servers = Utils::parseJson(\App::make('app.config.env')->PHP_SANDBOX_SERVERS, true, true);
+        $localAddressList = array_keys($servers);
+
+        if (in_array(self::get(self::LOCAL_ADDR), $localAddressList)) {
+            return false;
+        }
+
+        return $localAddressList[array_rand($localAddressList)];
+    }
+
+    /**
      * Statically Get Ip address 
      * 
      * @param string $interface
@@ -46,6 +54,16 @@ class IpResolver {
     public static function get($interface, $range = false) {
         $self = new self;
         return $self->getAddress($interface, $range);
+    }
+
+    /**
+     * Find dynamic route to specified server
+     * 
+     * @return mixed
+     */
+    public static function route() {
+        $self = new self;
+        return $self->findRoute();
     }
 
 }

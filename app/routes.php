@@ -49,8 +49,7 @@ Route::get('/view-feedback', function() {
 });
 
 Route::get('/view-testing', function() {
-  $nodes = \App\Models\Utils::parseJson(App::make('app.config.env')->PHP_SANDBOX_SERVERS, true, true);
-        var_dump($nodes);
+    
 });
 
 Route::get('/view-service', function() {
