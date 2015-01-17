@@ -14,7 +14,7 @@ class HomeController extends BaseController {
      * Index Controller
      */
     public function index() {
-        return View::make('hello', array('versions' => array_keys(PHPSandBox::$VERSIONS)));
+        return View::make('hello', array('versions' => PHPSandBox::versions()));
     }
 
     /**

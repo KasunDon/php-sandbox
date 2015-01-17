@@ -242,5 +242,14 @@ class PHPSandBox {
         $json = json_decode($output, true);
         return $json['output'];
     }
-
+    
+    
+    /**
+     * Returns list of versions
+     * 
+     * @return array
+     */
+    public static function versions() {
+        return array_keys(self::$VERSIONS);
+    }
 }

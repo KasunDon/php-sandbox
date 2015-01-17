@@ -13,7 +13,12 @@ class Code extends MongoModel {
     const STATUS_ACTIVE = 'active';
     const STATUS_EXPIRED = 'expired';
     const STATUS_PRIVATE = 'private';
-    const VIEW_LINK = 'http://phpbox.info/share/';
+    
+    /**
+     * View Link
+     * @var string 
+     */
+    public static $VIEW_LINK;
 
     /**
      * Document required parameters

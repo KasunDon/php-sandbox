@@ -37,9 +37,11 @@ Route::get('/share/{codeId}', function($codeId) {
         'version' => $document['version'],
         'id' => $document['_id']->{'$id'},
         'create_time' => $document['create_time'],
-        'view_link' => Code::VIEW_LINK,
+        'view_link' => \App\Models\Code::$VIEW_LINK,
         'views' => $views['views']
     ));
+        
+    $document['versions'] = App\Models\PHPSandBox::versions();
 
     return View::make('hello', $document);
 });
@@ -73,7 +75,7 @@ $id = $document['_id']->{'$id'};
 \App\Models\Storage::instance('phpsources')->getCollection()->insert($document);
 \App\Models\Storage::instance('views')->getCollection()->insert(\App\Models\Views::doc($id));
 
-return Response::json(array('viewId' => $id, 'viewLink' => \App\Models\Code::VIEW_LINK));
+return Response::json(array('viewId' => $id, 'viewLink' => \App\Models\Code::$VIEW_LINK));
 })
 );
 
