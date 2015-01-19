@@ -38,7 +38,7 @@ class Code extends MongoModel {
     public function getDocument(array $params) {
         return array_merge(parent::getDocument($params), array(
             'expiry' => null,
-            'ip' => $_SERVER['REMOTE_ADDR'],
+            'ip' => Utils::getServer('REMOTE_ADDR'),
             'theme' => 'xcode',
             'status' => self::STATUS_ACTIVE,
             '_id' => new \MongoId()

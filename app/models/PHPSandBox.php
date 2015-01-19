@@ -91,7 +91,7 @@ class PHPSandBox {
      */
     public function validate() {
         if (!$this->isVersion($this->getVersion())) {
-            throw new Exception('Requested version not avaialble :: ' . $this->getVersion());
+            throw new \Exception('Requested version not avaialble :: ' . $this->getVersion());
         }
 
         if (!preg_match('/^[<][?]php/', $this->getSourceCode())) {

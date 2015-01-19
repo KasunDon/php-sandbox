@@ -12,7 +12,7 @@ class SandboxTest extends TestCase {
      * @return void
      */
     public function testRuntimeModel() {
-        foreach (PHPSandBox::$VERSIONS as $version => $path) {
+        foreach (PHPSandBox::versions() as $version) {
             $eval = "testing works for " . $version;
             $code = "echo '$eval';";
 
@@ -29,7 +29,7 @@ class SandboxTest extends TestCase {
      * @return void
      */
     public function testRuntimeHttpAccess() {
-        foreach (PHPSandBox::$VERSIONS as $version => $path) {
+        foreach (PHPSandBox::versions() as $version) {
             $eval = "testing works for " . $version;
             $code = "echo '$eval';";
 

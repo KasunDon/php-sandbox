@@ -64,5 +64,25 @@ class Utils {
 
         return $output;
     }
+    
+    /**
+     * Formatted DateTime
+     * 
+     * @param string $format
+     * @return string (Formatted DateTime String)
+     */
+    public static function datetime($format = 'Y-m-d H:i:s') {
+        return date_format(new \DateTime(), $format);
+    }
+    
+    /**
+     * Accessing Server Global
+     * 
+     * @param type $param
+     * @return type
+     */
+    public static function getServer($param) {
+        return (isset($_SERVER[$param]) && ! empty($_SERVER[$param]))? $_SERVER[$param]: '127.0.0.1';
+    }
 
 }

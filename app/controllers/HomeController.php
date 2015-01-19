@@ -4,6 +4,7 @@ use App\Models\PHPSandBox;
 use App\Models\Storage;
 use App\Models\Feedback;
 use App\Models\Issues;
+use App\Models\Utils;
 
 /**
  * HomeConroller Class
@@ -22,7 +23,7 @@ class HomeController extends BaseController {
      */
     public function run() {
         $sandbox = new PHPSandBox(Input::get('v'), Input::get('code'));
-        return Response::json(array('output' => $sandbox->execute(), 'datetime' => date_format(new DateTime(), 'Y-m-d H:i:s')));
+        return Response::json(array('output' => $sandbox->execute(), 'datetime' => Utils::datetime()));
     }
 
     /**

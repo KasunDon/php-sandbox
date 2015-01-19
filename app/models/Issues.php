@@ -32,7 +32,7 @@ class Issues extends MongoModel {
     public function getDocument(array $params) {
         return array_merge(parent::getDocument($params), array(
             'date_time' => new \DateTime(),
-            'ip' => $_SERVER['REMOTE_ADDR'],
+            'ip' => Utils::getServer('REMOTE_ADDR'),
             'status' => self::STATUS_NEW
         ));
     }
@@ -46,5 +46,4 @@ class Issues extends MongoModel {
         $self = new self();
         return $self->getDocument(self::$REQUIRED_PARMS);
     }
-
 }
