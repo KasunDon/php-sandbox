@@ -59,7 +59,7 @@ echo 'hello world!';</pre>
                         </select>
                     </div>
                     <div class="col-md-9" style="padding-left: 10px; float: left">
-                        <button type="button"  id="run" class="btn btn-primary">Run</button>
+                        <button type="button"  id="run" class="btn btn-primary"><b>Run</b></button>
                     </div>
 
                     <div class="col-md-1" style="float: right; padding-left: 5px; padding-top: 0;">
@@ -68,7 +68,7 @@ echo 'hello world!';</pre>
 
                 </div>
 
-                <div id="output-zone" style="margin-top: 30px; display: none; margin-bottom: 20px;">
+                <div id="output-zone" style="margin-top: 30px; display: none; margin-bottom: 80px;">
                     <span style="float: right;"><small id="run-datetime"></small></span>
                     <div>PHP Version: <b><small id="php-version"> </small></b></div>
 
@@ -81,7 +81,7 @@ echo 'hello world!';</pre>
                             <span class="glyphicon glyphicon-eye-open"></span> <b>  Views : <small id="views">0</small></b>  
                         </div>
                     </span>
-                    <button id="save_share" type="button" class="btn btn-info" style="float: right;">Save & Share</button>
+                    <button id="save_share" type="button" class="btn btn-success" style="float: right;"><b>Share</b></button>
                 </div>
 
 

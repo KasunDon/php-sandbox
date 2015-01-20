@@ -20,29 +20,32 @@ Route::get('/view-report-issue', function() {
 });
 
 Route::get('/share/{codeId}', function($codeId) {
-    $document = \App\Models\Storage::instance('phpsources')->getCollection()->findOne(array(
-        '_id' => new MongoId($codeId)));
+    try {
+        $document = \App\Models\Storage::instance('phpsources')->getCollection()->findOne(array(
+            '_id' => new MongoId($codeId)));
 
-    if (!Session::has('visit-' . $codeId)) {
-        Session::put('visit-' . $codeId, true);
+        if (!Session::has('visit-' . $codeId)) {
+            Session::put('visit-' . $codeId, true);
 
-        \App\Models\Storage::instance('views')
-                ->getCollection()
-                ->update(array('_id' => new MongoId($document['_id']->{'$id'})), array('$inc' => array('views' => 1)));
+            \App\Models\Storage::instance('views')
+                    ->getCollection()
+                    ->update(array('_id' => new MongoId($document['_id']->{'$id'})), array('$inc' => array('views' => 1)));
+        }
+        $views = \App\Models\Storage::instance('views')->getCollection()->findOne(array(
+            '_id' => new MongoId($document['_id']->{'$id'})));
+
+        $document['meta'] = json_encode(array(
+            'version' => $document['version'],
+            'id' => $document['_id']->{'$id'},
+            'create_time' => $document['create_time'],
+            'view_link' => \App\Models\Code::$VIEW_LINK,
+            'views' => $views['views']
+        ));
+
+        $document['versions'] = App\Models\PHPSandBox::versions();
+    } catch (Exception $e) {
+        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
     }
-    $views = \App\Models\Storage::instance('views')->getCollection()->findOne(array(
-        '_id' => new MongoId($document['_id']->{'$id'})));
-
-    $document['meta'] = json_encode(array(
-        'version' => $document['version'],
-        'id' => $document['_id']->{'$id'},
-        'create_time' => $document['create_time'],
-        'view_link' => \App\Models\Code::$VIEW_LINK,
-        'views' => $views['views']
-    ));
-        
-    $document['versions'] = App\Models\PHPSandBox::versions();
-
     return View::make('hello', $document);
 });
 

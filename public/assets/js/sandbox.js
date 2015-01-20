@@ -30,7 +30,6 @@ SANDBOX.utils.loadData = function() {
         $('#run-datetime').html("<span class='glyphicon glyphicon-time'></span> " + SANDBOX.core.create_time);
         $('#output-zone').show();
         $('#php-version').text($('#php-version').text() + SANDBOX.core.version);
-        $('#save_share').text('Share');
         $('#views').text(SANDBOX.core.views);
         $('#view-link').text(SANDBOX.core.viewLink);
         $('#view-link').attr('href', SANDBOX.core.viewLink);
@@ -70,7 +69,6 @@ SANDBOX.core.socialTab = function() {
                 $('#view-link').attr('href', SANDBOX.core.viewLink);
                 $('#view-link-zone').show();
                 $('#progress').hide();
-                $('#save_share').text('Share');
                 $('#modal-view-link-zone').show();
                 $('#modal-view-link').text(SANDBOX.core.viewLink);
                 $('#modal-view-link').attr('href', SANDBOX.core.viewLink);
