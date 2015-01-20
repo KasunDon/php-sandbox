@@ -69,6 +69,9 @@ Route::get('/view-terms', function() {
     return View::make('terms');
 });
 
+Route::post('/auth/token', 'AuthController@token');
+Route::post('/auth/resource', 'AuthController@resource');
+
 Route::post('/report-issue', array('before' => 'postParams', 'uses' => 'HomeController@reportIssue'));
 
 Route::post('/save-code', array('before' => 'postParams', function() {

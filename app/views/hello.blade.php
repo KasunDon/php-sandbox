@@ -67,6 +67,10 @@ echo 'hello world!';</pre>
                     </div>
 
                 </div>
+                
+                <div id='loading' class="row text-center" style='display:none'>
+                    <img src='/assets/images/loading.gif'/> <b><span class="text-muted"> executing ...</span></b>
+                </div>
 
                 <div id="output-zone" style="margin-top: 30px; display: none; margin-bottom: 80px;">
                     <span style="float: right;"><small id="run-datetime"></small></span>
@@ -90,14 +94,14 @@ echo 'hello world!';</pre>
 
         <footer class="footer">
             <div class="container-fluid">
-            <div class="row show-grid" style="margin-top: 5px;">
-                <div class="col-md-1"></div>
-                <div class="col-md-2 text-muted"><strong>PHPBox</strong> Sandbox</div>
-                <div class="col-md-2"><a id="service" style="cursor: pointer;">Service Status</a><span class="label label-success" style="margin-left: 10px;">OK</span></div>
-                <div class="col-md-2"><a id="feedback" style="cursor: pointer;">Send Feedback</a></div>
-                <div class="col-md-2"><a id="terms" style="cursor: pointer;">Terms & Conditions</a></div>
-                <div class="col-md-2"><small><strong class="text-muted">Hosting Provider </strong> <a href="https://www.digitalocean.com/?refcode=2fdebfd067c7">DigitalOcean</a></small></div>
-            </div>
+                <div class="row show-grid" style="margin-top: 5px;">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2 text-muted"><strong>PHPBox</strong> Sandbox</div>
+                    <div class="col-md-2"><a id="service" style="cursor: pointer;">Service Status</a><span class="label label-success" style="margin-left: 10px;">OK</span></div>
+                    <div class="col-md-2"><a id="feedback" style="cursor: pointer;">Send Feedback</a></div>
+                    <div class="col-md-2"><a id="terms" style="cursor: pointer;">Terms & Conditions</a></div>
+                    <div class="col-md-2"><small><strong class="text-muted">Hosting Provider </strong> <a href="https://www.digitalocean.com/?refcode=2fdebfd067c7">DigitalOcean</a></small></div>
+                </div>
             </div>
         </div>
     </footer>

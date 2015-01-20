@@ -105,19 +105,22 @@ SANDBOX.core.setup = function() {
     $("#run").on("click", function() {
         var version = null;
         version = $('.selectpicker').find(":selected").val();
-
+        
         if (version == null) {
             alert('Please select PHP runtime version');
             return false;
         }
-
+        
         if (SANDBOX.core.defaultCode === editor.getValue()) {
             alert("Code editor hasn't changed. Assume there are no code to be run");
             return false;
         }
+        
+        $('#loading').show();
 
         $.post('/api/php/' + version + '/run',
                 {v: version, code: editor.getValue()}, function(output) {
+            $('#loading').hide();
             $('#output').text(output.output);
             SANDBOX.core.create_time = output.datetime;
             SANDBOX.core.output = output.output;
