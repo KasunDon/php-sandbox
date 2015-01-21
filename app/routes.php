@@ -72,9 +72,9 @@ Route::get('/view-terms', function() {
 Route::post('/auth/token', 'AuthController@token');
 Route::post('/auth/resource', 'AuthController@resource');
 
-Route::post('/report-issue', array('before' => 'postParams', 'uses' => 'HomeController@reportIssue'));
+Route::post('/report-issue', array('before' => array('postParams', 'csrf'), 'uses' => 'HomeController@reportIssue'));
 
-Route::post('/save-code', array('before' => 'postParams', function() {
+Route::post('/save-code', array('before' => array('postParams', 'csrf'), function() {
 $document = \App\Models\Code::doc();
 $id = $document['_id']->{'$id'};
 
@@ -85,7 +85,7 @@ return Response::json(array('viewId' => $id, 'viewLink' => \App\Models\Code::$VI
 })
 );
 
-Route::post('/send-feedback', array('before' => 'postParams', 'uses' => 'HomeController@sendFeedback'));
+Route::post('/send-feedback', array('before' => array('postParams', 'csrf'), 'uses' => 'HomeController@sendFeedback'));
 
 Route::filter('postParams', function() {
     $config = array(
@@ -105,6 +105,6 @@ Route::filter('postParams', function() {
     }
 });
 
-Route::post('/api/php/{version}/run', 'HomeController@run');
+Route::post('/api/php/{version}/run', array('before' => array('csrf'), 'uses' => 'HomeController@run'));
 
 

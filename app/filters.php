@@ -83,7 +83,8 @@ Route::filter('guest', function() {
  */
 
 Route::filter('csrf', function() {
-    if (Session::token() !== Input::get('_token')) {
-        throw new Illuminate\Session\TokenMismatchException;
+    $token = empty(Input::get('_token')) ? Request::header('X-CSRF-Token') : Input::get('_token');
+    if (Session::token() !== $token) {
+        return Response::json(array('status' => 'access denied to api resource. Please sign up for API credentials.'), 500);
     }
 });

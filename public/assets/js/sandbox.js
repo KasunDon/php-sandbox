@@ -102,20 +102,26 @@ SANDBOX.core.setup = function() {
 
     $('.selectpicker').selectpicker();
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+        }
+    });
+
     $("#run").on("click", function() {
         var version = null;
         version = $('.selectpicker').find(":selected").val();
-        
+
         if (version == null) {
             alert('Please select PHP runtime version');
             return false;
         }
-        
+
         if (SANDBOX.core.defaultCode === editor.getValue()) {
             alert("Code editor hasn't changed. Assume there are no code to be run");
             return false;
         }
-        
+
         $('#loading').show();
 
         $.post('/api/php/' + version + '/run',
