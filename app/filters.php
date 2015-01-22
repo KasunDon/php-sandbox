@@ -84,7 +84,7 @@ Route::filter('guest', function() {
 
 Route::filter('csrf', function() {
     $token = empty(Input::get('_token')) ? Request::header('X-CSRF-Token') : Input::get('_token');
-    if (! in_array(Request::getClientIp(), \App\Models\IpResolver::getLocalServers()) && Session::token() !== $token) {
+    if (! in_array(Request::getClientIp(), array('10.131.211.185')) && Session::token() !== $token) {
         return Response::json(array('status' => 'access denied to api resource. Please sign up for API credentials.'), 500);
     }
 });

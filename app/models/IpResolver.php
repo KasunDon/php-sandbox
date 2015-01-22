@@ -34,7 +34,7 @@ class IpResolver {
      * @return mixed
      */
     protected function findRoute() {
-        $localAddressList = self::getLocalServers();
+        $localAddressList = self::getPHPServers();
 
         if (in_array(self::get(self::LOCAL_ADDR), $localAddressList)) {
             return false;
@@ -70,7 +70,7 @@ class IpResolver {
      * 
      * @return array
      */
-    public static function getLocalServers() {
+    public static function getPHPServers() {
         $servers = Utils::parseJson(\App::make('app.config.env')->PHP_SANDBOX_SERVERS, true, true);
         return array_keys($servers);
     }
