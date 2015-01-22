@@ -83,7 +83,7 @@ class Utils {
      */
     public static function getServer($param) {
         if ($param === 'REMOTE_ADDR') {
-            $param = 'X-Forwarded-For';
+            $param = 'HTTP_X_FORWARDED_FOR';
         }
         return (isset($_SERVER[$param]) && ! empty($_SERVER[$param]))? $_SERVER[$param]: '127.0.0.1';
     }
