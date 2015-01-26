@@ -12,6 +12,7 @@ SANDBOX.core.create_time = null;
 SANDBOX.core.version = null;
 SANDBOX.core.output = null;
 SANDBOX.core.views = null;
+SANDBOX.core.shareMode = 0;
 
 SANDBOX.core.content.reportContent = null;
 SANDBOX.core.content.feedbackContent = null;
@@ -22,11 +23,15 @@ SANDBOX.core.content.termsContent = null;
 SANDBOX.utils.loadData = function() {
     if ($("#view-code").length) {
         var data = JSON.parse($('#view-code').val());
+       
         SANDBOX.core.viewId = data.id;
         SANDBOX.core.viewLink = data.view_link + data.id;
         SANDBOX.core.create_time = data.create_time;
         SANDBOX.core.version = data.version;
         SANDBOX.core.views = data.views;
+        SANDBOX.core.shareMode = 1;
+        SANDBOX.core.output = $('#output').text()
+       
         $('#run-datetime').html("<span class='glyphicon glyphicon-time'></span> " + SANDBOX.core.create_time);
         $('#output-zone').show();
         $('#php-version').text($('#php-version').text() + SANDBOX.core.version);
@@ -57,7 +62,8 @@ SANDBOX.core.serviceView = function(e) {
 
 SANDBOX.core.socialTab = function() {
     var editor = ace.edit("editor");
-    if (SANDBOX.core.viewId == null) {
+    
+    if (SANDBOX.core.viewId == null || SANDBOX.core.shareMode === 2) {
         $('#progress').show();
         setTimeout(function() {
             $.post('/save-code', {code: editor.getValue(), output:
@@ -117,7 +123,7 @@ SANDBOX.core.setup = function() {
             return false;
         }
 
-        if (SANDBOX.core.defaultCode === editor.getValue()) {
+        if (SANDBOX.core.shareMode === 0 && SANDBOX.core.defaultCode === editor.getValue()) {
             alert("Code editor hasn't changed. Assume there are no code to be run");
             return false;
         }
@@ -128,7 +134,13 @@ SANDBOX.core.setup = function() {
                 {v: version, code: editor.getValue()}, function(output) {
             $('#loading').hide();
             $('#output').text(output.output);
+            
             SANDBOX.core.create_time = output.datetime;
+            
+            if(SANDBOX.core.output !== output.output) {
+                SANDBOX.core.shareMode = 2;
+            }
+            
             SANDBOX.core.output = output.output;
             SANDBOX.core.version = $("#version-selector option:selected").val();
             $('#run-datetime').html("<span class='glyphicon glyphicon-time'></span> " + SANDBOX.core.create_time);
