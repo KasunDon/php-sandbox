@@ -6,6 +6,7 @@ SANDBOX.core = {};
 SANDBOX.core.content = {};
 
 SANDBOX.core.defaultCode = null;
+SANDBOX.core.theme = 'xcode';
 SANDBOX.core.viewId = null;
 SANDBOX.core.viewLink = null;
 SANDBOX.core.create_time = null;

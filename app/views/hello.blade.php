@@ -59,8 +59,20 @@ echo 'hello world!';</pre>
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-9" style="padding-left: 10px; float: left">
+                    <div class="col-md-8" style="padding-left: 10px; float: left">
                         <button type="button"  id="run" class="btn btn-primary"><b>Run</b></button>
+                    </div>
+
+                    <div class="col-md-1" style="padding-top: 30px; padding-left: 30px;">
+                        <!-- Single button -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                               Theme <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                              @include('themes')
+                            </ul>
+                        </div>
                     </div>
 
                     <div class="col-md-1" style="float: right; padding-left: 5px; padding-top: 0;">
@@ -68,7 +80,7 @@ echo 'hello world!';</pre>
                     </div>
 
                 </div>
-                
+
                 <div id='loading' class="row text-center" style='display:none'>
                     <img src='/assets/images/loading.gif'/> <b><span class="text-muted"> executing ...</span></b>
                 </div>
