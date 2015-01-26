@@ -59,20 +59,18 @@ echo 'hello world!';</pre>
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-8" style="padding-left: 10px; float: left">
+                    <div class="col-md-7" style="padding-left: 10px; float: left">
                         <button type="button"  id="run" class="btn btn-primary"><b>Run</b></button>
                     </div>
-
-                    <div class="col-md-1" style="padding-top: 30px; padding-left: 30px;">
-                        <!-- Single button -->
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                               Theme <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
+                    <div class="col-md-1"style="padding-top: 35px; padding-left: 40px; float: left;">
+                         <div class="btn-group">
+                            <select id="theme-selector" class="selectpicker" data-width="120px" multiple data-max-options="1">
                               @include('themes')
-                            </ul>
+                            </select>
                         </div>
+                    </div>
+                    <div class="col-md-1" >
+                       
                     </div>
 
                     <div class="col-md-1" style="float: right; padding-left: 5px; padding-top: 0;">

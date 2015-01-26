@@ -54,7 +54,7 @@ Route::get('/view-feedback', function() {
 });
 
 Route::get('/view-testing', function() {
-   
+    
 });
 
 Route::get('/view-service', function() {
@@ -63,6 +63,23 @@ Route::get('/view-service', function() {
 
 Route::get('/view-social', function() {
     return View::make('social');
+});
+
+Route::post('/theme-settings', function() {
+    $settings = Cookie::get('tstgs');
+    $response = null;
+    if (empty($settings)) {
+        $theme = Input::get('theme');
+        $response = Response::json(array('theme' => $theme));
+        $response->headers->setCookie(Cookie::make('tstgs', $theme, 43200));
+    } else {
+        $response = Response::json(array('theme' => $settings));
+    }
+    return $response;
+});
+
+Route::get('/forget-theme-settings', function() {
+    return Response::make('reset')->withCookie(Cookie::forget('tstgs'));
 });
 
 Route::get('/view-terms', function() {

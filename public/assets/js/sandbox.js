@@ -107,7 +107,7 @@ SANDBOX.core.setup = function() {
 
     SANDBOX.core.defaultCode = editor.getValue();
 
-    $('.selectpicker').selectpicker();
+    $('#version-selector').selectpicker();
 
     $.ajaxSetup({
         headers: {
