@@ -1,0 +1,569 @@
+.phpbox{
+    color:#333;
+    font-size:16px
+}
+
+.phpbox .markdown-body{
+    overflow:hidden;
+    font-family:"Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    word-wrap:break-word
+}
+
+.phpbox .markdown-body>*:first-child{
+    margin-top:0 !important
+}
+
+.phpbox .markdown-body>*:last-child{
+    margin-bottom:0 !important
+}
+
+.phpbox .markdown-body .absent{
+    color:#c00
+}
+
+.phpbox .markdown-body .anchor{
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    display:block;
+    padding-right:6px;
+    padding-left:30px;
+    margin-left:-30px
+}
+
+.phpbox .markdown-body .anchor:focus{
+    outline:none
+}
+
+.phpbox .markdown-body h1,.phpbox .markdown-body h2,.phpbox .markdown-body h3,.phpbox .markdown-body h4,.phpbox .markdown-body h5,.phpbox .markdown-body h6{
+    position:relative;
+    margin-top:1em;
+    margin-bottom:16px;
+    font-weight:bold;
+    line-height:1.4
+}
+
+.phpbox .markdown-body h1 .octicon-link,.phpbox .markdown-body h2 .octicon-link,.phpbox .markdown-body h3 .octicon-link,.phpbox .markdown-body h4 .octicon-link,.phpbox .markdown-body h5 .octicon-link,.phpbox .markdown-body h6 .octicon-link{
+    display:none;
+    color:#000;
+    vertical-align:middle
+}
+
+.phpbox .markdown-body h1:hover .anchor,.phpbox .markdown-body h2:hover .anchor,.phpbox .markdown-body h3:hover .anchor,.phpbox .markdown-body h4:hover .anchor,.phpbox .markdown-body h5:hover .anchor,.phpbox .markdown-body h6:hover .anchor{
+    padding-left:8px;
+    margin-left:-30px;
+    line-height:1;
+    text-decoration:none
+}
+
+.phpbox .markdown-body h1:hover .anchor .octicon-link,.phpbox .markdown-body h2:hover .anchor .octicon-link,.phpbox .markdown-body h3:hover .anchor .octicon-link,.phpbox .markdown-body h4:hover .anchor .octicon-link,.phpbox .markdown-body h5:hover .anchor .octicon-link,.phpbox .markdown-body h6:hover .anchor .octicon-link{
+    display:inline-block
+}
+
+.phpbox .markdown-body h1 tt,.phpbox .markdown-body h1 code,.phpbox .markdown-body h2 tt,.phpbox .markdown-body h2 code,.phpbox .markdown-body h3 tt,.phpbox .markdown-body h3 code,.phpbox .markdown-body h4 tt,.phpbox .markdown-body h4 code,.phpbox .markdown-body h5 tt,.phpbox .markdown-body h5 code,.phpbox .markdown-body h6 tt,.phpbox .markdown-body h6 code{
+    font-size:inherit
+}
+
+.phpbox .markdown-body h1{
+    padding-bottom:0.3em;
+    font-size:2.25em;
+    line-height:1.2;
+    border-bottom:1px solid #eee
+}
+
+.phpbox .markdown-body h2{
+    padding-bottom:0.3em;
+    font-size:1.75em;
+    line-height:1.225;
+    border-bottom:1px solid #eee
+}
+
+.phpbox .markdown-body h3{
+    font-size:1.5em;
+    line-height:1.43
+}
+
+.phpbox .markdown-body h4{
+    font-size:1.25em
+}
+
+.phpbox .markdown-body h5{
+    font-size:1em
+}
+
+.phpbox .markdown-body h6{
+    font-size:1em;
+    color:#777
+}
+
+.phpbox .markdown-body p,.phpbox .markdown-body blockquote,.phpbox .markdown-body ul,.phpbox .markdown-body ol,.phpbox .markdown-body dl,.phpbox .markdown-body table,.phpbox .markdown-body pre{
+    margin-top:0;
+    margin-bottom:16px
+}
+
+.phpbox .markdown-body hr{
+    height:4px;
+    padding:0;
+    margin:16px 0;
+    background-color:#e7e7e7;
+    border:0 none
+}
+
+.phpbox .markdown-body ul,.phpbox .markdown-body ol{
+    padding-left:2em
+}
+
+.phpbox .markdown-body ul.no-list,.phpbox .markdown-body ol.no-list{
+    padding:0;
+    list-style-type:none
+}
+
+.phpbox .markdown-body ul ul,.phpbox .markdown-body ul ol,.phpbox .markdown-body ol ol,.phpbox .markdown-body ol ul{
+    margin-top:0;
+    margin-bottom:0
+}
+
+.phpbox .markdown-body li>p{
+    margin-top:16px
+}
+
+.phpbox .markdown-body dl{
+    padding:0
+}
+
+.phpbox .markdown-body dl dt{
+    padding:0;
+    margin-top:16px;
+    font-size:1em;
+    font-style:italic;
+    font-weight:bold
+}
+
+.phpbox .markdown-body dl dd{
+    padding:0 16px;
+    margin-bottom:16px
+}
+
+.phpbox .markdown-body blockquote{
+    padding:0 15px;
+    color:#777;
+    border-left:4px solid #ddd
+}
+
+.phpbox .markdown-body blockquote>:first-child{
+    margin-top:0
+}
+
+.phpbox .markdown-body blockquote>:last-child{
+    margin-bottom:0
+}
+
+.phpbox .markdown-body table{
+    display:block;
+    width:100%;
+    overflow:auto;
+    word-break:normal;
+    word-break:keep-all
+}
+
+.phpbox .markdown-body table th{
+    font-weight:bold
+}
+
+.phpbox .markdown-body table th,.phpbox .markdown-body table td{
+    padding:6px 13px;
+    border:1px solid #ddd
+}
+
+.phpbox .markdown-body table tr{
+    background-color:#fff;
+    border-top:1px solid #ccc
+}
+
+.phpbox .markdown-body table tr:nth-child(2n){
+    background-color:#f8f8f8
+}
+
+.phpbox .markdown-body img{
+    max-width:100%;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box
+}
+
+.phpbox .markdown-body span.frame{
+    display:block;
+    overflow:hidden
+}
+
+.phpbox .markdown-body span.frame>span{
+    display:block;
+    float:left;
+    width:auto;
+    padding:7px;
+    margin:13px 0 0;
+    overflow:hidden;
+    border:1px solid #ddd
+}
+
+.phpbox .markdown-body span.frame span img{
+    display:block;
+    float:left
+}
+
+.phpbox .markdown-body span.frame span span{
+    display:block;
+    padding:5px 0 0;
+    clear:both;
+    color:#333
+}
+
+.phpbox .markdown-body span.align-center{
+    display:block;
+    overflow:hidden;
+    clear:both
+}
+
+.phpbox .markdown-body span.align-center>span{
+    display:block;
+    margin:13px auto 0;
+    overflow:hidden;
+    text-align:center
+}
+
+.phpbox .markdown-body span.align-center span img{
+    margin:0 auto;
+    text-align:center
+}
+
+.phpbox .markdown-body span.align-right{
+    display:block;
+    overflow:hidden;
+    clear:both
+}
+
+.phpbox .markdown-body span.align-right>span{
+    display:block;
+    margin:13px 0 0;
+    overflow:hidden;
+    text-align:right
+}
+
+.phpbox .markdown-body span.align-right span img{
+    margin:0;
+    text-align:right
+}
+
+.phpbox .markdown-body span.float-left{
+    display:block;
+    float:left;
+    margin-right:13px;
+    overflow:hidden
+}
+
+.phpbox .markdown-body span.float-left span{
+    margin:13px 0 0
+}
+
+.phpbox .markdown-body span.float-right{
+    display:block;
+    float:right;
+    margin-left:13px;
+    overflow:hidden
+}
+
+.phpbox .markdown-body span.float-right>span{
+    display:block;
+    margin:13px auto 0;
+    overflow:hidden;
+    text-align:right
+}
+
+.phpbox .markdown-body code,.phpbox .markdown-body tt{
+    padding:0;
+    padding-top:0.2em;
+    padding-bottom:0.2em;
+    margin:0;
+    font-size:85%;
+    background-color:rgba(0,0,0,0.04);
+    border-radius:3px
+}
+
+.phpbox .markdown-body code:before,.phpbox .markdown-body code:after,.phpbox .markdown-body tt:before,.phpbox .markdown-body tt:after{
+    letter-spacing:-0.2em;
+    content:"\00a0"
+}
+
+.phpbox .markdown-body code br,.phpbox .markdown-body tt br{
+    display:none
+}
+
+.phpbox .markdown-body del code{
+    text-decoration:inherit
+}
+
+.phpbox .markdown-body pre>code{
+    padding:0;
+    margin:0;
+    font-size:100%;
+    word-break:normal;
+    white-space:pre;
+    background:transparent;
+    border:0
+}
+
+.phpbox .markdown-body .highlight{
+    margin-bottom:16px
+}
+
+.phpbox .markdown-body .highlight pre,.phpbox .markdown-body pre{
+    padding:16px;
+    overflow:auto;
+    font-size:85%;
+    line-height:1.45;
+    background-color:#f7f7f7;
+    border-radius:3px
+}
+
+.phpbox .markdown-body .highlight pre{
+    margin-bottom:0;
+    word-break:normal
+}
+
+.phpbox .markdown-body pre{
+    word-wrap:normal
+}
+
+.phpbox .markdown-body pre code,.phpbox .markdown-body pre tt{
+    display:inline;
+    max-width:initial;
+    padding:0;
+    margin:0;
+    overflow:initial;
+    line-height:inherit;
+    word-wrap:normal;
+    background-color:transparent;
+    border:0
+}
+
+.phpbox .markdown-body pre code:before,.phpbox .markdown-body pre code:after,.phpbox .markdown-body pre tt:before,.phpbox .markdown-body pre tt:after{
+    content:normal
+}
+
+.phpbox .markdown-body kbd{
+    display:inline-block;
+    padding:3px 5px;
+    font-size:11px;
+    line-height:10px;
+    color:#555;
+    vertical-align:middle;
+    background-color:#fcfcfc;
+    border:solid 1px #ccc;
+    border-bottom-color:#bbb;
+    border-radius:3px;
+    -webkit-box-shadow:inset 0 -1px 0 #bbb;
+    box-shadow:inset 0 -1px 0 #bbb
+}
+
+.phpbox .highlight{
+    font-family:Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size:12px;
+    font-weight:normal;
+    line-height:1.4;
+    margin:0;
+    padding:0;
+    background:#fff;
+    color:#333
+}
+
+.phpbox .pl-c{
+    color:#969896
+}
+
+.phpbox .pl-c1,.phpbox .pl-mdh,.phpbox .pl-mm,.phpbox .pl-mp,.phpbox .pl-mr,.phpbox .pl-s1 .pl-v,.phpbox .pl-s3,.phpbox .pl-sc,.phpbox .pl-sv{
+    color:#0086b3
+}
+
+.phpbox .pl-e,.phpbox .pl-en{
+    color:#795da3
+}
+
+.phpbox .pl-s1 .pl-s2,.phpbox .pl-smi,.phpbox .pl-smp,.phpbox .pl-stj,.phpbox .pl-vo,.phpbox .pl-vpf{
+    color:#333
+}
+
+.phpbox .pl-ent{
+    color:#63a35c
+}
+
+.phpbox .pl-k,.phpbox .pl-s,.phpbox .pl-st{
+    color:#a71d5d
+}
+
+.phpbox .pl-pds,.phpbox .pl-s1,.phpbox .pl-s1 .pl-pse .pl-s2,.phpbox .pl-sr,.phpbox .pl-sr .pl-cce,.phpbox .pl-sr .pl-sra,.phpbox .pl-sr .pl-sre,.phpbox .pl-src{
+    color:#df5000
+}
+
+.phpbox .pl-mo,.phpbox .pl-v{
+    color:#1d3e81
+}
+
+.phpbox .pl-id{
+    color:#b52a1d
+}
+
+.phpbox .pl-ii{
+    background-color:#b52a1d;
+    color:#f8f8f8
+}
+
+.phpbox .pl-sr .pl-cce{
+    color:#63a35c;
+    font-weight:bold
+}
+
+.phpbox .pl-ml{
+    color:#693a17
+}
+
+.phpbox .pl-mh,.phpbox .pl-mh .pl-en,.phpbox .pl-ms{
+    color:#1d3e81;
+    font-weight:bold
+}
+
+.phpbox .pl-mq{
+    color:#008080
+}
+
+.phpbox .pl-mi{
+    color:#333;
+    font-style:italic
+}
+
+.phpbox .pl-mb{
+    color:#333;
+    font-weight:bold
+}
+
+.phpbox .pl-md,.phpbox .pl-mdhf{
+    background-color:#ffecec;
+    color:#bd2c00
+}
+
+.phpbox .pl-mdht,.phpbox .pl-mi1{
+    background-color:#eaffea;
+    color:#55a532
+}
+
+.phpbox .pl-mdr{
+    color:#795da3;
+    font-weight:bold
+}
+
+.phpbox .render-viewer-error,.phpbox .render-viewer-fatal,.phpbox .octospinner{
+    display:none
+}
+
+.phpbox .phpbox-render iframe{
+    width:100%
+}
+
+.phpbox pre,.phpbox code{
+    font-family:Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
+    white-space:pre
+}
+
+.phpbox .phpbox-file{
+    margin-bottom:1em;
+    font-family:Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    border:1px solid #ddd;
+    border-bottom:1px solid #ccc;
+    border-radius:3px
+}
+
+.phpbox .phpbox-file.phpbox-render{
+    border:0
+}
+
+.phpbox .phpbox-meta{
+    padding:10px;
+    overflow:hidden;
+    font:12px Helvetica, arial, freesans, clean, sans-serif;
+    color:#999;
+    background-color:#f7f7f7
+}
+
+.phpbox .phpbox-meta a{
+    font-weight:bold;
+    color:#666;
+    text-decoration:none
+}
+
+.phpbox .phpbox-data{
+    overflow:auto;
+    word-wrap:normal;
+    background-color:#fff;
+    border-bottom:1px solid #ddd
+}
+
+.phpbox .file-data{
+    font-size:12px;
+    line-height:1.4
+}
+
+.phpbox .phpbox-file.scroll .phpbox-data{
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:30px;
+    left:0;
+    overflow:scroll
+}
+
+.phpbox .phpbox-file.scroll .phpbox-meta{
+    position:absolute;
+    right:0;
+    bottom:0;
+    left:0
+}
+
+.phpbox .line-data{
+    padding:.5em !important
+}
+
+.phpbox .line-pre{
+    padding:0 !important;
+    margin:0 !important;
+    font-family:Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
+    font-size:100% !important;
+    line-height:inherit !important;
+    background:transparent !important;
+    border:0 !important
+}
+
+.phpbox .phpbox-highlight{
+    background:transparent !important
+}
+
+.phpbox .line-numbers{
+    padding:.5em;
+    color:#aaa;
+    text-align:right;
+    background-color:#fff;
+    border-right:1px solid #eee;
+    line-height:1.4
+}
+
+.phpbox .line-number{
+    display:block;
+    clear:right
+}
+
+#editor {
+    display: block;
+    width:  100%;
+    height: 100%;
+}

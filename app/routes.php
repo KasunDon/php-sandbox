@@ -54,8 +54,8 @@ Route::get('/view-feedback', function() {
     return View::make('feedback');
 });
 
-Route::get('/view-testing', function() {
-    
+Route::get('/view-testing.js', function() {
+     return View::make('embed');
 });
 
 Route::get('/view-service', function() {
