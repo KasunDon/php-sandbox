@@ -5,6 +5,7 @@ use App\Models\Storage;
 use App\Models\Feedback;
 use App\Models\Issues;
 use App\Models\Utils;
+use App\Models\Code;
 
 /**
  * HomeConroller Class
@@ -15,7 +16,7 @@ class HomeController extends BaseController {
      * Index Controller
      */
     public function index() {
-        return View::make('hello', array('versions' => PHPSandBox::versions()));
+        return View::make('hello', array('versions' => PHPSandBox::versions(), 'themeOrigin' => Code::cookieTheme()));
     }
 
     /**

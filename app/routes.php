@@ -39,7 +39,8 @@ Route::get('/share/{codeId}', function($codeId) {
             'id' => $document['_id']->{'$id'},
             'create_time' => $document['create_time'],
             'view_link' => \App\Models\Code::$VIEW_LINK,
-            'views' => $views['views']
+            'views' => $views['views'],
+            'theme' => $document['theme']
         ));
 
         $document['versions'] = App\Models\PHPSandBox::versions();
@@ -65,22 +66,23 @@ Route::get('/view-social', function() {
     return View::make('social');
 });
 
-Route::post('/theme-settings', function() {
-    $settings = Cookie::get('tstgs');
-    $response = null;
-    if (empty($settings)) {
-        $theme = Input::get('theme');
-        $response = Response::json(array('theme' => $theme));
-        $response->headers->setCookie(Cookie::make('tstgs', $theme, 43200));
-    } else {
-        $response = Response::json(array('theme' => $settings));
-    }
-    return $response;
-});
+Route::match(array('GET', 'POST'), '/theme-settings', array('before' => 'csrf', function() {
+$settings = App\Models\Code::cookieTheme();
+$response = null;
 
-Route::get('/forget-theme-settings', function() {
-    return Response::make('reset')->withCookie(Cookie::forget('tstgs'));
-});
+if (Input::get('clear')) {
+    $response = Response::make('reset')->withCookie(Cookie::forget('tstgs'));
+} else if (empty($settings)) {
+    $theme = Input::get('theme');
+    $response = Response::json(array('theme' => $theme));
+    $response->headers->setCookie(Cookie::make('tstgs', $theme, 43200));
+} else {
+    $response = Response::json(array('theme' => $settings));
+}
+
+return $response;
+}));
+
 
 Route::get('/view-terms', function() {
     return View::make('terms');
