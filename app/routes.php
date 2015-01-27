@@ -20,6 +20,18 @@ Route::get('/view-report-issue', function() {
 });
 
 Route::get('/share/{codeId}', function($codeId) {
+    $document = getSharedCode($codeId);
+    return View::make('hello', $document);
+});
+
+/**
+ * Fetches sources by given shared id
+ * 
+ * @param type $codeId
+ * @return type
+ * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+ */
+function getSharedCode($codeId) {
     try {
         $document = \App\Models\Storage::instance('phpsources')->getCollection()->findOne(array(
             '_id' => new MongoId($codeId)));
@@ -44,18 +56,30 @@ Route::get('/share/{codeId}', function($codeId) {
         ));
 
         $document['versions'] = App\Models\PHPSandBox::versions();
+
+        return $document;
     } catch (Exception $e) {
         throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
     }
-    return View::make('hello', $document);
-});
+}
 
 Route::get('/view-feedback', function() {
     return View::make('feedback');
 });
 
-Route::get('/view-testing.js', function() {
-     return View::make('embed');
+Route::get('/code/{code}/raw', function($code) {
+    $document = getSharedCode($code);
+    $response = Response::make(html_entity_decode($document['code']));
+    $response->header('Content-Type', "text/plain");
+    return $response;
+});
+
+Route::get('/embed.js', function() {
+    $document = getSharedCode(Input::get('c'));
+    $content = View::make('embed_content', $document)->render();
+    $response = Response::make('document.write(' . json_encode($content) . ');');
+    $response->header('Content-Type', "text/javascript");
+    return $response;
 });
 
 Route::get('/view-service', function() {
