@@ -17,6 +17,9 @@
         <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/>
         <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css'>
         <link href="/assets/css/jquery.share.css" rel="stylesheet">
+        <script type="text/javascript">var switchTo5x = true;</script>
+        <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+        <script type="text/javascript" src="http://s.sharethis.com/loader.js"></script>
         <script src="/assets/js/ie-emulation-modes-warning.js"></script>
         <!--[if lt IE 9]><script src="/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -63,14 +66,14 @@ echo 'hello world!';</pre>
                         <button type="button"  id="run" class="btn btn-primary"><b>Run</b></button>
                     </div>
                     <div class="col-md-1"style="padding-top: 35px; padding-left: 40px; float: left;">
-                         <div class="btn-group">
+                        <div class="btn-group">
                             <select id="theme-selector" class="selectpicker" data-width="120px" multiple data-max-options="1">
-                              @include('themes')
+                                @include('themes')
                             </select>
                         </div>
                     </div>
                     <div class="col-md-1" >
-                       
+
                     </div>
 
                     <div class="col-md-1" style="float: right; padding-left: 5px; padding-top: 0;">
@@ -127,24 +130,29 @@ echo 'hello world!';</pre>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
     <script src="/assets/js/sandbox.min.js?n=1"></script>
     <script>
-$(function() {
-    SANDBOX.core.setup();
-});
-(function(i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r;
-    i[r] = i[r] || function() {
-        (i[r].q = i[r].q || []).push(arguments)
-    }, i[r].l = 1 * new Date();
-    a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m)
-})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            $(function() {
+                SANDBOX.core.setup();
+            });
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-ga('create', 'UA-58231333-1', 'auto');
-ga('send', 'pageview');
+            ga('create', 'UA-58231333-1', 'auto');
+            ga('send', 'pageview');
 
+    </script>
+    <script type="text/javascript">stLight.options({publisher: "4d55ca84-88de-4370-83ad-49bbb69a297c", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+    <script>
+        var options = {"publisher": "4d55ca84-88de-4370-83ad-49bbb69a297c", "position": "left", "ad": {"visible": false, "openDelay": 5, "closeDelay": 0}, "chicklets": {"items": ["facebook", "linkedin", "twitter", "googleplus", "blogger"]}};
+        var st_hover_widget = new sharethis.widgets.hoverbuttons(options);
     </script>
 </body>
 </html>
