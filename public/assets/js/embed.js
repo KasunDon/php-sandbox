@@ -95,20 +95,15 @@ PHPBOX.core.runCode = function() {
 
         $.post('http://beta.phpbox.info/api/php/' + version + '/run',
                 {v: version, code: PHPBOX.core.editor.getValue()}, function(output) {
-
             $('#loading').hide();
             $(PHPBOX.core.runButton).hide();
             // console.log($.blockUI.defaults.css);
             $.blockUI.defaults.css = {padding: 0, margin: 0, position: 'relative', cursor: 'hand'};
-            $(PHPBOX.core.editorId).block({message: "<pre id='phpbox-output' class='well'><strong>Output </strong><br><br>" + output.output + "</pre>", 
+            $(PHPBOX.core.editorId).block({message: "<pre id='phpbox-output' class='well'><strong>PHP Version </strong><small>" + version + "</small> @" + output.datetime + "<br><br>" + output.output + "</pre>",
                 onBlock: function() {
                     $(PHPBOX.core.editId).show();
                 }});
 
-            $(PHPBOX.core.editorId).on('click', function() {
-                $(this).unblock();
-                unblockEvent();
-            });
         });
 
     });

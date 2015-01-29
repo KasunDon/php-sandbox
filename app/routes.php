@@ -82,7 +82,7 @@ Route::get('/embed.js', function() {
     return $response;
 });
 Route::get('/testing', function() {
-    var_dump($_SERVER['HTTP_HOST']);
+     return View::make('embed_testing');
 });
 
 
