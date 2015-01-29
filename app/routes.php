@@ -81,6 +81,10 @@ Route::get('/embed.js', function() {
     $response->header('Content-Type', "text/javascript");
     return $response;
 });
+Route::get('/testing', function() {
+    var_dump($_SERVER['HTTP_HOST']);
+});
+
 
 Route::get('/view-service', function() {
     return View::make('service');
@@ -148,6 +152,6 @@ Route::filter('postParams', function() {
     }
 });
 
-Route::post('/api/php/{version}/run', array('before' => array('csrf'), 'uses' => 'HomeController@run'));
+Route::post('/api/php/{version}/run', 'HomeController@run');
 
 
