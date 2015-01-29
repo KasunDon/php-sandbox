@@ -130,28 +130,28 @@ echo 'hello world!';</pre>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
     <script src="/assets/js/sandbox.min.js?n=1"></script>
     <script>
-    $(function() {
-        SANDBOX.core.setup();
-    });
-    (function(i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function() {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            $(function() {
+                SANDBOX.core.setup();
+            });
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', 'UA-58231333-1', 'auto');
-    ga('send', 'pageview');
+            ga('create', 'UA-58231333-1', 'auto');
+            ga('send', 'pageview');
 
     </script>
     <script type="text/javascript">stLight.options({publisher: "4d55ca84-88de-4370-83ad-49bbb69a297c", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
     <script>
-        var options = {"publisher": "4d55ca84-88de-4370-83ad-49bbb69a297c", "position": "right", "ad": {"visible": false, "openDelay": 5, "closeDelay": 0}, "chicklets": {"items": ["facebook", "twitter", "linkedin", "googleplus", "tumblr", "blogger"]}};
+        var options = {"publisher": "4d55ca84-88de-4370-83ad-49bbb69a297c", "position": "left", "ad": {"visible": false, "openDelay": 5, "closeDelay": 0}, "chicklets": {"items": ["facebook", "linkedin", "twitter", "googleplus", "blogger"]}};
         var st_hover_widget = new sharethis.widgets.hoverbuttons(options);
     </script>
 </body>
