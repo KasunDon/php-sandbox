@@ -55,6 +55,7 @@ PHPBOX.init = function() {
 
     checkReady(function() {
         $(document).ready(function() {
+
             PHPBOX.utils.addScript([PHPBOX.globals.bootstrapjs, PHPBOX.globals.blockui]);
             PHPBOX.core.editor = PHPBOX.utils.getEditor();
             $.getScript(PHPBOX.globals.select, function() {
@@ -89,8 +90,6 @@ PHPBOX.core.runCode = function() {
             unblockEvent();
         });
 
-
-
         $('#loading').show();
 
         $.post('http://beta.phpbox.info/api/php/' + version + '/run',
@@ -98,8 +97,8 @@ PHPBOX.core.runCode = function() {
             $('#loading').hide();
             $(PHPBOX.core.runButton).hide();
             // console.log($.blockUI.defaults.css);
-            $.blockUI.defaults.css = {padding: 0, margin: 0, position: 'relative', cursor: 'hand'};
-            $(PHPBOX.core.editorId).block({message: "<pre id='phpbox-output' class='well'><strong>PHP Version </strong><small>" + version + "</small> @" + output.datetime + "<br><br>" + output.output + "</pre>",
+            $.blockUI.defaults.css = {padding: '0 3em 0 3em', margin: 0, position: 'relative', cursor: 'hand', 'overflow-y': 'scroll', 'max-height': '100%'};
+            $(PHPBOX.core.editorId).block({message: "<pre id='phpbox-output' class='well pre-phpbox'><strong>PHP Version </strong><small>" + version + "</small> @" + output.datetime + "<br><br>" + output.output + "</pre>",
                 onBlock: function() {
                     $(PHPBOX.core.editId).show();
                 }});

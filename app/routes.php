@@ -76,8 +76,19 @@ Route::get('/code/{code}/raw', function($code) {
 
 Route::get('/embed.js', function() {
     $document = getSharedCode(Input::get('c'));
-    $content = View::make('embed_content', $document)->render();
-    $response = Response::make('document.write(' . json_encode($content) . ');');
+    $content = json_encode(View::make('embed_content', $document)->render());
+    
+       $jsRaw = <<<EOF
+    <iframe id="phpbox-embed" style="border: none; width: 100%; height: 100%;  display: block" src="about:blank"></iframe>
+    <script type="text/javascript">
+var doc = document.getElementById('phpbox-embed').contentWindow.document;
+doc.open();
+doc.write($content);
+doc.close();
+</script>
+</script>
+EOF;
+    $response = Response::make('document.write(' . json_encode($jsRaw) . ');');
     $response->header('Content-Type', "text/javascript");
     return $response;
 });
