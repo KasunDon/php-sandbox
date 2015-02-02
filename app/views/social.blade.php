@@ -10,10 +10,11 @@
             </div>
             <div id="modal-view-link-zone" class="panel panel-default" style="display: none;">
                 <div class="panel-body">
-                    <a id="modal-view-link"></a>
+                    <b> Link : </b>   <a id="modal-view-link"></a>
                 </div>
             </div>
-
+            
+            <div id="modal-embed"></div>
 
             <div id="social-links" class="panel panel-default" style="display: none;">
                 <!-- Default panel contents -->

@@ -11,9 +11,7 @@
   |
  */
 
-
 Route::get('/', 'HomeController@index');
-
 
 Route::get('/view-report-issue', function() {
     return View::make('report');
@@ -22,6 +20,10 @@ Route::get('/view-report-issue', function() {
 Route::get('/share/{codeId}', function($codeId) {
     $document = getSharedCode($codeId);
     return View::make('hello', $document);
+});
+
+Route::get('/get-embed/{codeId}', function($codeId) {
+    return View::make('embed_code')->with('_id', $codeId);;
 });
 
 /**

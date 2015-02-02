@@ -8,20 +8,20 @@
         <meta name="author" content="">
         <meta name="_token" content="{{ csrf_token() }}" />
         <title>PHPBox sandbox - Beta version - Debug, Test and Share!</title>
-        <link href="/assets/css/bootstrap.css" rel="stylesheet">
-        <link href="/assets/css/sticky-footer.css" rel="stylesheet">
-        <link href="/assets/css/grid.css" rel="stylesheet">
-        <link href="/assets/css/bootstrap-select.min.css" rel="stylesheet">
-        <link href="/assets/css/docs.css" rel="stylesheet">
+        <link href="{{ asset('/assets/css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ asset('/assets/css/sticky-footer.css') }}" rel="stylesheet">
+        <link href="{{ asset('/assets/css/grid.css') }}" rel="stylesheet">
+        <link href="{{ asset('/assets/css/bootstrap-select.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('/assets/css/docs.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/4.2.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/>
         <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css'>
-        <link href="/assets/css/jquery.share.css" rel="stylesheet">
+        <link href="{{ asset('/assets/css/jquery.share.css') }}" rel="stylesheet">
         <script type="text/javascript">var switchTo5x = true;</script>
         <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
         <script type="text/javascript" src="http://s.sharethis.com/loader.js"></script>
-        <script src="/assets/js/ie-emulation-modes-warning.js"></script>
-        <!--[if lt IE 9]><script src="/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+        <script src="{{ asset('/assets/js/ie-emulation-modes-warning.js') }}"></script>
+        <!--[if lt IE 9]><script src="{{ asset('/assets/js/ie8-responsive-file-warning.js') }}"></script><![endif]-->
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -101,7 +101,13 @@ echo 'hello world!';</pre>
                     </span>
                     <button id="save_share" type="button" class="btn btn-success" style="float: right;"><b>Share</b></button>
                 </div>
+                <br/>
+                <div id="embed-output" style="margin-top: 5px;">
+                    @if (isset($_id))
+                    @include('embed_code')
+                    @endif
 
+                </div>
 
             </div>
         </div>
@@ -120,15 +126,15 @@ echo 'hello world!';</pre>
         </div>
     </footer>
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>   	
-    <script src="/assets/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/assets/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src="/assets/js/bootstrap-select.min.js"></script>
-    <script src="/assets/js/docs.min.js"></script>
-    <script src="/assets/js/bootbox.min.js"></script>
-    <script src="/assets/js/jquery.share.js"></script>
+    <script src="{{ asset('/assets/js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ asset('/assets/js/ie10-viewport-bug-workaround.js') }}"></script>
+    <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/docs.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/bootbox.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/jquery.share.js') }}"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
-    <script src="/assets/js/sandbox.min.js?n=1"></script>
+    <script src="{{ asset('/assets/js/sandbox.min.js') }}?noCache={{ time() }}"></script>
     <script>
             $(function() {
                 SANDBOX.core.setup();

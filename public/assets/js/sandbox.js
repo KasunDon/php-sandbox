@@ -5,6 +5,7 @@ SANDBOX.utils = {};
 SANDBOX.core = {};
 SANDBOX.core.content = {};
 
+SANDBOX.core.editor = null;
 SANDBOX.core.defaultCode = null;
 SANDBOX.core.theme = 'xcode';
 SANDBOX.core.viewId = null;
@@ -15,16 +16,15 @@ SANDBOX.core.output = null;
 SANDBOX.core.views = null;
 SANDBOX.core.shareMode = 0;
 
-SANDBOX.core.content.reportContent = null;
-SANDBOX.core.content.feedbackContent = null;
-SANDBOX.core.content.serviceContent = null;
-SANDBOX.core.content.socialContent = null;
-SANDBOX.core.content.termsContent = null;
+SANDBOX.core.selectors = {
+    "version-selector": {},
+    "theme-selector": {noneSelectedText: "Theme", size: "auto"}
+};
 
-SANDBOX.utils.loadData = function() {
+SANDBOX.utils.load = function() {
     if ($("#view-code").length) {
         var data = JSON.parse($('#view-code').val());
-       
+
         SANDBOX.core.viewId = data.id;
         SANDBOX.core.viewLink = data.view_link + data.id;
         SANDBOX.core.create_time = data.create_time;
@@ -32,7 +32,9 @@ SANDBOX.utils.loadData = function() {
         SANDBOX.core.views = data.views;
         SANDBOX.core.shareMode = 1;
         SANDBOX.core.output = $('#output').text()
-       
+        SANDBOX.core.theme = data.theme;
+        SANDBOX.core.editor = SANDBOX.utils.initEditor(SANDBOX.core.theme);
+
         $('#run-datetime').html("<span class='glyphicon glyphicon-time'></span> " + SANDBOX.core.create_time);
         $('#output-zone').show();
         $('#php-version').text($('#php-version').text() + SANDBOX.core.version);
@@ -41,6 +43,17 @@ SANDBOX.utils.loadData = function() {
         $('#view-link').attr('href', SANDBOX.core.viewLink);
         $('#view-link-zone').show();
     }
+};
+
+SANDBOX.utils.showEmbed = function() {
+    $.get('/get-embed/' + SANDBOX.core.viewId, function(output) {
+        $('#embed-output').html(output);
+        $('#modal-embed').html(output);
+    });
+};
+
+SANDBOX.utils.getSelection = function(e) {
+    return $(e).find(":selected").val();
 };
 
 SANDBOX.core.serviceView = function(e) {
@@ -62,16 +75,16 @@ SANDBOX.core.serviceView = function(e) {
 };
 
 SANDBOX.core.socialTab = function() {
-    var editor = ace.edit("editor");
-    
     if (SANDBOX.core.viewId == null || SANDBOX.core.shareMode === 2) {
         $('#progress').show();
         setTimeout(function() {
-            $.post('/save-code', {code: editor.getValue(), output:
+            var theme = $('#theme-selector').find(":selected").val() || 'xcode';
+            $.post('/save-code', {code: SANDBOX.core.editor.getValue(), output:
                         SANDBOX.core.output, create_time: SANDBOX.core.create_time,
-                version: SANDBOX.core.version, vType: 'c1'}, function(data) {
+                version: SANDBOX.core.version, theme: theme, vType: 'c1'}, function(data) {
                 SANDBOX.core.viewId = data.viewId;
                 SANDBOX.core.viewLink = data.viewLink + data.viewId;
+                SANDBOX.utils.showEmbed();
                 $('#view-link').text(SANDBOX.core.viewLink);
                 $('#view-link').attr('href', SANDBOX.core.viewLink);
                 $('#view-link-zone').show();
@@ -102,29 +115,25 @@ SANDBOX.core.socialTab = function() {
     }
 };
 
-SANDBOX.core.setup = function() {
-    var editor = SANDBOX.utils.initEditor();
-
-    SANDBOX.core.defaultCode = editor.getValue();
-
-    $('#version-selector').selectpicker();
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-Token': $('meta[name="_token"]').attr('content')
-        }
+SANDBOX.core.getTheme = function() {
+    $.post('/theme-settings', {theme: SANDBOX.core.theme}, function(data) {
+        SANDBOX.core.theme = data.theme;
+        SANDBOX.core.editor = SANDBOX.utils.initEditor(SANDBOX.core.theme);
+        SANDBOX.core.selectTheme();
     });
+};
 
+SANDBOX.core.run = function() {
     $("#run").on("click", function() {
-        var version = null;
-        version = $('.selectpicker').find(":selected").val();
+
+        var version = SANDBOX.utils.getSelection('#version-selector');
 
         if (version == null) {
             alert('Please select PHP runtime version');
             return false;
         }
 
-        if (SANDBOX.core.shareMode === 0 && SANDBOX.core.defaultCode === editor.getValue()) {
+        if (SANDBOX.core.shareMode === 0 && SANDBOX.core.defaultCode === SANDBOX.core.editor.getValue()) {
             alert("Code editor hasn't changed. Assume there are no code to be run");
             return false;
         }
@@ -132,16 +141,16 @@ SANDBOX.core.setup = function() {
         $('#loading').show();
 
         $.post('/api/php/' + version + '/run',
-                {v: version, code: editor.getValue()}, function(output) {
+                {v: version, code: SANDBOX.core.editor.getValue()}, function(output) {
             $('#loading').hide();
             $('#output').text(output.output);
-            
+
             SANDBOX.core.create_time = output.datetime;
-            
-            if(SANDBOX.core.output !== output.output) {
+
+            if (SANDBOX.core.output !== output.output) {
                 SANDBOX.core.shareMode = 2;
             }
-            
+
             SANDBOX.core.output = output.output;
             SANDBOX.core.version = $("#version-selector option:selected").val();
             $('#run-datetime').html("<span class='glyphicon glyphicon-time'></span> " + SANDBOX.core.create_time);
@@ -151,34 +160,69 @@ SANDBOX.core.setup = function() {
         });
 
     });
+};
 
-    $.get('/view-report-issue', function(data) {
-        SANDBOX.core.content.reportContent = data;
+SANDBOX.core.selectTheme = function() {
+    $('#theme-selector').val(SANDBOX.core.theme);
+};
+
+SANDBOX.core.setTheme = function() {
+    $.get('/theme-settings', {clear: true}, function() {
+        return SANDBOX.core.getTheme();
     });
+};
 
-    $.get('/view-feedback', function(data) {
-        SANDBOX.core.content.feedbackContent = data;
-    });
+SANDBOX.utils.viewLoader = function(url, data, assign, interval) {
+    var time = interval || false;
 
-    $.get('/view-service', function(data) {
-        SANDBOX.core.content.serviceContent = data;
-    });
-
-    $.get('/view-social', function(data) {
-        SANDBOX.core.content.socialContent = data;
-    });
-
-    $.get('/view-terms', function(data) {
-        SANDBOX.core.content.termsContent = data;
-    });
-
-    setInterval(function() {
-        $.get('/view-service', function(data) {
-            SANDBOX.core.content.serviceContent = data;
+    var callback = function(url, data, assign) {
+        $.get(url, data, function(data) {
+            SANDBOX.core.content[assign] = data;
         });
-    }, (600000));
+    };
 
-    SANDBOX.utils.loadData();
+    callback(url, data, assign);
+
+    if (time !== false) {
+        setInterval(function() {
+            callback(url, data, assign);
+        }, (time));
+    }
+};
+
+SANDBOX.core.setup = function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+        }
+    });
+
+    for (var select in SANDBOX.core.selectors) {
+        $('#' + select).selectpicker(SANDBOX.core.selectors[select]);
+    }
+
+    SANDBOX.core.editor = SANDBOX.utils.initEditor(SANDBOX.core.theme);
+
+    SANDBOX.core.defaultCode = SANDBOX.core.editor.getValue();
+
+    SANDBOX.utils.viewLoader('/view-service', {}, 'serviceContent', 60000);
+    SANDBOX.utils.viewLoader('/view-report-issue', {}, 'reportContent');
+    SANDBOX.utils.viewLoader('/view-feedback', {}, 'feedbackContent');
+    SANDBOX.utils.viewLoader('/view-social', {}, 'socialContent');
+    SANDBOX.utils.viewLoader('/view-terms', {}, 'termsContent');
+
+    $('#theme-selector').change(function() {
+        SANDBOX.core.theme = SANDBOX.utils.getSelection(this);
+        SANDBOX.core.setTheme();
+    });
+
+    SANDBOX.core.run();
+
+    SANDBOX.utils.load();
+
+    if (SANDBOX.core.shareMode !== 1) {
+        SANDBOX.core.getTheme();
+    }
 
     $('#report').on("click", function(e) {
         bootbox.dialog({
@@ -233,7 +277,7 @@ SANDBOX.core.setup = function() {
     $("#save_share").on("click", function() {
         var shareTitle = "<span class='glyphicon glyphicon-globe' style='padding-left:5px;'></span> Save & Share";
 
-        if (SANDBOX.core.viewId != null) {
+        if (SANDBOX.core.viewId !== null) {
             shareTitle = "<span class='glyphicon glyphicon-globe' style='padding-left:5px;'></span> Share";
         }
 
@@ -250,6 +294,10 @@ SANDBOX.core.setup = function() {
                 }
             }
         });
+
+        if (SANDBOX.core.viewId !== null) {
+            SANDBOX.utils.showEmbed();
+        }
     });
 
     $('#terms').on("click", function(e) {
@@ -322,9 +370,9 @@ SANDBOX.validation.issue = function() {
     });
 };
 
-SANDBOX.utils.initEditor = function() {
+SANDBOX.utils.initEditor = function(t) {
     var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/xcode");
+    editor.setTheme("ace/theme/" + t);
     editor.getSession().setMode("ace/mode/php");
     return editor;
 };
@@ -353,12 +401,11 @@ SANDBOX.validation.feedback = function() {
             $('#feedback-success').show();
             $('#feedback-form').hide();
             SANDBOX.utils.closeModal(3000);
-        })
-                .fail(function() {
-                    $("button[data-bb-handler='feedback']").prop("disabled", true);
-                    $('#feedback-error').show();
-                    $('#feedback-form').hide();
-                    SANDBOX.utils.closeModal(5000);
-                });
+        }).fail(function() {
+            $("button[data-bb-handler='feedback']").prop("disabled", true);
+            $('#feedback-error').show();
+            $('#feedback-form').hide();
+            SANDBOX.utils.closeModal(5000);
+        });
     });
 };
