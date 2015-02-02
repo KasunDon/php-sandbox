@@ -18,7 +18,7 @@ Route::get('/view-report-issue', function() {
 });
 
 Route::get('/share/{codeId}', function($codeId) {
-    $document = getSharedCode($codeId);
+    $document = \App\Models\Code::getCode($codeId);
     return View::make('hello', $document);
 });
 
@@ -26,58 +26,19 @@ Route::get('/get-embed/{codeId}', function($codeId) {
     return View::make('embed_code')->with('_id', $codeId);;
 });
 
-/**
- * Fetches sources by given shared id
- * 
- * @param type $codeId
- * @return type
- * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
- */
-function getSharedCode($codeId) {
-    try {
-        $document = \App\Models\Storage::instance('phpsources')->getCollection()->findOne(array(
-            '_id' => new MongoId($codeId)));
-
-        if (!Session::has('visit-' . $codeId)) {
-            Session::put('visit-' . $codeId, true);
-
-            \App\Models\Storage::instance('views')
-                    ->getCollection()
-                    ->update(array('_id' => new MongoId($document['_id']->{'$id'})), array('$inc' => array('views' => 1)));
-        }
-        $views = \App\Models\Storage::instance('views')->getCollection()->findOne(array(
-            '_id' => new MongoId($document['_id']->{'$id'})));
-
-        $document['meta'] = json_encode(array(
-            'version' => $document['version'],
-            'id' => $document['_id']->{'$id'},
-            'create_time' => $document['create_time'],
-            'view_link' => \App\Models\Code::$VIEW_LINK,
-            'views' => $views['views'],
-            'theme' => $document['theme']
-        ));
-
-        $document['versions'] = App\Models\PHPSandBox::versions();
-
-        return $document;
-    } catch (Exception $e) {
-        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
-    }
-}
-
 Route::get('/view-feedback', function() {
     return View::make('feedback');
 });
 
 Route::get('/code/{code}/raw', function($code) {
-    $document = getSharedCode($code);
+    $document = \App\Models\Code::getCode($code);
     $response = Response::make(html_entity_decode($document['code']));
     $response->header('Content-Type', "text/plain");
     return $response;
 });
 
 Route::get('/embed.js', function() {
-    $document = getSharedCode(Input::get('c'));
+    $document = \App\Models\Code::getCode(Input::get('c'));
     $content = json_encode(View::make('embed_content', $document)->render());
     
        $jsRaw = <<<EOF

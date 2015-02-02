@@ -13,7 +13,7 @@ class Code extends MongoModel {
     const STATUS_ACTIVE = 'active';
     const STATUS_EXPIRED = 'expired';
     const STATUS_PRIVATE = 'private';
-    
+
     /**
      * View Link
      * @var string 
@@ -28,7 +28,7 @@ class Code extends MongoModel {
     public static $REQUIRED_PARMS = array(
         'code', 'output', 'version', 'create_time'
     );
-    
+
     /**
      * Themes
      * 
@@ -36,14 +36,14 @@ class Code extends MongoModel {
      */
     public static $THEMES = array(
         'Bright Themes' => array(
-            "chrome","crimson_editor", "dawn", "dreamweaver",
-            "eclipse", "github", "solarized_light", "textmate", 
+            "chrome", "crimson_editor", "dawn", "dreamweaver",
+            "eclipse", "github", "solarized_light", "textmate",
             "tomorrow", "xcode", "kuroir", "katzenmilch"
         ),
         'Dark Themes' => array(
-            "ambiance", "chaos", "clouds_midnight", "cobalt", "idle_fingers", 
+            "ambiance", "chaos", "clouds_midnight", "cobalt", "idle_fingers",
             "kr_theme", "merbivore", "merbivore_soft", "mono_industrial", "monokai",
-            "pastel_on_dark", "solarized_dark", "terminal", "tomorrow_night", 
+            "pastel_on_dark", "solarized_dark", "terminal", "tomorrow_night",
             "tomorrow_night_blue", "tomorrow_night_bright", "tomorrow_night_eighties",
             "twilight", "vibrant_ink"
         )
@@ -59,7 +59,7 @@ class Code extends MongoModel {
         return array_merge(parent::getDocument($params), array(
             'expiry' => null,
             'ip' => Utils::getServer('REMOTE_ADDR'),
-            'theme' =>  \Input::get('theme'),
+            'theme' => \Input::get('theme'),
             'status' => self::STATUS_ACTIVE,
             '_id' => new \MongoId()
         ));
@@ -74,12 +74,56 @@ class Code extends MongoModel {
         $self = new self();
         return $self->getDocument(self::$REQUIRED_PARMS);
     }
-    
+
     /**
      * Returns theme from cookie
      */
     public static function cookieTheme() {
-        return  \Cookie::get('tstgs');
+        return \Cookie::get('tstgs');
+    }
+
+    /**
+     * Finds sources by code 
+     * 
+     * @param type $code
+     * @return mixed
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public static function getCode($code) {
+        try {
+            $document = Storage::instance('phpsources')
+                    ->getCollection()
+                    ->findOne(array('_id' => new \MongoId($code)));
+
+            if (! \Session::has('visit-' . $code)) {
+                \Session::put('visit-' . $code, true);
+
+                Storage::instance('views')
+                        ->getCollection()
+                        ->update(array('_id' => new \MongoId($document['_id']->{'$id'})), 
+                                array('$inc' => array('views' => 1)));
+            }
+            
+            $views = Storage::instance('views')
+                    ->getCollection()
+                    ->findOne(array('_id' => new \MongoId($document['_id']->{'$id'})));
+
+            $document['meta'] = json_encode(array(
+                'version' => $document['version'],
+                'id' => $document['_id']->{'$id'},
+                'create_time' => $document['create_time'],
+                'view_link' => self::$VIEW_LINK,
+                'views' => $views['views'],
+                'theme' => $document['theme']
+            ));
+
+            $document['versions'] = PHPSandBox::versions();
+
+            return $document;
+            
+        } catch (Exception $e) {
+            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+        }
     }
 
 }
