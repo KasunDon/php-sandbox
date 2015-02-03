@@ -24,7 +24,6 @@ SANDBOX.core.selectors = {
 SANDBOX.utils.load = function() {
     if ($("#view-code").length) {
         var data = JSON.parse($('#view-code').val());
-
         SANDBOX.core.viewId = data.id;
         SANDBOX.core.viewLink = data.view_link + data.id;
         SANDBOX.core.create_time = data.create_time;
@@ -34,7 +33,6 @@ SANDBOX.utils.load = function() {
         SANDBOX.core.output = $('#output').text()
         SANDBOX.core.theme = data.theme;
         SANDBOX.core.editor = SANDBOX.utils.initEditor(SANDBOX.core.theme);
-
         $('#run-datetime').html("<span class='glyphicon glyphicon-time'></span> " + SANDBOX.core.create_time);
         $('#output-zone').show();
         $('#php-version').text($('#php-version').text() + SANDBOX.core.version);

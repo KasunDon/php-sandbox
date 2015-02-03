@@ -102,7 +102,7 @@ $id = $document['_id']->{'$id'};
 \App\Models\Storage::instance('phpsources')->getCollection()->insert($document);
 \App\Models\Storage::instance('views')->getCollection()->insert(\App\Models\Views::doc($id));
 
-return Response::json(array('viewId' => $id, 'viewLink' => \App\Models\Code::$VIEW_LINK));
+return Response::json(array('viewId' => $id, 'viewLink' => \App\Models\Code::$SHARE_LINK));
 })
 );
 

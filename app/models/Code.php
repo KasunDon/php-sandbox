@@ -16,9 +16,18 @@ class Code extends MongoModel {
 
     /**
      * View Link
+     * 
      * @var string 
      */
     public static $VIEW_LINK;
+    
+    
+    /**
+     * Share Link
+     * 
+     * @var string 
+     */
+    public static $SHARE_LINK;
 
     /**
      * Document required parameters
@@ -112,7 +121,7 @@ class Code extends MongoModel {
                 'version' => $document['version'],
                 'id' => $document['_id']->{'$id'},
                 'create_time' => $document['create_time'],
-                'view_link' => self::$VIEW_LINK,
+                'view_link' => self::$SHARE_LINK,
                 'views' => $views['views'],
                 'theme' => $document['theme']
             ));
@@ -125,5 +134,4 @@ class Code extends MongoModel {
             throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
         }
     }
-
 }
