@@ -92,7 +92,7 @@ PHPBOX.core.runCode = function() {
 
         $('#loading').show();
 
-        $.post('http://beta.phpbox.info/api/php/' + version + '/run',
+        $.post('http://phpbox.info/api/php/' + version + '/run',
                 {v: version, code: PHPBOX.core.editor.getValue()}, function(output) {
             $('#loading').hide();
             $(PHPBOX.core.runButton).hide();
