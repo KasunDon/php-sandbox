@@ -107,15 +107,8 @@ class PHPSandBox {
      * @param array $files
      */
     private function clear($files) {
-        $sandbox = $files['sandbox'];
-
-        unset($files['sandbox']);
-
-        foreach ($files as $file) {
-            unlink($file);
-        }
-
-        rmdir($sandbox);
+        //force delete sandbox folder
+        shell_exec("rm -rf {$files['sandbox']}");
     }
 
     /**
@@ -148,6 +141,9 @@ class PHPSandBox {
 
         //replacing empty spaces
         file_put_contents($files['php'], str_replace("\r\n\r\n\r\n", "", $this->getSourceCode()));
+        
+        //change directory
+        chdir($files['sandbox']);
 
         return $files;
     }
