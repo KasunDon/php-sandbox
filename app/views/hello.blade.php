@@ -64,6 +64,7 @@ echo 'hello world!';</pre>
                     </div>
                     <div class="col-md-7" style="padding-left: 10px; float: left">
                         <button type="button"  id="run" class="btn btn-primary"><b>Run</b></button>
+                        <button type="button" style="display: none"  id="stop" class="btn btn-danger"><b>Stop</b></button>
                     </div>
                     <div class="col-md-1"style="padding-top: 35px; padding-left: 40px; float: left;">
                         <div class="btn-group">

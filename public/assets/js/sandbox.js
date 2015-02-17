@@ -5,6 +5,7 @@ SANDBOX.utils = {};
 SANDBOX.core = {};
 SANDBOX.core.content = {};
 
+SANDBOX.core.request = null;
 SANDBOX.core.editor = null;
 SANDBOX.core.defaultCode = null;
 SANDBOX.core.theme = 'xcode';
@@ -121,9 +122,27 @@ SANDBOX.core.getTheme = function() {
     });
 };
 
-SANDBOX.core.run = function() {
-    $("#run").on("click", function() {
+SANDBOX.core.runUpdate = function(b) {
+    $("#run").attr('disabled', b);
 
+    var se = ["#stop", "#loading"];
+
+    for (var e in se) {
+        if (b === false) {
+            $(se[e]).hide();
+            continue;
+        }
+        $(se[e]).show();
+    }
+};
+
+SANDBOX.core.run = function() {
+    $("#stop").on("click", function() {
+        SANDBOX.core.request.abort();
+        SANDBOX.core.runUpdate(false);
+    });
+
+    $("#run").on("click", function() {
         var version = SANDBOX.utils.getSelection('#version-selector');
 
         if (version == null) {
@@ -136,11 +155,13 @@ SANDBOX.core.run = function() {
             return false;
         }
 
-        $('#loading').show();
+        SANDBOX.core.runUpdate(true);
 
-        $.post('/api/php/' + version + '/run',
+        SANDBOX.core.request = $.post('/api/php/' + version + '/run',
                 {v: version, code: SANDBOX.core.editor.getValue()}, function(output) {
-            $('#loading').hide();
+
+            SANDBOX.core.runUpdate(false);
+
             $('#output').text(output.output);
 
             SANDBOX.core.create_time = output.datetime;
