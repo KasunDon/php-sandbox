@@ -83,7 +83,7 @@ SANDBOX.core.socialTab = function() {
                 version: SANDBOX.core.version, theme: theme, vType: 'c1'}, function(data) {
                 SANDBOX.core.viewId = data.viewId;
                 SANDBOX.core.viewLink = data.viewLink + data.viewId;
-                SANDBOX.utils.showEmbed();
+                
                 $('#view-link').text(SANDBOX.core.viewLink);
                 $('#view-link').attr('href', SANDBOX.core.viewLink);
                 $('#view-link-zone').show();
@@ -96,6 +96,7 @@ SANDBOX.core.socialTab = function() {
                     urlToShare: SANDBOX.core.viewLink,
                 });
                 $('#social-links').show();
+                SANDBOX.utils.showEmbed();
             }).fail(function() {
                 $('#progress').hide();
                 SANDBOX.utils.closeModal(4000);
@@ -114,11 +115,12 @@ SANDBOX.core.socialTab = function() {
     }
 };
 
-SANDBOX.core.getTheme = function() {
-    $.post('/theme-settings', {theme: SANDBOX.core.theme}, function(data) {
+SANDBOX.core.setSettings = function() {
+    $.post('/usr-slct', {theme: SANDBOX.core.theme,  version: SANDBOX.core.version}, function(data) {
         SANDBOX.core.theme = data.theme;
+        SANDBOX.core.version = data.version;
         SANDBOX.core.editor = SANDBOX.utils.initEditor(SANDBOX.core.theme);
-        SANDBOX.core.selectTheme();
+        SANDBOX.core.setUI();
     });
 };
 
@@ -143,22 +145,12 @@ SANDBOX.core.run = function() {
     });
 
     $("#run").on("click", function() {
-        var version = SANDBOX.utils.getSelection('#version-selector');
-
-        if (version == null) {
-            alert('Please select PHP runtime version');
-            return false;
-        }
-
-        if (SANDBOX.core.shareMode === 0 && SANDBOX.core.defaultCode === SANDBOX.core.editor.getValue()) {
-            alert("Code editor hasn't changed. Assume there are no code to be run");
-            return false;
-        }
-
+        SANDBOX.core.version = SANDBOX.utils.getSelection('#version-selector');
+        
         SANDBOX.core.runUpdate(true);
 
-        SANDBOX.core.request = $.post('/api/php/' + version + '/run',
-                {v: version, code: SANDBOX.core.editor.getValue()}, function(output) {
+        SANDBOX.core.request = $.post('/api/php/' + SANDBOX.core.version + '/run',
+                {v: SANDBOX.core.version, code: SANDBOX.core.editor.getValue()}, function(output) {
 
             SANDBOX.core.runUpdate(false);
 
@@ -171,7 +163,6 @@ SANDBOX.core.run = function() {
             }
 
             SANDBOX.core.output = output.output;
-            SANDBOX.core.version = $("#version-selector option:selected").val();
             $('#run-datetime').html("<span class='glyphicon glyphicon-time'></span> " + SANDBOX.core.create_time);
             $('#output-zone').show();
             $('#php-version').text(SANDBOX.core.version);
@@ -181,13 +172,15 @@ SANDBOX.core.run = function() {
     });
 };
 
-SANDBOX.core.selectTheme = function() {
+SANDBOX.core.setUI = function() {
     $('#theme-selector').val(SANDBOX.core.theme);
+    $('#version-selector').val(SANDBOX.core.version);
+    $('.selectpicker').selectpicker('refresh');
 };
 
-SANDBOX.core.setTheme = function() {
-    $.get('/theme-settings', {clear: true}, function() {
-        return SANDBOX.core.getTheme();
+SANDBOX.core.clearSettings = function() {
+    $.get('/usr-slct', {clear: true}, function() {
+        return SANDBOX.core.setSettings();
     });
 };
 
@@ -219,7 +212,7 @@ SANDBOX.core.setup = function() {
     for (var select in SANDBOX.core.selectors) {
         $('#' + select).selectpicker(SANDBOX.core.selectors[select]);
     }
-
+    
     SANDBOX.core.editor = SANDBOX.utils.initEditor(SANDBOX.core.theme);
 
     SANDBOX.core.defaultCode = SANDBOX.core.editor.getValue();
@@ -230,9 +223,10 @@ SANDBOX.core.setup = function() {
     SANDBOX.utils.viewLoader('/view-social', {}, 'socialContent');
     SANDBOX.utils.viewLoader('/view-terms', {}, 'termsContent');
 
-    $('#theme-selector').change(function() {
-        SANDBOX.core.theme = SANDBOX.utils.getSelection(this);
-        SANDBOX.core.setTheme();
+    $('#theme-selector, #version-selector').change(function() {
+        SANDBOX.core.theme = SANDBOX.utils.getSelection('#theme-selector');
+        SANDBOX.core.version = SANDBOX.utils.getSelection('#version-selector');
+        SANDBOX.core.clearSettings();
     });
 
     SANDBOX.core.run();
@@ -240,7 +234,7 @@ SANDBOX.core.setup = function() {
     SANDBOX.utils.load();
 
     if (SANDBOX.core.shareMode !== 1) {
-        SANDBOX.core.getTheme();
+        SANDBOX.core.setSettings();
     }
 
     $('#report').on("click", function(e) {
@@ -307,9 +301,7 @@ SANDBOX.core.setup = function() {
                 close: {
                     label: "Close",
                     className: "btn-default",
-                    callback: function() {
-
-                    }
+                    callback: function() {}
                 }
             }
         });

@@ -68,18 +68,20 @@ Route::get('/view-social', function() {
     return View::make('social');
 });
 
-Route::match(array('GET', 'POST'), '/theme-settings', array('before' => 'csrf', function() {
-$settings = App\Models\Code::cookieTheme();
+Route::match(array('GET', 'POST'), '/usr-slct', array('before' => 'csrf', function() {
+$settings = App\Models\Code::cookieSettings();
 $response = null;
 
 if (Input::get('clear')) {
     $response = Response::make('reset')->withCookie(Cookie::forget('tstgs'));
 } else if (empty($settings)) {
     $theme = Input::get('theme');
-    $response = Response::json(array('theme' => $theme));
-    $response->headers->setCookie(Cookie::make('tstgs', $theme, 43200));
+    $version = empty(Input::get('version'))? end(PHPSandBox::versions()): Input::get('version');
+    $response = Response::json(array('theme' => $theme, 'version' => $version));
+    $response->headers->setCookie(Cookie::make('tstgs', "$theme|$version", 43200));
 } else {
-    $response = Response::json(array('theme' => $settings));
+    $parts = explode('|', $settings);
+    $response = Response::json(array('theme' => $parts[0], 'version' => $parts[1]));
 }
 
 return $response;

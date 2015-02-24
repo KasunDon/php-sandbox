@@ -57,7 +57,7 @@ class Storage {
      */
     public function __construct($collection = null, $hostname = "10.131.210.147", $port = 27017) {
         
-        $hostname = (\App::make('app.config.env')->APP_ENV !== 'local')?  '10.131.210.147': '10.131.211.185';
+        $hostname = (\App::make('app.config.env')->APP_ENV !== 'local')?  '10.131.210.147': '10.131.210.147';
         
         $this->setClient(new \MongoClient("mongodb://$hostname:$port"));
 

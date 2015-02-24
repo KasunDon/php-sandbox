@@ -87,7 +87,7 @@ class Code extends MongoModel {
     /**
      * Returns theme from cookie
      */
-    public static function cookieTheme() {
+    public static function cookieSettings() {
         return \Cookie::get('tstgs');
     }
 
