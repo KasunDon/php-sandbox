@@ -123,7 +123,7 @@ echo 'hello world!';</pre>
                     <div class="col-md-2"><a id="terms" style="cursor: pointer;">Terms & Conditions</a></div>
                     <div class="col-md-2">
                         <small><a href="https://www.digitalocean.com/?refcode=2fdebfd067c7">DigitalOcean</a></small>
-                        <small> - <strong>Get $10 free credit</strong></small> 
+                        <small> - <strong class="text-muted">Get $10 free credit</strong></small> 
                     </div>
                 </div>
             </div>
