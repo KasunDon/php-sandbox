@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="http://{{$_SERVER['HTTP_HOST']}}/assets/css/embed.css">
-<link rel="stylesheet" href="http://{{$_SERVER['HTTP_HOST']}}/assets/css/embed-phpbox.css">
-<link rel="stylesheet" href="http://{{$_SERVER['HTTP_HOST']}}/assets/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="https://{{$_SERVER['HTTP_HOST']}}/assets/css/embed.css">
+<link rel="stylesheet" href="https://{{$_SERVER['HTTP_HOST']}}/assets/css/embed-phpbox.css">
+<link rel="stylesheet" href="https://{{$_SERVER['HTTP_HOST']}}/assets/css/bootstrap-select.min.css">
 <div id="phpbox{{$code}}" class="phpbox">
     <div class="phpbox-file">
         <div class="phpbox-data phpbox-syntax">
@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="phpbox-meta">
-            <a href="http://{{$_SERVER['HTTP_HOST']}}/code/{{$_id}}/raw" style="float:right;">view raw</a>
+            <a href="https://{{$_SERVER['HTTP_HOST']}}/code/{{$_id}}/raw" style="float:right;">view raw</a>
 
             Platform by <a href="https://phpbox.info">PHPBox</a>
             <span style="margin-left: 1em;">
@@ -26,7 +26,7 @@
         </div>
     </div>
 </div>
-<script src="http://{{$_SERVER['HTTP_HOST']}}/assets/js/embed.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://{{$_SERVER['HTTP_HOST']}}/assets/js/embed.js" type="text/javascript" charset="utf-8"></script>
 <script>
 PHPBOX.init();
 </script>

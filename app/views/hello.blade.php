@@ -18,8 +18,8 @@
         <link rel='stylesheet prefetch' href='{{ asset('/assets/css/font-awesome.css') }}' />
         <link href="{{ asset('/assets/css/jquery.share.css') }}" rel="stylesheet">
         <script type="text/javascript">var switchTo5x = true;</script>
-        <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-        <script type="text/javascript" src="http://s.sharethis.com/loader.js"></script>
+        <script type="text/javascript" src="https://w.sharethis.com/button/buttons.js"></script>
+        <script type="text/javascript" src="https://s.sharethis.com/loader.js"></script>
         <script src="{{ asset('/assets/js/ie-emulation-modes-warning.js') }}"></script>
         <!--[if lt IE 9]><script src="{{ asset('/assets/js/ie8-responsive-file-warning.js') }}"></script><![endif]-->
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

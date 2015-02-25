@@ -234,7 +234,7 @@ class PHPSandBox {
      * @return string
      */
     private function remote($address, $source, $version) {
-        $output = Utils::curl("http://$address/api/php/$version/run", array('v' => $version, 'code' => $source), Utils::CURL_POST);
+        $output = Utils::curl("https://$address/api/php/$version/run", array('v' => $version, 'code' => $source), Utils::CURL_POST);
         $json = json_decode($output, true);
         return $json['output'];
     }

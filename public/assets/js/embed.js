@@ -9,11 +9,11 @@ PHPBOX.core.runButton = '#phpbox-code-run';
 PHPBOX.core.editorId = '#phpbox-code-editor';
 PHPBOX.core.editId = '#phpbox-code-edit';
 
-PHPBOX.globals.jQuery = "http://code.jquery.com/jquery-1.11.2.min.js";
-PHPBOX.globals.editorSrc = "http://phpbox.info/assets/js/ace/ace.js";
-PHPBOX.globals.select = "http://phpbox.info/assets/js/bootstrap-select.min.js";
-PHPBOX.globals.bootstrapjs = "http://phpbox.info/assets/js/bootstrap.min.js";
-PHPBOX.globals.blockui = "http://malsup.github.io/jquery.blockUI.js";
+PHPBOX.globals.jQuery = "https://phpbox.info/assets/js/jquery-1.11.2.min.js";
+PHPBOX.globals.editorSrc = "https://phpbox.info/assets/js/ace/ace.js";
+PHPBOX.globals.select = "https://phpbox.info/assets/js/bootstrap-select.min.js";
+PHPBOX.globals.bootstrapjs = "https://phpbox.info/assets/js/bootstrap.min.js";
+PHPBOX.globals.blockui = "https://malsup.github.io/jquery.blockUI.js";
 
 PHPBOX.utils.createScript = function(s, t) {
     var type = t || 'text/javascript';
@@ -92,7 +92,7 @@ PHPBOX.core.runCode = function() {
 
         $('#loading').show();
 
-        $.post('http://phpbox.info/api/php/' + version + '/run',
+        $.post('https://phpbox.info/api/php/' + version + '/run',
                 {v: version, code: PHPBOX.core.editor.getValue()}, function(output) {
             $('#loading').hide();
             $(PHPBOX.core.runButton).hide();
