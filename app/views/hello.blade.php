@@ -121,7 +121,10 @@ echo 'hello world!';</pre>
                     <div class="col-md-2"><a id="service" style="cursor: pointer;">Service Status</a><span class="label label-success" style="margin-left: 10px;">OK</span></div>
                     <div class="col-md-2"><a id="feedback" style="cursor: pointer;">Send Feedback</a></div>
                     <div class="col-md-2"><a id="terms" style="cursor: pointer;">Terms & Conditions</a></div>
-                    <div class="col-md-2"><small><strong class="text-muted">Hosting Provider </strong> <a href="https://www.digitalocean.com/?refcode=2fdebfd067c7">DigitalOcean</a></small></div>
+                    <div class="col-md-2">
+                        <small><a href="https://www.digitalocean.com/?refcode=2fdebfd067c7">DigitalOcean</a></small>
+                        <small> - <strong>Get $10 free credit</strong></small> 
+                    </div>
                 </div>
             </div>
         </div>
