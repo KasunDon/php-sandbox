@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="phpbox-meta">
-            <a href="https://{{$_SERVER['HTTP_HOST']}}/code/{{$_id}}/raw" style="float:right;">view raw</a>
+            <a href="https://{{$_SERVER['HTTP_HOST']}}/code/{{$_id}}/raw" target="_blank" style="float:right;">view raw</a>
 
             Platform by <a href="https://phpbox.info">PHPBox</a>
             <span style="margin-left: 1em;">
