@@ -76,7 +76,7 @@ if (Input::get('clear')) {
     $response = Response::make('reset')->withCookie(Cookie::forget('tstgs'));
 } else if (empty($settings)) {
     $theme = Input::get('theme');
-    $version = empty(Input::get('version'))? end(PHPSandBox::versions()): Input::get('version');
+    $version = empty(Input::get('version'))? end(\App\Models\PHPSandBox::versions()): Input::get('version');
     $response = Response::json(array('theme' => $theme, 'version' => $version));
     $response->headers->setCookie(Cookie::make('tstgs', "$theme|$version", 43200));
 } else {
