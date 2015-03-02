@@ -15,8 +15,8 @@ branches:
 
 #
 ## optionally specify a list of environments, for example to test different RDBMS
-#env:
-#  - DB=mysql
+env:
+  - APP_ENV=local
 #  - DB=pgsql
 
 # execute any number of scripts before the test run, custom env's are available as variables
