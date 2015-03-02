@@ -247,7 +247,10 @@ class PHPSandBox {
      */
     public static function versions() {
         if(empty(self::$VERSIONS)) {
-            self::$VERSIONS = \App\Models\Utils::parseJson(\App::make('app.config.env')->PHP_SANDBOX_VERSIONS, true, true);
+            self::$VERSIONS = (\App::make('app.config.env')
+                    ->APP_ENV !== 'local')? 
+                    \App\Models\Utils::parseJson(\App::make('app.config.env')
+                            ->PHP_SANDBOX_VERSIONS, true, true): array('5.5.0' => '/usr/bin/php');
         }
 
         return array_keys(self::$VERSIONS);
