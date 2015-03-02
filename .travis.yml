@@ -4,8 +4,14 @@ language: php
 php:
   - 5.5
 
+#services
 services:
   - mongodb
+
+#branches
+branches:
+  only:
+    - development
 
 #
 ## optionally specify a list of environments, for example to test different RDBMS
