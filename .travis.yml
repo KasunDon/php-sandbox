@@ -4,6 +4,9 @@ language: php
 php:
   - 5.5
 
+services:
+  - mongodb
+
 #
 ## optionally specify a list of environments, for example to test different RDBMS
 #env:
