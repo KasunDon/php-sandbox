@@ -69,7 +69,7 @@ class PHPSandBox {
         
         $route = IpResolver::route();
         
-        if($route){
+        if($route && \App::make('app.config.env')->APP_ENV !== 'local'){
             return $this->remote($route, $this->getSourceCode(), $this->getVersion());
         }
         
