@@ -16,7 +16,7 @@ branches:
 #
 ## optionally specify a list of environments, for example to test different RDBMS
 env:
-  - APP_ENV=local CI_HOME=`pwd` INI_FILE= eval ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini SANDBOX=/data/temp/ PHP_SANDBOX_PATH=$CI_HOME/app/tests/setup/php.ini PHP_SANDBOX_VERSIONS=$CI_HOME/app/tests/setup/php.version
+  - APP_ENV=local CI_HOME=`pwd` INI_FILE=$('~/.phpenv/versions/$(phpenv version-name)/etc/php.ini') SANDBOX=/data/temp/ PHP_SANDBOX_PATH=$CI_HOME/app/tests/setup/php.ini PHP_SANDBOX_VERSIONS=$CI_HOME/app/tests/setup/php.version
 #  - DB=pgsql
 
 # execute any number of scripts before the test run, custom env's are available as variables
