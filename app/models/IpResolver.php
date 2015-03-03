@@ -71,10 +71,7 @@ class IpResolver {
      * @return array
      */
     public static function getPHPServers() {
-        $servers = (\App::make('app.config.env')
-                ->APP_ENV !== 'local')?  Utils::parseJson(\App::make('app.config.env')
-                        ->PHP_SANDBOX_SERVERS, true, true): array('127.0.0.1' => 1);
-        
+        $servers = Utils::parseJson(\App::make('app.config.env')->PHP_SANDBOX_SERVERS, true, true);
         return array_keys($servers);
     }
 }
