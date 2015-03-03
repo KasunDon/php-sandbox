@@ -21,7 +21,7 @@ env:
 
 # execute any number of scripts before the test run, custom env's are available as variables
 before_script:
-  - composer install
+  - composer self-update && composer install
   - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - mongo < $CI_HOME/app/tests/setup/mongo-setup.js
 # omitting "script:" will default to phpunit
