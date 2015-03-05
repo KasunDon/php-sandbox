@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="https://{{$_SERVER['HTTP_HOST']}}/assets/css/embed.css">
-<link rel="stylesheet" href="https://{{$_SERVER['HTTP_HOST']}}/assets/css/embed-phpbox.css">
-<link rel="stylesheet" href="https://{{$_SERVER['HTTP_HOST']}}/assets/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="{{ \App\Models\Code::$VIEW_LINK }}assets/css/embed.css">
+<link rel="stylesheet" href="{{ \App\Models\Code::$VIEW_LINK }}assets/css/embed-phpbox.css">
+<link rel="stylesheet" href="{{ \App\Models\Code::$VIEW_LINK }}assets/css/bootstrap-select.min.css">
 <div id="phpbox{{$code}}" class="phpbox">
     <div class="phpbox-file">
         <div class="phpbox-data phpbox-syntax">
@@ -9,9 +9,9 @@
             </div>
         </div>
         <div class="phpbox-meta">
-            <a href="https://{{$_SERVER['HTTP_HOST']}}/code/{{$_id}}/raw" target="_blank" style="float:right;">view raw</a>
+            <a href="{{ \App\Models\Code::$VIEW_LINK }}code/{{$_id}}/raw" target="_blank" style="float:right;">view raw</a>
 
-            Platform by <a href="https://phpbox.info">PHPBox</a>
+            Platform by <a href="{{ \App\Models\Code::$VIEW_LINK }}">PHPBox</a>
             <span style="margin-left: 1em;">
                 <select id="phpbox-version-selector" class="selectpicker dropup" data-container="body" data-width="110px" multiple data-max-options="1">
                     @foreach ($versions as $lang_version)
@@ -26,7 +26,7 @@
         </div>
     </div>
 </div>
-<script src="https://{{$_SERVER['HTTP_HOST']}}/assets/js/embed.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/embed.js" type="text/javascript" charset="utf-8"></script>
 <script>
 PHPBOX.init();
 </script>
