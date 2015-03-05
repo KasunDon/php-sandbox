@@ -104,7 +104,7 @@ class Code extends MongoModel {
                     ->getCollection()
                     ->findOne(array('_id' => new \MongoId($code)));
 
-            if (! \Session::has('visit-' . $code)) {
+            if (! \Session::has('visit-' . $code) && empty(\Input::get('noVisitor'))) {
                 \Session::put('visit-' . $code, true);
 
                 Storage::instance('views')
