@@ -54,7 +54,7 @@ echo 'hello world!';</pre>
                                 <div class="input-group">
                                     <select id="version-selector" class="selectpicker" data-width="110px" multiple data-max-options="1">
                                         @foreach ($versions as $lang_version)
-                                        <option value='{{$lang_version}}' {{{ isset($version) && $lang_version == $version || $lang_version == end($versions) ? 'selected' : '' }}} >PHP {{$lang_version}}</option>
+                                        <option value='{{$lang_version}}' {{{ isset($version) && $lang_version === $version ? 'selected' : '' }}} >PHP {{$lang_version}}</option>
                                         @endforeach
                                     </select>
                                     <span class="input-group-btn">
