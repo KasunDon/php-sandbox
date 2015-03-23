@@ -10,16 +10,11 @@
         <title>PHPBox sandbox - Beta version - Debug, Test and Share!</title>
         <link href="{{ asset('/assets/css/bootstrap.css') }}" rel="stylesheet">
         <link href="{{ asset('/assets/css/sticky-footer.css') }}" rel="stylesheet">
-        <link href="{{ asset('/assets/css/grid.css') }}" rel="stylesheet">
         <link href="{{ asset('/assets/css/bootstrap-select.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('/assets/css/docs.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('/assets/css/bootstrapValidator.min.css') }}" />
         <link rel='stylesheet prefetch' href='{{ asset('/assets/css/font-awesome.css') }}' />
         <link href="{{ asset('/assets/css/jquery.share.css') }}" rel="stylesheet">
-        <script type="text/javascript">var switchTo5x = true;</script>
-        <script type="text/javascript" src="https://ws.sharethis.com/button/buttons.js"></script>
-        <script type="text/javascript" src="https://ss.sharethis.com/loader.js"></script>
         <script src="{{ asset('/assets/js/ie-emulation-modes-warning.js') }}"></script>
         <!--[if lt IE 9]><script src="{{ asset('/assets/js/ie8-responsive-file-warning.js') }}"></script><![endif]-->
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -40,7 +35,7 @@
             <p>Easy as <b>1-2-3</b>. Place your code. Select runtime. Hit '<b><i>Run</i></b>' Button</p>
             <br>
             <div class="row">
-                <div class="col-md-12" style="height: 350px;">  
+                <div class="col-md-12" style="height: 400px;">  
                     <div  id="copy" class="zero-clipboard"><span  class="btn-clipboard">Copy</span></div>
                     <div class="editor-zone">
                         @if(isset($code))
@@ -52,35 +47,33 @@ echo 'hello world!';</pre>
                         @endif
                     </div>
                 </div>
-
-                <div class="row">
-
-                    <div class="col-md-2">
-                        <select id="version-selector" class="selectpicker" data-width="110px" multiple data-max-options="1">
-                            @foreach ($versions as $lang_version)
-                            <option value='{{$lang_version}}' {{{ isset($version) && $lang_version == $version || $lang_version == end($versions) ? 'selected' : '' }}}  >PHP {{$lang_version}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-7" style="padding-left: 10px; float: left">
-                        <button type="button"  id="run" class="btn btn-primary"><b>Run</b></button>
-                        <button type="button" style="display: none"  id="stop" class="btn btn-danger"><b>Stop</b></button>
-                    </div>
-                    <div class="col-md-1"style="padding-top: 35px; padding-left: 40px; float: left;">
-                        <div class="btn-group">
-                            <select id="theme-selector" class="selectpicker" data-width="120px" multiple data-max-options="1">
-                                @include('themes')
-                            </select>
+                <div class="row" style="margin: 0 -15px 0 -15px!important; padding-bottom: 10px;">
+                    <div class="col-md-12" >
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                    <select id="version-selector" class="selectpicker" data-width="110px" multiple data-max-options="1">
+                                        @foreach ($versions as $lang_version)
+                                        <option value='{{$lang_version}}' {{{ isset($version) && $lang_version == $version || $lang_version == end($versions) ? 'selected' : '' }}} >PHP {{$lang_version}}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="input-group-btn">
+                                        <button type="button" id="run" class="btn btn-primary"><b>Run</b></button>
+                                        <button type="button" style="display: none" id="stop" class="btn btn-danger"><b>Stop</b></button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-md-offset-8">
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <select id="theme-selector" class="selectpicker" data-width="120px" multiple data-max-options="1">
+                                            @include('themes')
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-1" >
-
-                    </div>
-
-                    <div class="col-md-1" style="float: right; padding-left: 5px; padding-top: 0;">
-                        <a id="report" class="reportLink">Report</a>
-                    </div>
-
                 </div>
 
                 <div id='loading' class="row text-center" style='display:none'>
@@ -102,6 +95,7 @@ echo 'hello world!';</pre>
                     </span>
                     <button id="save_share" type="button" class="btn btn-success" style="float: right;"><b>Share</b></button>
                 </div>
+                
                 <br/>
                 <div id="embed-output" style="margin-top: 5px;">
                     @if (isset($_id))
@@ -112,7 +106,7 @@ echo 'hello world!';</pre>
 
             </div>
         </div>
-
+        <br><br><br>
         <footer class="footer">
             <div class="container-fluid">
                 <div class="row show-grid" style="margin-top: 5px;">
@@ -134,13 +128,14 @@ echo 'hello world!';</pre>
     <script src="{{ asset('/assets/js/ie10-viewport-bug-workaround.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap-select.min.js') }}"></script>
-    <script src="{{ asset('/assets/js/docs.min.js') }}"></script>
     <script src="{{ asset('/assets/js/bootbox.min.js') }}"></script>
     <script src="{{ asset('/assets/js/jquery.share.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/assets/js/bootstrapValidator.min.js') }}"></script>
     <script src="{{ asset('/assets/js/sandbox.min.js') }}?noCache={{ time() }}"></script>
     <script>
-            $(function() {SANDBOX.core.setup();});
+            $(function(){
+                SANDBOX.core.setup();
+            });
             (function(i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r;
                 i[r] = i[r] || function() {
@@ -156,11 +151,6 @@ echo 'hello world!';</pre>
             ga('create', 'UA-58231333-1', 'auto');
             ga('send', 'pageview');
 
-    </script>
-    <script type="text/javascript">stLight.options({publisher: "4d55ca84-88de-4370-83ad-49bbb69a297c", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
-    <script>
-        var options = {"publisher": "4d55ca84-88de-4370-83ad-49bbb69a297c", "position": "left", "ad": {"visible": false, "openDelay": 5, "closeDelay": 0}, "chicklets": {"items": ["facebook", "linkedin", "twitter", "googleplus", "blogger"]}};
-        var st_hover_widget = new sharethis.widgets.hoverbuttons(options);
     </script>
 </body>
 </html>
