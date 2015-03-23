@@ -4,6 +4,8 @@
  * Test Class for application controllers
  */
 class ControllerTest extends TestCase {
+    
+    public static $TEST_CODE = "54ad21adf037d0b2047b23c6";
 
     /**
      * Testing Root Controller
@@ -53,6 +55,14 @@ class ControllerTest extends TestCase {
         $this->assertResponseOk();
     }
     
+       /**
+     * Testing Rendering embed code
+     */
+    public function testRenderingEmbedJs() {
+        $this->call('GET', '/embed.js?c=' . self::$TEST_CODE);
+        $this->assertResponseOk();
+    }
+    
     /**
      * Tesing Report-Issue POST
      */
@@ -67,7 +77,23 @@ class ControllerTest extends TestCase {
      * Test Share Code
      */
     public function testShareCode(){
-        $this->call('GET', "/share/54ad21adf037d0b2047b23c6");
+        $this->call('GET', "/share/" . self::$TEST_CODE);
+        $this->assertResponseOk();
+    }
+    
+    /**
+     * Test Embed Code
+     */
+    public function testGetEmbedCode(){
+        $this->call('GET', "/get-embed/" . self::$TEST_CODE);
+        $this->assertResponseOk();
+    }
+    
+    /**
+     * Test Get Raw Code
+     */
+    public function testGetRawCode(){
+        $this->call('GET', "/code/". self::$TEST_CODE . "/raw");
         $this->assertResponseOk();
     }
     

@@ -67,10 +67,12 @@ class PHPSandBox {
      */
     public function execute() {
         
-        $route = IpResolver::route();
+        if (\App::make('app.config.env')->APP_ENV !== 'local') {
+            $route = IpResolver::route();
         
-        if($route){
-            return $this->remote($route, $this->getSourceCode(), $this->getVersion());
+            if($route){
+                return $this->remote($route, $this->getSourceCode(), $this->getVersion());
+            }
         }
         
         $checksum = sha1($this->getSourceCode() . $this->getVersion() . time());
