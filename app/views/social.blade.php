@@ -1,4 +1,3 @@
-<div class="container">
     <p>Share the output across social network's</p>
     <div class="row">
         <div class="col-md-12">
@@ -30,8 +29,6 @@
 
         </div>
     </div>
-</div>
-
 <script>
     $(document).ready(function() {
        SANDBOX.core.socialTab();
