@@ -35,7 +35,7 @@
             <p>Easy as <b>1-2-3</b>. Place your code. Select runtime. Hit '<b><i>Run</i></b>' Button</p>
             <br>
             <div class="row">
-                <div class="col-md-12" style="height: 400px;">  
+                <div class="col-md-12 editor-height">  
                     <div  id="copy" class="zero-clipboard"><span  class="btn-clipboard">Copy</span></div>
                     <div class="editor-zone">
                         @if(isset($code))
