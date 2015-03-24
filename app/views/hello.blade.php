@@ -23,7 +23,7 @@
         <![endif]-->
     </head>
     <body>
-        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-exclamation-sign"></span><b> 2015-03-24 14:23:06 GMT - We've managed to stabilize the system, unfortunately system has lost nearly 50% of data within our database cluster. 
+        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-exclamation-sign"></span><b> 2015-03-24 22:34:48 GMT - Due to a database cluster problem, system has lost nearly 50% of data was on our database. 
     We’ve taken measures to prevent these type of incidents reoccurring again. Apologize for any inconvenience caused.</b></div>
         <div class="container">
             <div class="page-header">
@@ -113,7 +113,7 @@ echo 'hello world!';</pre>
                 <div class="row show-grid" style="margin-top: 5px;">
                     <div class="col-md-1"></div>
                     <div class="col-md-2 text-muted"><strong>PHPBox</strong> Sandbox</div>
-                    <div class="col-md-2"><a id="service" style="cursor: pointer;">Service Status</a><span class="label label-warning" style="margin-left: 10px;">Stable</span></div>
+                    <div class="col-md-2"><a id="service" style="cursor: pointer;">Service Status</a><span class="label label-success" style="margin-left: 10px;">OK</span></div>
                     <div class="col-md-2"><a id="feedback" style="cursor: pointer;">Send Feedback</a></div>
                     <div class="col-md-2"><a id="terms" style="cursor: pointer;">Terms & Conditions</a></div>
                     <div class="col-md-2">
