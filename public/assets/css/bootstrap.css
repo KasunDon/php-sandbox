@@ -6331,6 +6331,21 @@ button.close {
 }
 /*# sourceMappingURL=bootstrap.css.map */
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-top: 50px;
+  margin-bottom: 10px;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+}
+
 #editor {
     margin: 0;
     position: absolute;

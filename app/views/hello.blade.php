@@ -8,8 +8,7 @@
         <meta name="author" content="">
         <meta name="_token" content="{{ csrf_token() }}" />
         <title>PHPBox sandbox - Beta version - Debug, Test and Share!</title>
-        <link href="{{ asset('/assets/css/bootstrap.css') }}" rel="stylesheet">
-        <link href="{{ asset('/assets/css/sticky-footer.css') }}" rel="stylesheet">
+        <link href="{{ asset('/assets/css/bootstrap.css') }}?noCache={{ time() }}" rel="stylesheet">
         <link href="{{ asset('/assets/css/bootstrap-select.min.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('/assets/css/bootstrapValidator.min.css') }}" />
@@ -133,9 +132,6 @@ echo 'hello world!';</pre>
     <script type="text/javascript" src="{{ asset('/assets/js/bootstrapValidator.min.js') }}"></script>
     <script src="{{ asset('/assets/js/sandbox.min.js') }}?noCache={{ time() }}"></script>
     <script>
-            $(function(){
-                SANDBOX.core.setup();
-            });
             (function(i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r;
                 i[r] = i[r] || function() {
@@ -150,7 +146,8 @@ echo 'hello world!';</pre>
 
             ga('create', 'UA-58231333-1', 'auto');
             ga('send', 'pageview');
-
+            
+            SANDBOX.core.setup();
     </script>
 </body>
 </html>
