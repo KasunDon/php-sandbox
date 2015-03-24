@@ -113,6 +113,10 @@ class Code extends MongoModel {
                                 array('$inc' => array('views' => 1)));
             }
             
+            if(empty($document)) {
+                throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+            }
+            
             $views = Storage::instance('views')
                     ->getCollection()
                     ->findOne(array('_id' => new \MongoId($document['_id']->{'$id'})));
