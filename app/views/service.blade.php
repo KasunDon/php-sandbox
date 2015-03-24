@@ -1,4 +1,5 @@
-<div class="container">
-    <h4>There are no current issues reported.</h4>
-    <p>Current Service Status : <span class="label label-success" style="margin-left: 10px;">OK</span></p>
-</div>
+<p>Current Service Status : <span class="label label-danger" style="margin-left: 10px;">Issues</span></p>
+<br>
+<h4>2015-03-24 13:15:00</h4>
+<p>We're experiencing database cluster issues.</p>
+

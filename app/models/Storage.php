@@ -55,7 +55,7 @@ class Storage {
      * @param string $hostname
      * @param int $port
      */
-    public function __construct($collection = null, $hostname = "10.131.210.147", $port = 27017) {
+    public function __construct($collection = null, $hostname = "10.131.211.185", $port = 27017) {
         
         $hostname = (\App::make('app.config.env')->APP_ENV !== 'local')?  $hostname: '127.0.0.1';
         

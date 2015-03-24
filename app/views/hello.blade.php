@@ -23,6 +23,7 @@
         <![endif]-->
     </head>
     <body>
+        <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign"></span><b>  We're experiencing database cluster issues on our platform. Trying to resolve issue soon as possible. Apologize for inconvenience caused.</b></div>
         <div class="container">
             <div class="page-header">
                 @if (isset($meta))
@@ -111,7 +112,7 @@ echo 'hello world!';</pre>
                 <div class="row show-grid" style="margin-top: 5px;">
                     <div class="col-md-1"></div>
                     <div class="col-md-2 text-muted"><strong>PHPBox</strong> Sandbox</div>
-                    <div class="col-md-2"><a id="service" style="cursor: pointer;">Service Status</a><span class="label label-success" style="margin-left: 10px;">OK</span></div>
+                    <div class="col-md-2"><a id="service" style="cursor: pointer;">Service Status</a><span class="label label-danger" style="margin-left: 10px;">Issues</span></div>
                     <div class="col-md-2"><a id="feedback" style="cursor: pointer;">Send Feedback</a></div>
                     <div class="col-md-2"><a id="terms" style="cursor: pointer;">Terms & Conditions</a></div>
                     <div class="col-md-2">
