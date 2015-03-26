@@ -23,10 +23,6 @@
         <![endif]-->
     </head>
     <body>
-        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-exclamation-sign"></span>
-            <b> 2015-03-24 22:34:48 GMT - Due to a database cluster problem, system has lost nearly 50% of data was on our database. Apologize for any inconvenience caused.</b>
-        </div>
-
         <div class="container">
             <div class="page-header">
                 @if (isset($meta))
