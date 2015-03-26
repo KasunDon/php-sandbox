@@ -23,8 +23,10 @@
         <![endif]-->
     </head>
     <body>
-        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-exclamation-sign"></span><b> 2015-03-24 22:34:48 GMT - Due to a database cluster problem, system has lost nearly 50% of data was on our database. 
-    We’ve taken measures to prevent these type of incidents reoccurring again. Apologize for any inconvenience caused.</b></div>
+        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-exclamation-sign"></span>
+            <b> 2015-03-24 22:34:48 GMT - Due to a database cluster problem, system has lost nearly 50% of data was on our database. Apologize for any inconvenience caused.</b>
+        </div>
+            
         <div class="container">
             <div class="page-header">
                 @if (isset($meta))
@@ -86,28 +88,69 @@ echo 'hello world!';</pre>
                     <div>PHP Version: <b><small id="php-version"> </small></b></div>
 
                     <pre id="output" class="well">{{{isset($output)? $output: ''}}}</pre>
-                    <span id="view-link-zone" style="float: left; display: none;"> 
-                        <div class="row">
-                            <span class="glyphicon glyphicon-link"></span> <b>  Link : </b> <a id="view-link"></a> 
-                        </div>
-                        <div class="row">
-                            <span class="glyphicon glyphicon-eye-open"></span> <b>  Views : <small id="views">0</small></b>  
-                        </div>
-                    </span>
+
+                    <div class="pull-left">
+                        <div id="filter-panel" class="collapse filter-panel">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="tabbable-panel">
+                                        <div class="tabbable-line">
+                                            <ul class="nav nav-tabs ">
+                                                <li class="active">
+                                                    <a href="#tab_default_1" data-toggle="tab">
+                                                        <span class="glyphicon glyphicon-info-sign"> </span> References </a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="tab_default_1">
+                                                    <div class="table-responsive">
+                                                        <ul class="list-inline" id="ref-list">
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="tab_default_2">
+
+                                                </div>
+                                                <div class="tab-pane" id="tab_default_3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                        <button type="button" class="btn toggle btn-small btn-default" data-toggle="collapse" autocomplete="off" data-target="#filter-panel">
+                            <span class="glyphicon glyphicon-cog"></span><small> Advanced</small></button>
+                    </div>
                     <button id="save_share" type="button" class="btn btn-success" style="float: right;"><b>Share</b></button>
+
                 </div>
-                
-                <br/>
-                <div id="embed-output" style="margin-top: 5px;">
+            </div>
+            <div class="row" style="margin-top: 5px;">
+                <div id="view-link-zone" class="pull-left" style="display: none;">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div >
+                                <span class="glyphicon glyphicon-link"></span> <b>  Link : </b> <a id="view-link"></a> 
+                            </div>
+                            <div>
+                                <span class="glyphicon glyphicon-eye-open"></span> <b>  Views : <small id="views">0</small></b>  
+                            </div>
+                        </div></div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div id="embed-output">
                     @if (isset($_id))
                     @include('embed_code')
                     @endif
 
                 </div>
-
             </div>
         </div>
-        <br><br><br>
+        <br><br><br><br><br>
         <footer class="footer">
             <div class="container-fluid">
                 <div class="row show-grid" style="margin-top: 5px;">
@@ -126,30 +169,32 @@ echo 'hello world!';</pre>
     </footer>
     <script src="{{ asset('/assets/js/jquery-1.11.2.min.js') }}"></script>   	
     <script src="{{ asset('/assets/js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ asset('/assets/js/ace/ext-language_tools.js') }}"></script>
     <script src="{{ asset('/assets/js/ie10-viewport-bug-workaround.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('/assets/js/bootbox.min.js') }}"></script>
-    <script src="{{ asset('/assets/js/jquery.share.js') }}"></script>
+    <script src="{{ asset('/assets/js/button.js') }}"></script>
+    <script src="https://phpbox.info/assets/js/jquery.share.js"></script>
     <script type="text/javascript" src="{{ asset('/assets/js/bootstrapValidator.min.js') }}"></script>
     <script src="{{ asset('/assets/js/sandbox.min.js') }}?noCache={{ time() }}"></script>
     <script>
-            (function(i, s, o, g, r, a, m) {
-                i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function() {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-                a = s.createElement(o),
-                        m = s.getElementsByTagName(o)[0];
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m)
-            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+(function(i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-            ga('create', 'UA-58231333-1', 'auto');
-            ga('send', 'pageview');
-            
-            SANDBOX.core.setup();
+ga('create', 'UA-58231333-1', 'auto');
+ga('send', 'pageview');
+
+SANDBOX.core.setup();
     </script>
 </body>
 </html>

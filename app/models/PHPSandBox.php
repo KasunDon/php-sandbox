@@ -95,8 +95,12 @@ class PHPSandBox {
         if (!$this->isVersion($this->getVersion())) {
             throw new \Exception('Requested version not avaialble :: ' . $this->getVersion());
         }
-
-        if (!preg_match('/^[<][?]php/', $this->getSourceCode())) {
+        
+        $code = $this->getSourceCode();
+        
+        $code = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "", $code);
+        
+        if (! preg_match('/^[<][?]php/i', $code) && ! preg_match('/^[<][?]/', $code)) {
             $this->setSourceCode("<?php " . $this->getSourceCode());
         }
 

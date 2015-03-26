@@ -41,6 +41,8 @@ SANDBOX.utils.load = function() {
         $('#view-link').text(SANDBOX.core.viewLink);
         $('#view-link').attr('href', SANDBOX.core.viewLink);
         $('#view-link-zone').show();
+        
+        SANDBOX.core.getRefs(SANDBOX.core.getApiPayload());
     }
 };
 
@@ -83,7 +85,7 @@ SANDBOX.core.socialTab = function() {
                 version: SANDBOX.core.version, theme: theme, vType: 'c1'}, function(data) {
                 SANDBOX.core.viewId = data.viewId;
                 SANDBOX.core.viewLink = data.viewLink + data.viewId;
-                
+
                 $('#view-link').text(SANDBOX.core.viewLink);
                 $('#view-link').attr('href', SANDBOX.core.viewLink);
                 $('#view-link-zone').show();
@@ -116,7 +118,7 @@ SANDBOX.core.socialTab = function() {
 };
 
 SANDBOX.core.setSettings = function() {
-    $.post('/usr-slct', {theme: SANDBOX.core.theme,  version: SANDBOX.core.version}, function(data) {
+    $.post('/usr-slct', {theme: SANDBOX.core.theme, version: SANDBOX.core.version}, function(data) {
         SANDBOX.core.theme = data.theme;
         SANDBOX.core.version = data.version;
         SANDBOX.core.editor = SANDBOX.utils.initEditor(SANDBOX.core.theme);
@@ -138,6 +140,26 @@ SANDBOX.core.runUpdate = function(b) {
     }
 };
 
+SANDBOX.core.getApiPayload = function () {
+    return {v: SANDBOX.core.version, code: SANDBOX.core.editor.getValue()};
+};
+
+SANDBOX.core.getRefs = function (params) {
+    $.post('/get-code-ref', params, function(data) {
+        var refContent = '';
+
+        for (var ref in data.refs) {
+            refContent += "<li><a href='" + data.refs[ref] + "' style='cursor: help;'>" + ref + "</a></li>";
+        }
+
+        if (refContent === '') {
+            refContent = '<li><b>No Internal method references found.</b></li>'
+        }
+
+        $('#ref-list').html(refContent);
+    });
+};
+
 SANDBOX.core.run = function() {
     $("#stop").on("click", function() {
         SANDBOX.core.request.abort();
@@ -146,11 +168,15 @@ SANDBOX.core.run = function() {
 
     $("#run").on("click", function() {
         SANDBOX.core.version = SANDBOX.utils.getSelection('#version-selector');
-        
+
         SANDBOX.core.runUpdate(true);
 
+        var payload = SANDBOX.core.getApiPayload();
+        
+        SANDBOX.core.getRefs(payload);
+        
         SANDBOX.core.request = $.post('/api/php/' + SANDBOX.core.version + '/run',
-                {v: SANDBOX.core.version, code: SANDBOX.core.editor.getValue()}, function(output) {
+                payload, function(output) {
 
             SANDBOX.core.runUpdate(false);
 
@@ -212,7 +238,7 @@ SANDBOX.core.setup = function() {
     for (var select in SANDBOX.core.selectors) {
         $('#' + select).selectpicker(SANDBOX.core.selectors[select]);
     }
-    
+
     SANDBOX.core.editor = SANDBOX.utils.initEditor(SANDBOX.core.theme);
 
     SANDBOX.core.defaultCode = SANDBOX.core.editor.getValue();
@@ -301,7 +327,8 @@ SANDBOX.core.setup = function() {
                 close: {
                     label: "Close",
                     className: "btn-default",
-                    callback: function() {}
+                    callback: function() {
+                    }
                 }
             }
         });
@@ -382,9 +409,15 @@ SANDBOX.validation.issue = function() {
 };
 
 SANDBOX.utils.initEditor = function(t) {
+    ace.require("ace/ext/language_tools");
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/" + t);
     editor.getSession().setMode("ace/mode/php");
+    editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: false
+    });
     return editor;
 };
 

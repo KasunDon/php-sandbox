@@ -30,6 +30,19 @@ Route::get('/view-feedback', function() {
     return View::make('feedback');
 });
 
+Route::post('/get-code-ref', array('before' => 'csrf', function() {
+    
+    $sandbox = new App\Models\PHPSandBox(Input::get('v'), Input::get('code'));
+    $sandbox->validate();
+
+    $refs = App\Models\PHPKeywordAnalyzer::init()
+        ->setSource($sandbox->getSourceCode())
+        ->setVersion($sandbox->getVersion())
+        ->getReferences();
+
+    return Response::json(array('refs' => $refs, 'source' => $sandbox->getSourceCode()));
+}));
+
 Route::get('/code/{code}/raw', function($code) {
     $document = \App\Models\Code::getCode($code);
     $response = Response::make(html_entity_decode($document['code']));
