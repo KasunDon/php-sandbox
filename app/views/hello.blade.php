@@ -102,7 +102,7 @@ echo 'hello world!';</pre>
                                                 </li>
                                                 <li>
                                                     <a href="#tab_default_2" data-toggle="tab">
-                                                        <span class="glyphicon glyphicon-info-sign"> </span> VLD Opcode </a>
+                                                        <span class="glyphicon glyphicon-th"> </span> VLD Opcode </a>
                                                 </li>
 
                                             </ul>
