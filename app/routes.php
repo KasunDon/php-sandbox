@@ -30,6 +30,10 @@ Route::get('/view-feedback', function() {
     return View::make('feedback');
 });
 
+Route::post('/get-vld-data', array('before' => 'csrf', function() {
+    return Response::json(array('vld_data' => App\Models\VLDAnalyzer::init(Input::get('code'))->disassemble()));
+}));
+
 Route::post('/get-code-ref', array('before' => 'csrf', function() {
     
     $sandbox = new App\Models\PHPSandBox(Input::get('v'), Input::get('code'));

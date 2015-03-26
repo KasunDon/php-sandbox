@@ -10,6 +10,11 @@ use App\Models\Utils;
 class PHPSandBox {
 
     /**
+     * Host PHP Path
+     */
+    const PHP_HOST = '/usr/bin/php';
+            
+    /**
      * Available PHP runtime versions
      * 
      * @var array 
@@ -74,14 +79,12 @@ class PHPSandBox {
                 return $this->remote($route, $this->getSourceCode(), $this->getVersion());
             }
         }
-        
-        $checksum = sha1($this->getSourceCode() . $this->getVersion() . time());
 
-        $files = $this->prepareSandbox($checksum);
+        $files = $this->_prepareSandbox();
 
-        $output = $this->getOutput($files);
+        $output = $this->_getOutput($files);
 
-        $this->clear($files);
+        $this->_clear($files);
 
         return $output;
     }
@@ -112,7 +115,7 @@ class PHPSandBox {
      * 
      * @param array $files
      */
-    private function clear($files) {
+    protected function _clear($files) {
         //force delete sandbox folder
         shell_exec("rm -rf {$files['sandbox']}");
     }
@@ -120,11 +123,11 @@ class PHPSandBox {
     /**
      * Preparing sandbox
      * 
-     * @param array $checksum
      * @return string
      * @throws \App\Exception\FileCopyException
      */
-    private function prepareSandbox($checksum) {
+    protected function _prepareSandbox() {
+        $checksum = sha1($this->getSourceCode() . $this->getVersion() . time());
 
         $files = array('sandbox' => \App::make('app.config.env')->SANDBOX . $checksum);
 
@@ -160,9 +163,9 @@ class PHPSandBox {
      * @param array $files
      * @return string
      */
-    private function getOutput($files) {
+    protected function _getOutput($files) {
 
-        $output = shell_exec($this->getSystemPath() . " -c " . $files['ini'] . " " . $files['php']);
+        $output = $this->_cmd($files);
 
         foreach ($files as $file) {
             $output = str_replace($file, "SandBox-Request", $output);
@@ -176,6 +179,15 @@ class PHPSandBox {
             $output = "No output!";
         }
         return $output;
+    }
+    
+    /**
+     * Executed Shell Commands
+     * 
+     * @param type $files
+     */
+    protected function _cmd($files) {
+        return shell_exec($this->getSystemPath() . " -c " . $files['ini'] . " " . $files['php']);
     }
 
     /**

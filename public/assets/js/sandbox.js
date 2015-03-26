@@ -41,8 +41,9 @@ SANDBOX.utils.load = function() {
         $('#view-link').text(SANDBOX.core.viewLink);
         $('#view-link').attr('href', SANDBOX.core.viewLink);
         $('#view-link-zone').show();
-        
+
         SANDBOX.core.getRefs(SANDBOX.core.getApiPayload());
+        SANDBOX.core.getVLD(SANDBOX.core.getApiPayload());
     }
 };
 
@@ -140,23 +141,37 @@ SANDBOX.core.runUpdate = function(b) {
     }
 };
 
-SANDBOX.core.getApiPayload = function () {
+SANDBOX.core.getApiPayload = function() {
     return {v: SANDBOX.core.version, code: SANDBOX.core.editor.getValue()};
 };
 
-SANDBOX.core.getRefs = function (params) {
+SANDBOX.core.getRefs = function(params) {
     $.post('/get-code-ref', params, function(data) {
-        var refContent = '';
+        var content = '';
 
         for (var ref in data.refs) {
-            refContent += "<li><a href='" + data.refs[ref] + "' style='cursor: help;'>" + ref + "</a></li>";
+            content += "<li><a href='" + data.refs[ref] + "' style='cursor: help;'>" + ref + "</a></li>";
         }
 
-        if (refContent === '') {
-            refContent = '<li><b>No Internal method references found.</b></li>'
+        if (content === '') {
+            content = '<li><b>No Internal method references found.</b></li>'
         }
 
-        $('#ref-list').html(refContent);
+        $('#ref-list').html(content);
+    });
+};
+
+SANDBOX.core.getVLD = function(params) {
+    $.post('/get-vld-data', params, function(data) {
+        var content = '';
+
+        content = data.vld_data;
+
+        if (content === '') {
+            content = '<li><b>No VLD data available.</b></li>'
+        }
+
+        $('#vld-data').html(content);
     });
 };
 
@@ -172,29 +187,30 @@ SANDBOX.core.run = function() {
         SANDBOX.core.runUpdate(true);
 
         var payload = SANDBOX.core.getApiPayload();
-        
+
         SANDBOX.core.getRefs(payload);
-        
+
         SANDBOX.core.request = $.post('/api/php/' + SANDBOX.core.version + '/run',
                 payload, function(output) {
 
-            SANDBOX.core.runUpdate(false);
+                    SANDBOX.core.runUpdate(false);
 
-            $('#output').text(output.output);
+                    $('#output').text(output.output);
 
-            SANDBOX.core.create_time = output.datetime;
+                    SANDBOX.core.create_time = output.datetime;
 
-            if (SANDBOX.core.output !== output.output) {
-                SANDBOX.core.shareMode = 2;
-            }
+                    if (SANDBOX.core.output !== output.output) {
+                        SANDBOX.core.shareMode = 2;
+                    }
 
-            SANDBOX.core.output = output.output;
-            $('#run-datetime').html("<span class='glyphicon glyphicon-time'></span> " + SANDBOX.core.create_time);
-            $('#output-zone').show();
-            $('#php-version').text(SANDBOX.core.version);
-            $('html, body').animate({scrollTop: $('#output-zone').offset().top}, 'slow');
-        });
+                    SANDBOX.core.output = output.output;
+                    $('#run-datetime').html("<span class='glyphicon glyphicon-time'></span> " + SANDBOX.core.create_time);
+                    $('#output-zone').show();
+                    $('#php-version').text(SANDBOX.core.version);
+                    $('html, body').animate({scrollTop: $('#output-zone').offset().top}, 'slow');
+                });
 
+        SANDBOX.core.getVLD(payload);
     });
 };
 
