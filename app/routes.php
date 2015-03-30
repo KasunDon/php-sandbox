@@ -30,11 +30,17 @@ Route::get('/view-feedback', function() {
     return View::make('feedback');
 });
 
-Route::post('/get-vld-data', array('before' => 'csrf', function() {
-    return Response::json(array('vld_data' => App\Models\VLDAnalyzer::init(Input::get('code'))->disassemble()));
+Route::get('/testing-v2', function() {
+    var_dump(\App::make('app.config.env')->VIRTSTORE);
+                die();
+});
+
+
+Route::post('/api/vld-data', array('before' => 'csrf', function() {
+    return Response::json(array('output' => App\Models\VLDAnalyzer::init(Input::get('code'))->execute()));
 }));
 
-Route::post('/get-code-ref', array('before' => 'csrf', function() {
+Route::post('/api/code-ref', array('before' => 'csrf', function() {
     
     $sandbox = new App\Models\PHPSandBox(Input::get('v'), Input::get('code'));
     $sandbox->validate();
@@ -44,7 +50,7 @@ Route::post('/get-code-ref', array('before' => 'csrf', function() {
         ->setVersion($sandbox->getVersion())
         ->getReferences();
 
-    return Response::json(array('refs' => $refs, 'source' => $sandbox->getSourceCode()));
+    return Response::json(array('output' => $refs, 'source' => $sandbox->getSourceCode()));
 }));
 
 Route::get('/code/{code}/raw', function($code) {

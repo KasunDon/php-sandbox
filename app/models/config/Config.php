@@ -23,7 +23,7 @@ class Config {
      */
     protected static $ENV_VARS = array(
         'INI_FILE', 'SANDBOX', 'PHP_SANDBOX_VERSIONS',
-        'PHP_SANDBOX_PATH', 'PHP_SANDBOX_SERVERS', 'APP_ENV'
+        'PHP_SANDBOX_PATH', 'PHP_SANDBOX_SERVERS', 'VIRTSTORE','APP_ENV'
     );
 
     /**

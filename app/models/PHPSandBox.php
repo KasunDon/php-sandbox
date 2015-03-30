@@ -8,12 +8,7 @@ use App\Models\Utils;
  * Class for PHP Sandbox runtime access
  */
 class PHPSandBox {
-
-    /**
-     * Host PHP Path
-     */
-    const PHP_HOST = '/usr/bin/php';
-            
+    
     /**
      * Available PHP runtime versions
      * 
@@ -26,22 +21,29 @@ class PHPSandBox {
      * 
      * @var string 
      */
-    private $version = null;
+    private $version;
 
     /**
      * System path
      * 
      * @var string 
      */
-    private $systemPath = null;
+    private $systemPath;
 
     /**
      * Source Code
      * 
      * @var string 
      */
-    private $sourceCode = null;
-
+    private $sourceCode;
+    
+    /**
+     * Servers
+     * 
+     * @var array 
+     */
+    private $servers;
+    
     /**
      * Constructor
      * 
@@ -52,6 +54,7 @@ class PHPSandBox {
         $this->setVersion($version);
         $this->setSourceCode($sourceCode);
         $this->validate();
+        $this->setServers(\App::make('app.config.env')->PHP_SANDBOX_SERVERS);
     }
 
     /**
@@ -63,7 +66,27 @@ class PHPSandBox {
     public function isVersion($version) {
         return (in_array($version, array_keys(self::$VERSIONS))) ? true : false;
     }
+    
+    /**
+     * Returns resource address
+     * 
+     * @param string $route
+     * @return string
+     */
+    protected function _getAddress($route) {
+        $version = $this->getVersion();
+        return "https://$route/api/php/$version/run";
+    }
 
+    /**
+     * Prepares payload
+     * 
+     * @return array
+     */
+    protected function _getPayload() {
+        return array('v' => $this->getVersion(), 'code' => $this->getSourceCode());
+    }
+    
     /**
      * Executes settings on runtime
      * 
@@ -71,13 +94,11 @@ class PHPSandBox {
      * @throws Exception
      */
     public function execute() {
+
+        $route = IpResolver::route($this->getServers());
         
-        if (\App::make('app.config.env')->APP_ENV !== 'local') {
-            $route = IpResolver::route();
-        
-            if($route){
-                return $this->remote($route, $this->getSourceCode(), $this->getVersion());
-            }
+        if($route){
+            return $this->remote($this->_getAddress($route), $this->_getPayload());
         }
 
         $files = $this->_prepareSandbox();
@@ -137,6 +158,22 @@ class PHPSandBox {
         // create sandbox path
         mkdir($files['sandbox']);
 
+        //replacing empty spaces
+        file_put_contents($files['php'], str_replace("\r\n\r\n\r\n", "", $this->getSourceCode()));
+        
+        //change directory
+        chdir($files['sandbox']);
+        
+        return $this->_sandboxSettings($files);
+    }
+    
+    /**
+     * Settings for sandbox
+     * 
+     * @param array $files
+     * @throws \App\Exception\FileCopyException
+     */
+    protected function _sandboxSettings($files) {
         //copy default php.ini to sandbox
         if (!copy(sprintf(\App::make('app.config.env')->PHP_SANDBOX_PATH, $this->getVersion()), $files['ini'])) {
             throw new \App\Exception\FileCopyException();
@@ -146,14 +183,7 @@ class PHPSandBox {
         $ini_settings .= 'open_basedir = "' . $files['sandbox'] . '"' . "\n";
 
         //adding custom ini settings to temp ini file
-        file_put_contents($files['ini'], $ini_settings, FILE_APPEND);
-
-        //replacing empty spaces
-        file_put_contents($files['php'], str_replace("\r\n\r\n\r\n", "", $this->getSourceCode()));
-        
-        //change directory
-        chdir($files['sandbox']);
-
+        file_put_contents($files['ini'], $ini_settings, FILE_APPEND);  
         return $files;
     }
 
@@ -244,6 +274,24 @@ class PHPSandBox {
     }
     
     /**
+     * Return servers
+     * 
+     * @return array
+     */
+    public function getServers() {
+        return $this->servers;
+    }
+
+    /**
+     * Setting servers
+     * 
+     * @param array $servers
+     */
+    public function setServers($servers) {
+        $this->servers = $servers;
+    }
+    
+    /**
      * Execute code on remote server
      * 
      * @param string $address
@@ -251,8 +299,8 @@ class PHPSandBox {
      * @param string $version
      * @return string
      */
-    private function remote($address, $source, $version) {
-        $output = Utils::curl("https://$address/api/php/$version/run", array('v' => $version, 'code' => $source), Utils::CURL_POST);
+    private function remote($address, $params, $method = Utils::CURL_POST) {
+        $output = Utils::curl($address, $params, $method);
         $json = json_decode($output, true);
         return $json['output'];
     }

@@ -31,10 +31,11 @@ class IpResolver {
     /**
      * Finds a route
      * 
+     * @param array $servers
      * @return mixed
      */
-    protected function findRoute() {
-        $localAddressList = self::getPHPServers();
+    protected function findRoute($servers) {
+        $localAddressList = self::getServers($servers);
 
         if (in_array(self::get(self::LOCAL_ADDR), $localAddressList)) {
             return false;
@@ -58,20 +59,22 @@ class IpResolver {
     /**
      * Find dynamic route to specified server
      * 
+     * @param array $servers
      * @return mixed
      */
-    public static function route() {
+    public static function route($servers) {
         $self = new self;
-        return $self->findRoute();
+        return $self->findRoute($servers);
     }
     
     /**
      * List all local servers
      * 
+     * @param array $servers
      * @return array
      */
-    public static function getPHPServers() {
-        $servers = Utils::parseJson(\App::make('app.config.env')->PHP_SANDBOX_SERVERS, true, true);
+    public static function getServers($servers) {
+        $servers = Utils::parseJson($servers, true, true);
         return array_keys($servers);
     }
 }

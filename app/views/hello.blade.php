@@ -182,6 +182,8 @@ echo 'hello world!';</pre>
     <script type="text/javascript" src="{{ asset('/assets/js/bootstrapValidator.min.js') }}"></script>
     <script src="{{ asset('/assets/js/sandbox.min.js') }}?noCache={{ time() }}"></script>
     <script>
+        
+                @if(\App::make('app.config.env')->APP_ENV !== 'local')
 (function(i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function() {
@@ -193,10 +195,10 @@ echo 'hello world!';</pre>
     a.src = g;
     m.parentNode.insertBefore(a, m)
 })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
+      
 ga('create', 'UA-58231333-1', 'auto');
 ga('send', 'pageview');
-
+  @endif
 SANDBOX.core.setup();
     </script>
 </body>

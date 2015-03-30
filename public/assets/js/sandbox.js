@@ -146,11 +146,11 @@ SANDBOX.core.getApiPayload = function() {
 };
 
 SANDBOX.core.getRefs = function(params) {
-    $.post('/get-code-ref', params, function(data) {
+    $.post('/api/code-ref', params, function(data) {
         var content = '';
 
-        for (var ref in data.refs) {
-            content += "<li><a href='" + data.refs[ref] + "' style='cursor: help;'>" + ref + "</a></li>";
+        for (var ref in data.output) {
+            content += "<li><a href='" + data.output[ref] + "' style='cursor: help;'>" + ref + "</a></li>";
         }
 
         if (content === '') {
@@ -162,10 +162,10 @@ SANDBOX.core.getRefs = function(params) {
 };
 
 SANDBOX.core.getVLD = function(params) {
-    $.post('/get-vld-data', params, function(data) {
+    $.post('/api/vld-data', params, function(data) {
         var content = '';
 
-        content = data.vld_data;
+        content = data.output;
 
         if (content === '') {
             content = '<li><b>No VLD data available.</b></li>'
@@ -259,7 +259,7 @@ SANDBOX.core.setup = function() {
 
     SANDBOX.core.defaultCode = SANDBOX.core.editor.getValue();
 
-    SANDBOX.utils.viewLoader('/view-service', {}, 'serviceContent', 60000);
+    SANDBOX.utils.viewLoader('/view-service', {}, 'serviceContent');
     SANDBOX.utils.viewLoader('/view-report-issue', {}, 'reportContent');
     SANDBOX.utils.viewLoader('/view-feedback', {}, 'feedbackContent');
     SANDBOX.utils.viewLoader('/view-social', {}, 'socialContent');
