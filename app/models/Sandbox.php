@@ -72,10 +72,12 @@ abstract class Sandbox {
     public static function versions() {
         if (empty(self::$VERSIONS)) {
             foreach (self::$VERSION_VARS as $var) {
-                array_push(self::$VERSIONS, \App\Models\Utils::parseJson(\App::make('app.config.env')->$var, true, true));
+                $version = \App\Models\Utils::parseJson(\App::make('app.config.env')->$var, true, true);
+                if(! empty($version)) {
+                    self::$VERSIONS = array_merge(self::$VERSIONS, $version);
+                }
             }
         }
-
         return array_keys(self::$VERSIONS);
     }
     
