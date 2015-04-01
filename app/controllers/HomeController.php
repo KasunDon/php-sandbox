@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\PHPSandBox;
+use App\Models\PHPAPI;
+use App\Models\SandBox;
 use App\Models\Storage;
 use App\Models\Feedback;
 use App\Models\Issues;
@@ -16,7 +17,7 @@ class HomeController extends BaseController {
      * Index Controller
      */
     public function index() {
-        $versions = PHPSandBox::versions();
+        $versions = SandBox::versions();
         return View::make('hello', array('versions' => $versions, 'version' => end($versions), 'settings' => Code::cookieSettings()));
     }
 
@@ -24,7 +25,7 @@ class HomeController extends BaseController {
      *  Run Controller
      */
     public function run() {
-        $sandbox = new PHPSandBox(Input::get('v'), Input::get('code'));
+        $sandbox = new PHPAPI(Input::get('v'), Input::get('code'));
         return Response::json(array('output' => $sandbox->execute(), 'datetime' => Utils::datetime()));
     }
 

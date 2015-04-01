@@ -5,7 +5,7 @@ namespace App\Models;
 /**
  * Class for handle Vulcan Logic Disassembler (VLD)
  */
-class VLDAnalyzer extends PHPSandBox {
+class VLD extends Sandbox {
 
     /**
      * Constructor
@@ -13,8 +13,8 @@ class VLDAnalyzer extends PHPSandBox {
      * @param string $sourceCode
      * @param string $version
      */
-    public function __construct($sourceCode, $version = "5.5.6") {
-        parent::__construct($version, $sourceCode);
+    public function __construct($sourceCode) {
+        parent::__construct('5.5.6', $sourceCode);
         $this->setServers(\App::make('app.config.env')->VIRTSTORE);
     }
     

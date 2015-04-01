@@ -130,7 +130,7 @@ class Code extends MongoModel {
                 'theme' => $document['theme']
             ));
 
-            $document['versions'] = PHPSandBox::versions();
+            $document['versions'] = SandBox::versions();
 
             return $document;
             

@@ -5,58 +5,80 @@ namespace App\Models;
 use App\Models\Utils;
 
 /**
- * Class for PHP Sandbox runtime access
+ * Core sandbox functionality
  */
-class PHPSandBox {
-    
+abstract class Sandbox {
+
     /**
-     * Available PHP runtime versions
+     * Available runtime versions
      * 
      * @var array 
      */
-    public static $VERSIONS;
+    public static $VERSIONS = array();
+    
+    /**
+     *
+     * @var array 
+     */
+    protected static $VERSION_VARS = array(
+        'PHP_SANDBOX_VERSIONS', 'SANDBOX_HHVM_VERSIONS'
+    );
 
     /**
      * Version
      * 
      * @var string 
      */
-    private $version;
+    protected $_version;
 
     /**
      * System path
      * 
      * @var string 
      */
-    private $systemPath;
+    protected $_systemPath;
 
     /**
      * Source Code
      * 
      * @var string 
      */
-    private $sourceCode;
+    protected $_sourceCode;
     
     /**
      * Servers
      * 
      * @var array 
      */
-    private $servers;
+    protected $_servers;
     
     /**
      * Constructor
      * 
-     * @param string $version
      * @param string $sourceCode
+     * @param string $version
      */
     public function __construct($version, $sourceCode) {
-        $this->setVersion($version);
         $this->setSourceCode($sourceCode);
+        $this->setVersion($version);
         $this->validate();
-        $this->setServers(\App::make('app.config.env')->PHP_SANDBOX_SERVERS);
     }
+    
+    /**
+     * Returns list of versions
+     * 
+     * @return array
+     */
+    public static function versions() {
+        if (empty(self::$VERSIONS)) {
+            foreach (self::$VERSION_VARS as $var) {
+                array_push(self::$VERSIONS, \App\Models\Utils::parseJson(\App::make('app.config.env')->$var, true, true));
+            }
+        }
 
+        return array_keys(self::$VERSIONS);
+    }
+    
     /**
      * Checks whether given runtime version available
      * 
@@ -73,74 +95,30 @@ class PHPSandBox {
      * @param string $route
      * @return string
      */
-    protected function _getAddress($route) {
-        $version = $this->getVersion();
-        return "https://$route/api/php/$version/run";
-    }
-
+    protected abstract function _getAddress($route);
+    
     /**
      * Prepares payload
      * 
      * @return array
      */
-    protected function _getPayload() {
-        return array('v' => $this->getVersion(), 'code' => $this->getSourceCode());
-    }
+    protected abstract function _getPayload();
     
     /**
-     * Executes settings on runtime
-     * 
-     * @return string
-     * @throws Exception
-     */
-    public function execute() {
-
-        $route = IpResolver::route($this->getServers());
-        
-        if($route){
-            return $this->remote($this->_getAddress($route), $this->_getPayload());
-        }
-
-        $files = $this->_prepareSandbox();
-
-        $output = $this->_getOutput($files);
-
-        $this->_clear($files);
-
-        return $output;
-    }
-
-    /**
-     * Validate settings
-     * 
-     * @throws Exception
-     */
-    public function validate() {
-        if (!$this->isVersion($this->getVersion())) {
-            throw new \Exception('Requested version not avaialble :: ' . $this->getVersion());
-        }
-        
-        $code = $this->getSourceCode();
-        
-        $code = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "", $code);
-        
-        if (! preg_match('/^[<][?]php/i', $code) && ! preg_match('/^[<][?]/', $code)) {
-            $this->setSourceCode("<?php " . $this->getSourceCode());
-        }
-
-        $this->setSystemPath(self::$VERSIONS[$this->getVersion()]);
-    }
-
-    /**
-     * Removing all files
+     * Settings for sandbox
      * 
      * @param array $files
+     * @throws \App\Exception\FileCopyException
      */
-    protected function _clear($files) {
-        //force delete sandbox folder
-        shell_exec("rm -rf {$files['sandbox']}");
-    }
-
+    protected abstract function _sandboxSettings($files);
+    
+    /**
+     * Executed Shell Commands
+     * 
+     * @param type $files
+     */
+    protected abstract function _cmd($files);
+    
     /**
      * Preparing sandbox
      * 
@@ -168,27 +146,51 @@ class PHPSandBox {
     }
     
     /**
-     * Settings for sandbox
+     * Executes settings on runtime
      * 
-     * @param array $files
-     * @throws \App\Exception\FileCopyException
+     * @return string
+     * @throws Exception
      */
-    protected function _sandboxSettings($files) {
-        //copy default php.ini to sandbox
-        if (!copy(sprintf(\App::make('app.config.env')->PHP_SANDBOX_PATH, $this->getVersion()), $files['ini'])) {
-            throw new \App\Exception\FileCopyException();
+    public function execute() {
+
+        $route = IpResolver::route($this->getServers());
+        
+        if($route){
+            return $this->remote($this->_getAddress($route), $this->_getPayload());
         }
 
-        $ini_settings = "\n" . file_get_contents(\App::make('app.config.env')->INI_FILE) . "\n";
-        $ini_settings .= 'open_basedir = "' . $files['sandbox'] . '"' . "\n";
+        $files = $this->_prepareSandbox();
 
-        //adding custom ini settings to temp ini file
-        file_put_contents($files['ini'], $ini_settings, FILE_APPEND);  
-        return $files;
+        $output = $this->_getOutput($files);
+
+        $this->_clear($files);
+
+        return $output;
     }
-
+    
     /**
-     * Returns output
+     * Validate settings
+     * 
+     * @throws Exception
+     */
+    public function validate() {
+        if (!$this->isVersion($this->getVersion())) {
+            throw new \Exception('Requested version not avaialble :: ' . $this->getVersion());
+        }
+        
+        $code = $this->getSourceCode();
+        
+        $code = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "", $code);
+        
+        if (! preg_match('/^[<][?]php/i', $code) && ! preg_match('/^[<][?]/', $code)) {
+            $this->setSourceCode("<?php " . $this->getSourceCode());
+        }
+
+        $this->setSystemPath(self::$VERSIONS[$this->getVersion()]);
+    }
+    
+    /**
+     * Validates output and returns it
      * 
      * @param array $files
      * @return string
@@ -212,86 +214,6 @@ class PHPSandBox {
     }
     
     /**
-     * Executed Shell Commands
-     * 
-     * @param type $files
-     */
-    protected function _cmd($files) {
-        return shell_exec($this->getSystemPath() . " -c " . $files['ini'] . " " . $files['php']);
-    }
-
-    /**
-     * Returns Version
-     * 
-     * @return type
-     */
-    public function getVersion() {
-        return $this->version;
-    }
-
-    /**
-     * Returns System path
-     * @return type
-     */
-    public function getSystemPath() {
-        return $this->systemPath;
-    }
-
-    /**
-     * Return Source Code
-     * 
-     * @return type
-     */
-    public function getSourceCode() {
-        return $this->sourceCode;
-    }
-
-    /**
-     * Set Version
-     * 
-     * @param type $version
-     */
-    public function setVersion($version) {
-        $this->version = $version;
-    }
-
-    /**
-     *  Set System path
-     * 
-     * @param type $systemPath
-     */
-    public function setSystemPath($systemPath) {
-        $this->systemPath = $systemPath;
-    }
-
-    /**
-     * Set Source Code 
-     * 
-     * @param type $sourceCode
-     */
-    public function setSourceCode($sourceCode) {
-        $this->sourceCode = $sourceCode;
-    }
-    
-    /**
-     * Return servers
-     * 
-     * @return array
-     */
-    public function getServers() {
-        return $this->servers;
-    }
-
-    /**
-     * Setting servers
-     * 
-     * @param array $servers
-     */
-    public function setServers($servers) {
-        $this->servers = $servers;
-    }
-    
-    /**
      * Execute code on remote server
      * 
      * @param string $address
@@ -305,17 +227,85 @@ class PHPSandBox {
         return $json['output'];
     }
     
+    /**
+     * Removing all files
+     * 
+     * @param array $files
+     */
+    protected function _clear($files) {
+        //force delete sandbox folder
+        shell_exec("rm -rf {$files['sandbox']}");
+    }
     
     /**
-     * Returns list of versions
+     * Returns Version
+     * 
+     * @return type
+     */
+    public function getVersion() {
+        return $this->_version;
+    }
+
+    /**
+     * Returns System path
+     * @return type
+     */
+    public function getSystemPath() {
+        return $this->_systemPath;
+    }
+
+    /**
+     * Return Source Code
+     * 
+     * @return type
+     */
+    public function getSourceCode() {
+        return $this->_sourceCode;
+    }
+
+    /**
+     * Set Version
+     * 
+     * @param type $version
+     */
+    public function setVersion($version) {
+        $this->_version = $version;
+    }
+
+    /**
+     *  Set System path
+     * 
+     * @param type $systemPath
+     */
+    public function setSystemPath($systemPath) {
+        $this->_systemPath = $systemPath;
+    }
+
+    /**
+     * Set Source Code 
+     * 
+     * @param type $sourceCode
+     */
+    public function setSourceCode($sourceCode) {
+        $this->_sourceCode = $sourceCode;
+    }
+    
+    /**
+     * Return servers
      * 
      * @return array
      */
-    public static function versions() {
-        if(empty(self::$VERSIONS)) {
-            self::$VERSIONS = \App\Models\Utils::parseJson(\App::make('app.config.env')->PHP_SANDBOX_VERSIONS, true, true);
-        }
-
-        return array_keys(self::$VERSIONS);
+    public function getServers() {
+        return $this->_servers;
     }
+
+    /**
+     * Setting servers
+     * 
+     * @param array $servers
+     */
+    public function setServers($servers) {
+        $this->_servers = $servers;
+    }
+
 }

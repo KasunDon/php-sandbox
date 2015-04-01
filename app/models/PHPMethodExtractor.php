@@ -5,7 +5,7 @@ namespace App\Models;
 /**
  * Class for handle source code keyword analyzer
  */
-class PHPKeywordAnalyzer {
+class PHPMethodExtractor {
     /**
      * PHP.net localtion
      */
@@ -36,7 +36,7 @@ class PHPKeywordAnalyzer {
      * Setting list of functions
      * 
      * @param array $functions
-     * @return \App\Models\PHPKeywordAnalyzer
+     * @return \App\Models\PHPMethodExtractor
      */
     public function setFunctions($functions) {
         $this->_functions = $functions;
@@ -47,7 +47,7 @@ class PHPKeywordAnalyzer {
      * Setting version  
      * 
      * @param string $version
-     * @return \App\Models\PHPKeywordAnalyzer
+     * @return \App\Models\PHPMethodExtractor
      */
     public function setVersion($version) {
         $this->_version = $version;
@@ -58,7 +58,7 @@ class PHPKeywordAnalyzer {
      * Setting source
      * 
      * @param string $source
-     * @return \App\Models\PHPKeywordAnalyzer
+     * @return \App\Models\PHPMethodExtractor
      */
     public function setSource($source) {
         $this->_source = $source;
@@ -79,7 +79,7 @@ class PHPKeywordAnalyzer {
      * Gets list of internal function by given php version
      */
     protected function _fetchDefaultFunctions() {
-        $box = new PHPSandBox($this->_version, "<?php echo serialize(get_defined_functions()); ?>");
+        $box = new PHPAPI($this->_version, "<?php echo serialize(get_defined_functions()); ?>");
         
         $methods = unserialize($box->execute());
         

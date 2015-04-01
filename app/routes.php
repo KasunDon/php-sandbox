@@ -37,15 +37,15 @@ Route::get('/testing-v2', function() {
 
 
 Route::post('/api/vld-data', array('before' => 'csrf', function() {
-    return Response::json(array('output' => App\Models\VLDAnalyzer::init(Input::get('code'))->execute()));
+    return Response::json(array('output' => App\Models\VLD::init(Input::get('code'))->execute()));
 }));
 
 Route::post('/api/code-ref', array('before' => 'csrf', function() {
     
-    $sandbox = new App\Models\PHPSandBox(Input::get('v'), Input::get('code'));
+    $sandbox = new App\Models\PHPAPI(Input::get('v'), Input::get('code'));
     $sandbox->validate();
 
-    $refs = App\Models\PHPKeywordAnalyzer::init()
+    $refs = App\Models\PHPMethodExtractor::init()
         ->setSource($sandbox->getSourceCode())
         ->setVersion($sandbox->getVersion())
         ->getReferences();
@@ -100,7 +100,7 @@ if (Input::get('clear')) {
 } else if (empty($settings)) {
     $theme = Input::get('theme');
     $inputVersion = Input::get('version');
-    $allVersions = \App\Models\PHPSandBox::versions();
+    $allVersions = \App\Models\SandBox::versions();
     $version = empty($inputVersion)? end($allVersions): $inputVersion;
     $response = Response::json(array('theme' => $theme, 'version' => $version));
     $response->headers->setCookie(Cookie::make('tstgs', "$theme|$version", 43200));
