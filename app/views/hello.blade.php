@@ -4,12 +4,13 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="PHP Legacy versions. Run-Debug-Share. 
-              Anywhere-Anytime PHP Sandbox running versions of {{ implode(', ', array_keys($versions['PHP'])) }} 
-              Available HHVM Versions : {{ implode(', ', array_keys($versions['HHVM'])) }}">
-        <meta name="author" content="">
+        <meta name="description" content="
+        PHP Legacy versions. Run-Debug-Share. 
+        Anywhere-Anytime PHP Sandbox running versions of {{ implode(', ', array_keys($versions['PHP'])) }}
+        Available HHVM Versions : {{ implode(', ', array_keys($versions['HHVM'])) }}">
+        <meta name="author" content="PHPBox">
         <meta name="_token" content="{{ csrf_token() }}" />
-        <title>PHPBox sandbox - Beta version - Debug, Test and Share!</title>
+        <title>PHPBox sandbox - Run, Debug and Share! - PHP Sandbox | HHVM Sandbox |</title>
         <link href="{{ asset('/assets/css/bootstrap.css') }}?noCache={{ time() }}" rel="stylesheet">
         <link href="{{ asset('/assets/css/bootstrap-select.min.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}" />
@@ -32,7 +33,7 @@
                 @endif
                 <h1>PHPBox  - RUN, DEBUG and SHARE!</h1>
             </div>
-            <p class="lead">Any PHP runtime can be used anytime/anywhere. Also share your code snippet and their output.</p>
+            <p class="lead">Any available PHP/HHVM environments can be used anytime/anywhere. Also share your code and output.</p>
             <p>Easy as <b>1-2-3</b>. Place your code. Select runtime. Hit '<b><i>Run</i></b>' Button</p>
             <br>
             <div class="row">
