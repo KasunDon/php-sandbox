@@ -128,7 +128,7 @@ class Code extends MongoModel {
                 'view_link' => self::$SHARE_LINK,
                 'views' => $views['views'],
                 'theme' => $document['theme'],
-                'type' => $document['type']
+                'type' => isset($document['type'])? $document['type']: 'PHP'
             ));
 
             $document['versions'] = SandBox::versions();
