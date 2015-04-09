@@ -35,7 +35,7 @@ class Code extends MongoModel {
      * @var array 
      */
     public static $REQUIRED_PARMS = array(
-        'code', 'output', 'version', 'create_time'
+        'code', 'output', 'version', 'create_time', 'type'
     );
 
     /**
@@ -127,7 +127,8 @@ class Code extends MongoModel {
                 'create_time' => $document['create_time'],
                 'view_link' => self::$SHARE_LINK,
                 'views' => $views['views'],
-                'theme' => $document['theme']
+                'theme' => $document['theme'],
+                'type' => $document['type']
             ));
 
             $document['versions'] = SandBox::versions();

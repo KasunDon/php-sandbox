@@ -14,9 +14,7 @@
             Platform by <a href="{{ \App\Models\Code::$VIEW_LINK }}">PHPBox</a>
             <span style="margin-left: 1em;">
                 <select id="phpbox-version-selector" class="selectpicker dropup" data-container="body" data-width="110px" multiple data-max-options="1">
-                    @foreach ($versions as $lang_version)
-                    <option value='{{$lang_version}}' {{{ isset($version) && $lang_version == $version  ? 'selected' : '' }}}  >PHP {{$lang_version}}</option>
-                    @endforeach
+                    @include('versions')
                 </select>
                 <button id="phpbox-code-run" type="button" class="btn btn-sm btn-primary">Run</button>
                 <button id="phpbox-code-edit" type="button" class="btn btn-sm btn-danger" style="display: none">Edit</button>

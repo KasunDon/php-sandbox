@@ -11,7 +11,6 @@ class VLD extends Sandbox {
      * Constructor
      * 
      * @param string $sourceCode
-     * @param string $version
      */
     public function __construct($sourceCode) {
         parent::__construct('5.5.6', $sourceCode);
@@ -45,7 +44,7 @@ class VLD extends Sandbox {
     protected function _cmd($files) {
 
         return shell_exec("docker run -v {$files['sandbox']}:{$files['sandbox']}"
-        . " -w {$files['sandbox']} sandbox:core php -c {$files['ini']} -dextension=vld.so "
+        . " -w {$files['sandbox']} kasundon/phpbox:core php -c {$files['ini']} -dextension=vld.so "
         . "-dvld.active=1 -dvld.verbosity=1 -dvld.execute=0 {$files['php']} 2>&1");
     }
     

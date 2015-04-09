@@ -31,7 +31,7 @@ Route::get('/view-feedback', function() {
 });
 
 Route::get('/testing-v2', function() {
-    var_dump(\App::make('app.config.env')->VIRTSTORE);
+    var_dump(\App::make('app.config.env')->SANDBOX_HHVM_VERSIONS);
                 die();
 });
 
@@ -100,18 +100,17 @@ if (Input::get('clear')) {
 } else if (empty($settings)) {
     $theme = Input::get('theme');
     $inputVersion = Input::get('version');
+    $type = Input::get('type');
     $allVersions = \App\Models\SandBox::versions();
     $version = empty($inputVersion)? end($allVersions): $inputVersion;
-    $response = Response::json(array('theme' => $theme, 'version' => $version));
-    $response->headers->setCookie(Cookie::make('tstgs', "$theme|$version", 43200));
+    $response = Response::json(array('theme' => $theme, 'version' => $version, 'type' => $type));
+    $response->headers->setCookie(Cookie::make('tstgs', "$theme|$version|$type", 43200));
 } else {
     $parts = explode('|', $settings);
-    $response = Response::json(array('theme' => $parts[0], 'version' => $parts[1]));
+    $response = Response::json(array('theme' => $parts[0], 'version' => $parts[1], 'type' => $parts[2]));
 }
-
 return $response;
 }));
-
 
 Route::get('/view-terms', function() {
     return View::make('terms');
@@ -153,6 +152,6 @@ Route::filter('postParams', function() {
     }
 });
 
-Route::post('/api/php/{version}/run', 'HomeController@run');
+Route::post('/api/{sandbox}/{version}', 'HomeController@run');
 
 

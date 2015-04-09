@@ -76,7 +76,9 @@ PHPBOX.core.runCode = function() {
             alert('Please select PHP runtime version');
             return false;
         }
-
+        
+        version = version.split(" ");
+        
         $(PHPBOX.core.runButton).attr('disabled', true);
 
         var unblockEvent = function() {
@@ -92,13 +94,13 @@ PHPBOX.core.runCode = function() {
 
         $('#loading').show();
 
-        $.post('https://phpbox.info/api/php/' + version + '/run',
-                {v: version, code: PHPBOX.core.editor.getValue()}, function(output) {
+        $.post('https://phpbox.info/api/' + version[0].toLowerCase() + '/' + version[1],
+                {v: version[1], code: PHPBOX.core.editor.getValue()}, function(output) {
             $('#loading').hide();
             $(PHPBOX.core.runButton).hide();
-            // console.log($.blockUI.defaults.css);
+            console.log(output);
             $.blockUI.defaults.css = {padding: '0 3em 0 3em', margin: 0, position: 'relative', cursor: 'hand', 'overflow-y': 'scroll', 'max-height': '100%'};
-            $(PHPBOX.core.editorId).block({message: "<pre id='phpbox-output' class='well pre-phpbox'><strong>PHP Version </strong><small>" + version + "</small> @" + output.datetime + "<br><br>" + output.output + "</pre>",
+            $(PHPBOX.core.editorId).block({message: "<pre id='phpbox-output' class='well pre-phpbox'><strong>" + output.type + " Version </strong><small>" + version[1] + "</small> @" + output.datetime + "<br><br>" + output.output + "</pre>",
                 onBlock: function() {
                     $(PHPBOX.core.editId).show();
                 }});

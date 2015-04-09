@@ -20,8 +20,8 @@ abstract class Sandbox {
      *
      * @var array 
      */
-    protected static $VERSION_VARS = array(
-        'PHP_SANDBOX_VERSIONS', 'SANDBOX_HHVM_VERSIONS'
+    protected static $TYPES = array(
+       'PHP' => 'PHP_SANDBOX_VERSIONS', 'HHVM' => 'SANDBOX_HHVM_VERSIONS'
     );
 
     /**
@@ -30,6 +30,13 @@ abstract class Sandbox {
      * @var string 
      */
     protected $_version;
+    
+    /**
+     * Type
+     * 
+     * @var string 
+     */
+    protected $_type = 'PHP';
 
     /**
      * System path
@@ -71,14 +78,15 @@ abstract class Sandbox {
      */
     public static function versions() {
         if (empty(self::$VERSIONS)) {
-            foreach (self::$VERSION_VARS as $var) {
+            foreach (self::$TYPES as $prefix => $var) {
                 $version = \App\Models\Utils::parseJson(\App::make('app.config.env')->$var, true, true);
                 if(! empty($version)) {
-                    self::$VERSIONS = array_merge(self::$VERSIONS, $version);
+                    self::$VERSIONS[$prefix] = $version;
                 }
             }
         }
-        return array_keys(self::$VERSIONS);
+        
+        return self::$VERSIONS;
     }
     
     /**
@@ -88,7 +96,7 @@ abstract class Sandbox {
      * @return boolean
      */
     public function isVersion($version) {
-        return (in_array($version, array_keys(self::$VERSIONS))) ? true : false;
+        return (in_array($version, array_keys(self::$VERSIONS[$this->_type]))) ? true : false;
     }
     
     /**
@@ -188,7 +196,7 @@ abstract class Sandbox {
             $this->setSourceCode("<?php " . $this->getSourceCode());
         }
 
-        $this->setSystemPath(self::$VERSIONS[$this->getVersion()]);
+        $this->setSystemPath(self::$VERSIONS[$this->_type][$this->getVersion()]);
     }
     
     /**
@@ -247,6 +255,15 @@ abstract class Sandbox {
     public function getVersion() {
         return $this->_version;
     }
+    
+    /**
+     * Returns Version
+     * 
+     * @return type
+     */
+    public function getType() {
+        return $this->_type;
+    }
 
     /**
      * Returns System path
@@ -272,6 +289,15 @@ abstract class Sandbox {
      */
     public function setVersion($version) {
         $this->_version = $version;
+    }
+    
+    /**
+     * Set Version
+     * 
+     * @param type $version
+     */
+    public function setType($type) {
+        $this->_type = $type;
     }
 
     /**

@@ -5,8 +5,8 @@ namespace App\Models;
 /**
  * Class for PHP Sandbox runtime access
  */
-class PHPAPI extends Sandbox { 
-  
+class PHPAPI extends Sandbox {
+    
     /**
      * Constructor
      * 
@@ -26,7 +26,7 @@ class PHPAPI extends Sandbox {
      */
     protected function _getAddress($route) {
         $version = $this->getVersion();
-        return "https://$route/api/php/$version/run";
+        return "https://$route/api/php/$version";
     }
 
     /**
