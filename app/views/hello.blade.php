@@ -35,7 +35,7 @@
                 @endif
                 <h1>PHPBox  - RUN, DEBUG and SHARE!</h1>
             </div>
-            <p class="lead">Any available PHP/HHVM/HippyVM environments can be used anytime/anywhere. Also share your code and output.</p>
+            <p class="lead">Any available PHP | HHVM | HippyVM environments can be used anytime/anywhere. Also share your code and output.</p>
             <p>Easy as <b>1-2-3</b>. Place your code. Select runtime. Hit '<b><i>Run</i></b>' Button</p>
             <br>
             <div class="row">
