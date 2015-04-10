@@ -72,11 +72,9 @@ App::down(function()
 | Forcing non HTTPS requests to use HTTPS in production
 |--------------------------------------------------------------------------
 */
-App::before(function($request)
+App::before( function( $request )
 {
-	if ((App::make('app.config.env')->APP_ENV !== 'local') && ! Request::secure()){
-            return Redirect::secure(Request::getRequestUri()); 
-	} 
+    Request::setTrustedProxies( [ $request->getClientIp() ] );
 });
 
 /*
