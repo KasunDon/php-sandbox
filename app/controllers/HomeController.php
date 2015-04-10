@@ -7,6 +7,7 @@ use App\Models\Feedback;
 use App\Models\Issues;
 use App\Models\Utils;
 use App\Models\HHVM;
+use App\Models\HippyVM;
 
 /**
  * HomeConroller Class
@@ -33,6 +34,10 @@ class HomeController extends BaseController {
             
             case 'HHVM':
                 $api = new HHVM(Input::get('code'), $version);
+                break;
+            
+            case 'HIPPYVM':
+                $api = new HippyVM(Input::get('code'), $version);
                 break;
             
             default:

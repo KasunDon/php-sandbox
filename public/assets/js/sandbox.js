@@ -238,7 +238,7 @@ SANDBOX.core.run = function() {
 };
 
 SANDBOX.core.tabControl = function(payload) {
-    if (SANDBOX.core.version[0].toLowerCase() !== 'hhvm') {
+    if (SANDBOX.core.version[0].toLowerCase() === 'php') {
         SANDBOX.core.activateAllTabs();
         SANDBOX.core.getRefs(payload);
         SANDBOX.core.getVLD(payload);

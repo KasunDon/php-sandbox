@@ -21,7 +21,7 @@ abstract class Sandbox {
      * @var array 
      */
     protected static $TYPES = array(
-       'PHP' => 'PHP_SANDBOX_VERSIONS', 'HHVM' => 'SANDBOX_HHVM_VERSIONS'
+       'PHP' => 'PHP_SANDBOX_VERSIONS', 'HHVM' => 'SANDBOX_HHVM_VERSIONS', 'HIPPYVM' => 'SANDBOX_HIPPYVM_VERSIONS'
     );
 
     /**
