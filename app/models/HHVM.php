@@ -62,6 +62,9 @@ class HHVM extends Sandbox{
      * @throws \App\Exception\FileCopyException
      */
     protected function _sandboxSettings($files) {
+        //creating .hhconfig file to enable hhvm typechecker
+        touch($files['sandbox'] . "/.hhconfig");
+        
         return $files;
     }
 }
