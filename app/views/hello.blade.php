@@ -12,7 +12,7 @@
         ">
         <meta name="author" content="PHPBox">
         <meta name="_token" content="{{ csrf_token() }}" />
-        <title>PHPBox - Run, Debug and Share! - PHP Sandbox | HHVM Sandbox </title>
+        <title>PHPBox - Run, Debug and Share! - PHP | HHVM | HIPPYVM </title>
         <link href="{{ asset('/assets/css/bootstrap.css') }}?noCache={{ time() }}" rel="stylesheet">
         <link href="{{ asset('/assets/css/bootstrap-select.min.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}" />
