@@ -67,15 +67,10 @@ App::down(function()
 	return Response::make("Be right back!", 503);
 });
 
-/*
-|--------------------------------------------------------------------------
-| Forcing non HTTPS requests to use HTTPS in production
-|--------------------------------------------------------------------------
-*/
-App::before( function( $request )
-{
-    Request::setTrustedProxies( [ $request->getClientIp() ] );
-});
+Request::setTrustedProxies(array(
+    '10.131.211.185',
+    '10.131.210.147'
+));
 
 /*
 |--------------------------------------------------------------------------
