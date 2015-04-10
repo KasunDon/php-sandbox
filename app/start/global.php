@@ -69,13 +69,26 @@ App::down(function()
 
 /*
 |--------------------------------------------------------------------------
+| Forcing non HTTPS requests to use HTTPS in production
+|--------------------------------------------------------------------------
+*/
+App::before(function($request)
+{
+	if ((App::make('app.config.env')->APP_ENV !== 'local') && ! Request::secure()){
+            return Redirect::secure(Request::getRequestUri()); 
+	} 
+});
+
+/*
+|--------------------------------------------------------------------------
 | Loading PHP Runtime Versions
 |--------------------------------------------------------------------------
 | Initializing PHP Runtime versions when app loads
 */
 \App\Models\Sandbox::versions(); 
-\App\Models\Code::$VIEW_LINK = (\App::make('app.config.env')->APP_ENV !== 'local')? 'https://phpbox.info/': 'http://beta.phpbox.info/';
+\App\Models\Code::$VIEW_LINK = (App::make('app.config.env')->APP_ENV !== 'local')? 'https://phpbox.info/': 'http://beta.phpbox.info/';
 \App\Models\Code::$SHARE_LINK = \App\Models\Code::$VIEW_LINK . 'share/';
+
 /*
 |--------------------------------------------------------------------------
 | Require The Filters File
