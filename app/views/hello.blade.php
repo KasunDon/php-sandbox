@@ -7,7 +7,9 @@
         <meta name="description" content="
         PHP Legacy versions. Run-Debug-Share. 
         Anywhere-Anytime PHP Sandbox running versions of {{ implode(', ', array_keys($versions['PHP'])) }}
-        Available HHVM Versions : {{ implode(', ', array_keys($versions['HHVM'])) }}">
+        HHVM Versions : {{ implode(', ', array_keys($versions['HHVM'])) }}
+        Latest HippyVM
+        ">
         <meta name="author" content="PHPBox">
         <meta name="_token" content="{{ csrf_token() }}" />
         <title>PHPBox - Run, Debug and Share! - PHP Sandbox | HHVM Sandbox </title>
@@ -33,7 +35,7 @@
                 @endif
                 <h1>PHPBox  - RUN, DEBUG and SHARE!</h1>
             </div>
-            <p class="lead">Any available PHP/HHVM environments can be used anytime/anywhere. Also share your code and output.</p>
+            <p class="lead">Any available PHP/HHVM/HippyVM environments can be used anytime/anywhere. Also share your code and output.</p>
             <p>Easy as <b>1-2-3</b>. Place your code. Select runtime. Hit '<b><i>Run</i></b>' Button</p>
             <br>
             <div class="row">
