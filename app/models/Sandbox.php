@@ -147,7 +147,7 @@ abstract class Sandbox {
         mkdir($files['sandbox']);
 
         //replacing empty spaces
-        file_put_contents($files['php'], str_replace("\r\n\r\n\r\n", "", $this->getSourceCode()));
+        file_put_contents($files['php'], $this->getSourceCode());
         
         //change directory
         chdir($files['sandbox']);
@@ -212,10 +212,6 @@ abstract class Sandbox {
         foreach ($files as $file) {
             $output = str_replace($file, "SandBox-Request", $output);
         }
-
-        //clearing up signatures
-        $output = str_replace(array("Content-type: text/html", "X-Powered-By: PHP/" .
-            $this->getVersion(), "\r\n\r\n\r\n"), "", $output);
 
         if (preg_match("/^\s*$/", $output)) {
             $output = "No output!";

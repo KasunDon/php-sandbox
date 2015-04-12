@@ -64,6 +64,6 @@ class PHPAPI extends Sandbox {
      * @param type $files
      */
     protected function _cmd($files) {
-        return shell_exec($this->getSystemPath() . " -c " . $files['ini'] . " " . $files['php']);
+        return shell_exec($this->getSystemPath() . " -q -c " . $files['ini'] . " " . $files['php']);
     }
 }
