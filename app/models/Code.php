@@ -20,14 +20,6 @@ class Code extends MongoModel {
      * @var string 
      */
     public static $VIEW_LINK;
-    
-    
-    /**
-     * Share Link
-     * 
-     * @var string 
-     */
-    public static $SHARE_LINK;
 
     /**
      * Document required parameters
@@ -142,7 +134,7 @@ class Code extends MongoModel {
             'version' => $document['version'],
             'id' => $id,
             'create_time' => $document['create_time'],
-            'view_link' => self::$SHARE_LINK,
+            'view_link' => self::$VIEW_LINK,
             'views' => $views['views'],
             'theme' => $document['theme'],
             'type' => isset($document['type']) ? $document['type'] : 'PHP'
