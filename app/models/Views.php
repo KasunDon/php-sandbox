@@ -5,6 +5,16 @@ namespace App\Models;
  * Document Class for Mongo-Views Mondel
  */
 class Views extends MongoModel {
+    
+    /**
+     * Tracking code length
+     */
+    const TRACKING_CODE_LENGTH = 5;
+    
+    /**
+     * Tracking code chars
+     */
+    const TRACKING_CODE_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
     /**
      * Document required parameters
@@ -47,10 +57,39 @@ class Views extends MongoModel {
     public function getDocument(array $params) {
         return array_merge(parent::getDocument($params), array(
             '_id' => new \MongoId($this->getId()),
-            'views' => 0
+            'views' => 0,
+            'tracking_code' => $this->getTrackingCode()
         ));
     }
-
+    
+    /**
+     * Get Unique String
+     * 
+     * @return string
+     */
+    public function getTrackingCode() {
+        while (true) {
+            $random = substr(str_shuffle(self::TRACKING_CODE_CHARS), 0, self::TRACKING_CODE_LENGTH);
+            
+            $objectId = self::objectIdByTrackingCode($random);
+            
+            if (empty($objectId)) {
+                return $random;
+            }
+        }
+    }
+    
+    /**
+     * Object Id by tracking code
+     * 
+     * @param string $code
+     * @return mixed
+     */
+    public static function objectIdByTrackingCode($code) {
+        return Storage::instance('views')->getCollection()
+                    ->findOne(array('tracking_code' => $code));
+    }
+    
     /**
      * Reurns prepared document with given id
      * 

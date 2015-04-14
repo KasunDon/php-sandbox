@@ -17,9 +17,13 @@ Route::get('/view-report-issue', function() {
     return View::make('report');
 });
 
-Route::get('/share/{codeId}', function($codeId) {
+Route::get('/{codeId}', function($codeId) {
     $document = \App\Models\Code::getCode($codeId);
     return View::make('hello', $document);
+})->where('codeId', '[A-Za-z0-9]+');;
+
+Route::get('/share/{codeId}', function($codeId) {
+    return Redirect::to("/$codeId");
 });
 
 Route::get('/get-embed/{codeId}', function($codeId) {
@@ -31,8 +35,7 @@ Route::get('/view-feedback', function() {
 });
 
 Route::get('/testing-v2', function() {
-    var_dump(\App::make('app.config.env')->SANDBOX_HHVM_VERSIONS);
-                die();
+    
 });
 
 
@@ -121,14 +124,17 @@ Route::post('/auth/resource', 'AuthController@resource');
 
 Route::post('/report-issue', array('before' => array('postParams', 'csrf'), 'uses' => 'HomeController@reportIssue'));
 
-Route::post('/save-code', array('before' => array('postParams', 'csrf'), function() {
+Route::post('/store', array('before' => array('postParams', 'csrf'), function() {
 $document = \App\Models\Code::doc();
 $id = $document['_id']->{'$id'};
 
 \App\Models\Storage::instance('phpsources')->getCollection()->insert($document);
-\App\Models\Storage::instance('views')->getCollection()->insert(\App\Models\Views::doc($id));
 
-return Response::json(array('viewId' => $id, 'viewLink' => \App\Models\Code::$SHARE_LINK));
+$view = \App\Models\Views::doc($id);
+
+\App\Models\Storage::instance('views')->getCollection()->insert($view);
+
+return Response::json(array('viewId' => $view['tracking_code'], 'viewLink' => \App\Models\Code::$VIEW_LINK));
 })
 );
 

@@ -26,6 +26,17 @@
           <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/html5shiv.min.js"></script>
           <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/respond.min.js"></script>
         <![endif]-->
+        <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/jquery-1.11.2.min.js"></script>   	
+        <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/ace/ext-language_tools.js"></script>
+        <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/ie10-viewport-bug-workaround.js"></script>
+        <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/bootstrap.min.js"></script>
+        <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/bootstrap-select.min.js"></script>
+        <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/bootbox.min.js"></script>
+        <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/button.js"></script>
+        <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/jquery.share.js"></script>
+        <script type="text/javascript" src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/bootstrapValidator.min.js"></script>
+        <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/sandbox.min.js?noCache={{ time() }}"></script>
     </head>
     <body>
         <div class="container">
@@ -173,17 +184,6 @@ echo 'hello world!';</pre>
             </div>
         </div>
     </footer>
-    <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/jquery-1.11.2.min.js"></script>   	
-    <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/ace/ext-language_tools.js"></script>
-    <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/bootstrap.min.js"></script>
-    <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/bootstrap-select.min.js"></script>
-    <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/bootbox.min.js"></script>
-    <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/button.js"></script>
-    <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/jquery.share.js"></script>
-    <script type="text/javascript" src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/bootstrapValidator.min.js"></script>
-    <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/sandbox.min.js?noCache={{ time() }}"></script>
     <script>
         
                 @if(\App::make('app.config.env')->APP_ENV !== 'local')

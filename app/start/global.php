@@ -75,7 +75,6 @@ App::down(function()
 */
 \App\Models\Sandbox::versions(); 
 \App\Models\Code::$VIEW_LINK = (App::make('app.config.env')->APP_ENV !== 'local')? 'https://phpbox.info/': 'http://beta.phpbox.info/';
-\App\Models\Code::$SHARE_LINK = \App\Models\Code::$VIEW_LINK . 'share/';
 
 /*
 |--------------------------------------------------------------------------

@@ -82,7 +82,7 @@ SANDBOX.core.socialTab = function() {
         $('#progress').show();
         setTimeout(function() {
             var theme = $('#theme-selector').find(":selected").val() || 'xcode';
-            $.post('/save-code', {code: SANDBOX.core.editor.getValue(), output:
+            $.post('/store', {code: SANDBOX.core.editor.getValue(), output:
                         SANDBOX.core.output, create_time: SANDBOX.core.create_time,
                 version: SANDBOX.core.version[1], type: SANDBOX.core.version[0], theme: theme, vType: 'c1'}, function(data) {
                 SANDBOX.core.viewId = data.viewId;

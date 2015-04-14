@@ -99,44 +99,58 @@ class Code extends MongoModel {
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public static function getCode($code) {
-        try {
-            $document = Storage::instance('phpsources')
-                    ->getCollection()
-                    ->findOne(array('_id' => new \MongoId($code)));
+        //checks whether legacy tracking code or not
+        if (strlen($code) == Views::TRACKING_CODE_LENGTH) {
+            $object = Views::objectIdByTrackingCode($code);
+            $code = $object['_id']->{'$id'};
+        }
 
-            if (! \Session::has('visit-' . $code) && empty(\Input::get('noVisitor'))) {
-                \Session::put('visit-' . $code, true);
-
-                Storage::instance('views')
-                        ->getCollection()
-                        ->update(array('_id' => new \MongoId($document['_id']->{'$id'})), 
-                                array('$inc' => array('views' => 1)));
-            }
-            
-            if(empty($document)) {
-                throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
-            }
-            
-            $views = Storage::instance('views')
-                    ->getCollection()
-                    ->findOne(array('_id' => new \MongoId($document['_id']->{'$id'})));
-
-            $document['meta'] = json_encode(array(
-                'version' => $document['version'],
-                'id' => $document['_id']->{'$id'},
-                'create_time' => $document['create_time'],
-                'view_link' => self::$SHARE_LINK,
-                'views' => $views['views'],
-                'theme' => $document['theme'],
-                'type' => isset($document['type'])? $document['type']: 'PHP'
-            ));
-
-            $document['versions'] = SandBox::versions();
-
-            return $document;
-            
-        } catch (Exception $e) {
+        //checks object id validity
+        if (! \MongoId::isValid($code)) {
             throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
         }
+
+        //finds source document
+        $document = Storage::instance('phpsources')
+                ->getCollection()
+                ->findOne(array('_id' => new \MongoId($code)));
+
+        if (empty($document)) {
+            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+        }
+        
+        //creates session if not existing 
+        if (!\Session::has('visit-' . $code) && empty(\Input::get('noVisitor'))) {
+            
+            \Session::put('visit-' . $code, true);
+
+            Storage::instance('views')
+                    ->getCollection()
+                    ->update(array('_id' => new \MongoId($document['_id']->{'$id'})),
+                            array('$inc' => array('views' => 1)));
+        }
+
+        $views = Storage::instance('views')
+                ->getCollection()
+                ->findOne(array('_id' => new \MongoId($document['_id']->{'$id'})));
+
+        //determinte whether use legacy tracking code or not
+        $id = ! empty($views['tracking_code']) && strlen(Views::TRACKING_CODE_LENGTH) ?
+                $views['tracking_code'] : $document['_id']->{'$id'};
+
+        $document['meta'] = json_encode(array(
+            'version' => $document['version'],
+            'id' => $id,
+            'create_time' => $document['create_time'],
+            'view_link' => self::$SHARE_LINK,
+            'views' => $views['views'],
+            'theme' => $document['theme'],
+            'type' => isset($document['type']) ? $document['type'] : 'PHP'
+        ));
+
+        $document['_id'] = $id;
+        $document['versions'] = SandBox::versions();
+
+        return $document;
     }
 }
