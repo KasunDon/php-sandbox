@@ -105,7 +105,7 @@ if (Input::get('clear')) {
     $inputVersion = Input::get('version');
     $type = Input::get('type');
     $allVersions = \App\Models\SandBox::versions();
-    $version = empty($inputVersion)? end($allVersions): $inputVersion;
+    $version = empty($inputVersion)? end($allVersions['PHP']): $inputVersion;
     $response = Response::json(array('theme' => $theme, 'version' => $version, 'type' => $type));
     $response->headers->setCookie(Cookie::make('tstgs', "$theme|$version|$type", 43200));
 } else {

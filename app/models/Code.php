@@ -94,7 +94,7 @@ class Code extends MongoModel {
         //checks whether legacy tracking code or not
         if (strlen($code) == Views::TRACKING_CODE_LENGTH) {
             $object = Views::objectIdByTrackingCode($code);
-            $code = $object['_id']->{'$id'};
+            $code = is_object($object['_id'])? $object['_id']->{'$id'}: $code;
         }
 
         //checks object id validity
