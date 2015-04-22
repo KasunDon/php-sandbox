@@ -24,7 +24,7 @@ class Config {
     protected static $ENV_VARS = array(
         'INI_FILE', 'SANDBOX', 'PHP_SANDBOX_VERSIONS', 'SANDBOX_HHVM_VERSIONS',
         'PHP_SANDBOX_PATH', 'PHP_SANDBOX_SERVERS', 'VIRTSTORE','APP_ENV', 
-        'SANDBOX_HIPPYVM_VERSIONS'
+        'SANDBOX_HIPPYVM_VERSIONS', 'SETTINGS'
     );
 
     /**

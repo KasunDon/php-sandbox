@@ -77,4 +77,18 @@ class IpResolver {
         $servers = Utils::parseJson($servers, true, true);
         return array_keys($servers);
     }
+    
+    /**
+     * Return next available port
+     */
+    public static function getPort() {
+        while(true) {
+            $random = rand(20000, 25000);
+            $output = shell_exec("lsof -iTCP:$random");
+            
+            if(empty($output)) {
+                return $random;
+            }
+        } 
+    }
 }

