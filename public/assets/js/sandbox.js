@@ -315,7 +315,6 @@ SANDBOX.core.setup = function() {
     SANDBOX.core.defaultCode = SANDBOX.core.editor.getValue();
 
     SANDBOX.utils.viewLoader('/view-service', {}, 'serviceContent');
-    SANDBOX.utils.viewLoader('/view-report-issue', {}, 'reportContent');
     SANDBOX.utils.viewLoader('/view-feedback', {}, 'feedbackContent');
     SANDBOX.utils.viewLoader('/view-social', {}, 'socialContent');
     SANDBOX.utils.viewLoader('/view-terms', {}, 'termsContent');
@@ -334,30 +333,6 @@ SANDBOX.core.setup = function() {
     if (SANDBOX.core.shareMode !== 1) {
         SANDBOX.core.setSettings();
     }
-
-    $('#report').on("click", function(e) {
-        bootbox.dialog({
-            message: SANDBOX.core.content.reportContent,
-            title: "<span class='glyphicon glyphicon-exclamation-sign' style='padding-left:5px;'></span> Report a issue",
-            buttons: {
-                report: {
-                    label: "Report",
-                    className: "btn-danger",
-                    callback: function() {
-                        $('#report-form').trigger('submit');
-                        return false;
-                    }
-                },
-                close: {
-                    label: "Close",
-                    className: "btn-default",
-                    callback: function() {
-
-                    }
-                }
-            }
-        });
-    });
 
     $('#feedback').on("click", function(e) {
         bootbox.dialog({

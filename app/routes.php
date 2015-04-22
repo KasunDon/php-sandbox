@@ -101,12 +101,14 @@ $response = null;
 if (Input::get('clear')) {
     $response = Response::make('reset')->withCookie(Cookie::forget('tstgs'));
 } else if (empty($settings)) {
+    $deafult = 'PHP';
     $theme = Input::get('theme');
     $inputVersion = Input::get('version');
     $type = Input::get('type');
     $allVersions = \App\Models\SandBox::versions();
-    $phpVersions = array_keys($allVersions['PHP']);
+    $phpVersions = array_keys($allVersions[$deafult]);
     $version = empty($inputVersion)? end($phpVersions): $inputVersion;
+    $type = empty($type)? $deafult: $type;
     $response = Response::json(array('theme' => $theme, 'version' => $version, 'type' => $type));
     $response->headers->setCookie(Cookie::make('tstgs', "$theme|$version|$type", 43200));
 } else {
