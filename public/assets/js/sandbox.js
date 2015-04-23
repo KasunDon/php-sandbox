@@ -457,7 +457,20 @@ SANDBOX.validation.issue = function() {
 
 SANDBOX.utils.initEditor = function(t) {
     ace.require("ace/ext/language_tools");
+    var dom = ace.require("ace/lib/dom");
+
+    ace.require("ace/commands/default_commands").commands.push({
+        name: "Toggle Fullscreen",
+        bindKey: "F11",
+        exec: function(editor) {
+            dom.toggleCssClass(document.body, "fullScreen");
+            dom.toggleCssClass(editor.container, "fullScreen-editor");
+            editor.resize();
+        }
+    });
+
     var editor = ace.edit("editor");
+   
     editor.setTheme("ace/theme/" + t);
     editor.getSession().setMode("ace/mode/php");
     editor.setOptions({
@@ -465,6 +478,7 @@ SANDBOX.utils.initEditor = function(t) {
         enableSnippets: true,
         enableLiveAutocompletion: false
     });
+
     return editor;
 };
 
