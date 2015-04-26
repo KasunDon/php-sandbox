@@ -180,6 +180,7 @@ echo 'hello world!';</pre>
 
             <br><br>
 
+            <div class="row">
             <div id="adzone">
                 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                 <!-- software -->
@@ -188,11 +189,9 @@ echo 'hello world!';</pre>
                      data-ad-client="ca-pub-9934334610290132"
                      data-ad-slot="2993561801"
                      data-ad-format="auto"></ins>
-                <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
             </div>
-
+            </div>
+<br>
             <div class="row">
                 <div class="col-md-5" style="bottom: 4px;">
                     <div class="fb-like"  data-href="https://www.facebook.com/pages/PHPBox-Sandbox/864368126975513" data-layout="standard" data-action="like" data-show-faces="false" data-share="false"></div>
@@ -274,6 +273,9 @@ echo 'hello world!';</pre>
     ga('send', 'pageview');
             @endif
             SANDBOX.core.setup();
+            window.setTimeout(function (){
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            }, 300);
 </script>
 </body>
 </html>
