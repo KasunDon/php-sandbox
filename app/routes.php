@@ -34,6 +34,10 @@ Route::get('/view-feedback', function() {
     return View::make('feedback');
 });
 
+Route::get('/view-login', function() {
+    return View::make('login');
+});
+
 Route::get('/testing-v2', function() {
     
 });

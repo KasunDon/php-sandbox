@@ -318,6 +318,7 @@ SANDBOX.core.setup = function() {
     SANDBOX.utils.viewLoader('/view-feedback', {}, 'feedbackContent');
     SANDBOX.utils.viewLoader('/view-social', {}, 'socialContent');
     SANDBOX.utils.viewLoader('/view-terms', {}, 'termsContent');
+    SANDBOX.utils.viewLoader('/view-login', {}, 'loginContent');
 
     $('#theme-selector, #version-selector').change(function() {
         SANDBOX.core.theme = SANDBOX.utils.getSelection('#theme-selector') || SANDBOX.core.theme;
@@ -333,6 +334,12 @@ SANDBOX.core.setup = function() {
     if (SANDBOX.core.shareMode !== 1) {
         SANDBOX.core.setSettings();
     }
+    $('#sign-in').on("click", function(e) {
+        bootbox.dialog({
+            message: SANDBOX.core.content.loginContent,
+            title: "<span class='glyphicon glyphicon-hand-up' style='padding-left:5px;'></span> My Account"
+        });
+    });
 
     $('#feedback').on("click", function(e) {
         bootbox.dialog({
@@ -470,7 +477,7 @@ SANDBOX.utils.initEditor = function(t) {
     });
 
     var editor = ace.edit("editor");
-   
+
     editor.setTheme("ace/theme/" + t);
     editor.getSession().setMode("ace/mode/php");
     editor.setOptions({

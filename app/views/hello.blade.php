@@ -40,6 +40,13 @@
         <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/sandbox.min.js?noCache={{ time() }}"></script>
     </head>
     <body>
+          <section>
+            <div class="pull-right" style="margin-right: 17px; margin-top: 35px; float: right">
+                <button id="sign-in" class="btn btn-default">
+                    <b style="font-family: sans-serif" class=""><span class="glyphicon glyphicon-user"></span> My Account</b>
+                </button>
+            </div>
+        </section>
         <div id="fb-root"></div>
         <script>(function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -151,7 +158,7 @@ echo 'hello world!';</pre>
                         <button type="button" class="btn toggle btn-small btn-default" data-toggle="collapse" autocomplete="off" data-target="#filter-panel">
                             <span class="glyphicon glyphicon-cog"></span><small> Advanced</small></button>
                     </div>
-                    <button id="save_share" type="button" class="btn btn-success" style="float: right;"><b>Share</b></button>
+                    <button id="save_share" type="button" class="btn btn-warning" style="float: right;"><b>Keep</b></button>
 
                 </div>
             </div>
