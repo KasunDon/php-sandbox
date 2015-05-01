@@ -17,6 +17,10 @@ Route::get('/view-report-issue', function() {
     return View::make('report');
 });
 
+Route::get('/login', function() {
+    return View::make('login');
+});
+
 Route::get('/{codeId}', function($codeId) {
     $document = \App\Models\Code::getCode($codeId);
     return View::make('hello', $document);
@@ -34,9 +38,7 @@ Route::get('/view-feedback', function() {
     return View::make('feedback');
 });
 
-Route::get('/view-login', function() {
-    return View::make('login');
-});
+
 
 Route::get('/testing-v2', function() {
     
