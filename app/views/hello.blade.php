@@ -105,6 +105,14 @@ echo 'hello world!';</pre>
                 </div>
 
                 <div id="output-zone" style="margin-top: 30px; display: none; margin-bottom: 80px;">
+                    <div class="row">
+                        <div class="col-xs-6" style="margin: 0 0 10px 0!important;">
+                            <button id="select_output" type="button" class="btn btn-default" style="float: left;">Select</button>
+                        </div>
+                        <div class="col-xs-6" style="margin: 0 0 10px 0!important;">
+                            <button id="save_share" type="button" class="btn btn-warning" style="float: right;"><b>Keep</b></button>
+                        </div>
+                    </div>
                     <span style="float: right;"><small id="run-datetime"></small></span>
                     <div><span id="code-type"></span> Version: <b><small id="code-version"> </small></b></div>
 
@@ -151,7 +159,6 @@ echo 'hello world!';</pre>
                         <button type="button" class="btn toggle btn-small btn-default" data-toggle="collapse" autocomplete="off" data-target="#filter-panel">
                             <span class="glyphicon glyphicon-cog"></span><small> Advanced</small></button>
                     </div>
-                    <button id="save_share" type="button" class="btn btn-success" style="float: right;"><b>Share</b></button>
 
                 </div>
             </div>

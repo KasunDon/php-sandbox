@@ -310,6 +310,10 @@ SANDBOX.core.setup = function() {
         ;
     });
 
+    $('#select_output').on('click', function() {
+        SANDBOX.selectOutput();
+    });
+
     SANDBOX.core.editor = SANDBOX.utils.initEditor(SANDBOX.core.theme);
 
     SANDBOX.core.defaultCode = SANDBOX.core.editor.getValue();
@@ -470,7 +474,7 @@ SANDBOX.utils.initEditor = function(t) {
     });
 
     var editor = ace.edit("editor");
-   
+
     editor.setTheme("ace/theme/" + t);
     editor.getSession().setMode("ace/mode/php");
     editor.setOptions({
@@ -514,3 +518,21 @@ SANDBOX.validation.feedback = function() {
         });
     });
 };
+
+SANDBOX.selectOutput = function() {
+    var doc = document
+            , text = doc.getElementById('output')
+            , range, selection
+            ;
+    if (doc.body.createTextRange) {
+        range = document.body.createTextRange();
+        range.moveToElementText(text);
+        range.select();
+    } else if (window.getSelection) {
+        selection = window.getSelection();
+        range = document.createRange();
+        range.selectNodeContents(text);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+}
