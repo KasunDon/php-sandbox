@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="Refresh" content="2;url=http://www.phpbox.info">
+        <meta http-equiv="Refresh" content="2;url=http://www.phpbox.info/?refer=404">
         <title>PHPBox sandbox - Beta version - Debug, Test and Share! - 404</title>
         <link href="/assets/css/bootstrap.css" rel="stylesheet">
     </head>
