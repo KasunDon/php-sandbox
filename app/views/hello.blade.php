@@ -261,7 +261,7 @@ echo 'hello world!';</pre>
                         <input type="hidden" name="hosted_button_id" value="NETPW44ZFYCQ6">
                         <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
                         <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-                        <small class="text-muted"> <strong>Help us for better service.</strong></small> 
+                        <small class="text-muted"> <strong>Help us to improve!.</strong></small> 
                     </form>
                 </div>
             </div>
