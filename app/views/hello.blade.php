@@ -256,8 +256,13 @@ echo 'hello world!';</pre>
                 <div class="col-md-2"><a id="feedback" style="cursor: pointer;">Send Feedback</a></div>
                 <div class="col-md-2"><a id="terms" style="cursor: pointer;">Terms & Conditions</a></div>
                 <div class="col-md-2">
-                    <small><a href="https://www.digitalocean.com/?refcode=2fdebfd067c7">DigitalOcean</a></small>
-                    <small> - <strong class="text-muted">Get $10 free credit</strong></small> 
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="NETPW44ZFYCQ6">
+                        <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+                        <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+                        <small class="text-muted"> <strong>Help us for better service.</strong></small> 
+                    </form>
                 </div>
             </div>
         </div>
