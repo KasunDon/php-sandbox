@@ -38,20 +38,27 @@ class Utils {
     public static function curl($url, array $params = null, $method = self::CURL_GET) {
         $ch = curl_init();
 
+        if (!preg_match("@^[hf]tt?ps?://@", $params['url'])) {
+            $params['url'] = "http://" . $params['url'];
+        }
+
+        $setParams = '';
+
+        foreach ($params as $key => $value) {
+            $setParams .= $key . "=" . urlencode($value) . "&";
+        }
+
+        $setParams = rtrim($setParams, "&");
+
+        $url .= strpos($url, "?") !== false ? $setParams : "?$setParams";
+
         //CURL Settings
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 
-        if ($method == self::CURL_POST) {
-            $postParams = '';
-            foreach ($params as $key => $value) {
-                $postParams .= $key . "=" . $value . "&";
-            }
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $postParams);
+        if ($method === self::CURL_POST) {
+            curl_setopt($ch, CURLOPT_POST, count($params));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $setParams);
         }
 
         $output = curl_exec($ch);
@@ -64,7 +71,7 @@ class Utils {
 
         return $output;
     }
-    
+
     /**
      * Formatted DateTime
      * 
@@ -74,7 +81,7 @@ class Utils {
     public static function datetime($format = 'Y-m-d H:i:s') {
         return date_format(new \DateTime(), $format);
     }
-    
+
     /**
      * Accessing Server Global
      * 
@@ -85,7 +92,7 @@ class Utils {
         if ($param === 'REMOTE_ADDR') {
             $param = 'HTTP_X_FORWARDED_FOR';
         }
-        return (isset($_SERVER[$param]) && ! empty($_SERVER[$param]))? $_SERVER[$param]: '127.0.0.1';
+        return (isset($_SERVER[$param]) && !empty($_SERVER[$param])) ? $_SERVER[$param] : '127.0.0.1';
     }
 
 }

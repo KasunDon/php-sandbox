@@ -141,7 +141,7 @@ class Code extends MongoModel {
         ));
 
         $document['_id'] = $id;
-        $document['versions'] = SandBox::versions();
+        $document['versions'] = SandboxClient::versions();
 
         return $document;
     }

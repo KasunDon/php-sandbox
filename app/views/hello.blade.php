@@ -7,8 +7,8 @@
         <meta name="description" content="
               PHP Sandbox
               PHP Legacy versions. Run-Debug-Share. 
-              Anywhere-Anytime PHP Sandbox running versions of {{ implode(', ', array_keys($versions['PHP'])) }}
-              HHVM Versions : {{ implode(', ', array_keys($versions['HHVM'])) }}
+              Anywhere-Anytime PHP Sandbox running versions of {{ implode(', ', $versions['PHP']) }}
+              HHVM Versions : {{ implode(', ', $versions['HHVM']) }}
               Latest HippyVM
               ">
         <meta name="author" content="PHPBox">
@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="{{ \App\Models\Code::$VIEW_LINK }}assets/css/bootstrapValidator.min.css" />
         <link rel='stylesheet prefetch' href='{{ \App\Models\Code::$VIEW_LINK }}assets/css/font-awesome.css' />
         <link href="{{ \App\Models\Code::$VIEW_LINK }}assets/css/jquery.share.css" rel="stylesheet">
+        <link href="{{ \App\Models\Code::$VIEW_LINK }}assets/css/animate.css" rel="stylesheet">
         <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/ie-emulation-modes-warning.js"></script>
         <!--[if lt IE 9]><script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -37,6 +38,7 @@
         <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/button.js"></script>
         <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/jquery.share.js"></script>
         <script type="text/javascript" src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/bootstrapValidator.min.js"></script>
+        <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/noty/js/noty/packaged/jquery.noty.packaged.js"></script>
         <script src="{{ \App\Models\Code::$VIEW_LINK }}assets/js/sandbox.min.js?noCache={{ time() }}"></script>
     </head>
     <body>

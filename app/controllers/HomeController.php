@@ -1,13 +1,11 @@
 <?php
 
-use App\Models\PHPAPI;
 use App\Models\SandBox;
 use App\Models\Storage;
 use App\Models\Feedback;
 use App\Models\Issues;
 use App\Models\Utils;
-use App\Models\HHVM;
-use App\Models\HippyVM;
+use App\Models\SandboxClient;
 
 /**
  * HomeConroller Class
@@ -18,7 +16,7 @@ class HomeController extends BaseController {
      * Index Controller
      */
     public function index() {
-        $versions = SandBox::versions();
+        $versions = SandboxClient::versions();
         $version = array_keys($versions['PHP']);
         return View::make('hello', array('versions' => $versions, 'version' => end($version)));
     }
@@ -26,28 +24,12 @@ class HomeController extends BaseController {
     /**
      *  Run Controller
      */
-    public function run($sandbox, $version) {
-        switch ($sandbox = strtoupper($sandbox)) {
-            case 'PHP':
-                $api = new PHPAPI($version, Input::get('code'));
-                break;
-            
-            case 'HHVM':
-                $api = new HHVM(Input::get('code'), $version);
-                break;
-            
-            case 'HIPPYVM':
-                $api = new HippyVM(Input::get('code'), $version);
-                break;
-            
-            default:
-                $api = new PHPAPI($version, Input::get('code'));
-        }
-        
+    public function run($api, $version) {
+       $output = SandboxClient::request($api, $version, Input::get('code'));
         return Response::json(
             array(
-                'output' => $api->execute(),
-                'type' => $sandbox, 
+                'output' => $output['output'],
+                'type' => $api, 
                 'datetime' => Utils::datetime()
             )
         );

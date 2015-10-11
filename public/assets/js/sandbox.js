@@ -23,7 +23,7 @@ SANDBOX.core.selectors = {
     "theme-selector": {noneSelectedText: "Theme", size: "auto"}
 };
 
-SANDBOX.utils.load = function() {
+SANDBOX.utils.load = function () {
     if ($("#view-code").length) {
         var data = JSON.parse($('#view-code').val());
         SANDBOX.core.viewId = data.id;
@@ -48,19 +48,19 @@ SANDBOX.utils.load = function() {
     }
 };
 
-SANDBOX.utils.showEmbed = function() {
-    $.get('/get-embed/' + SANDBOX.core.viewId, function(output) {
+SANDBOX.utils.showEmbed = function () {
+    $.get('/get-embed/' + SANDBOX.core.viewId, function (output) {
         $('#embed-output').html(output);
         $('#modal-embed').html(output);
     });
 };
 
-SANDBOX.utils.getSelection = function(e) {
+SANDBOX.utils.getSelection = function (e) {
     return $(e).find(":selected").val();
 };
 
-SANDBOX.core.serviceView = function(e) {
-    $(e).on("click", function(e) {
+SANDBOX.core.serviceView = function (e) {
+    $(e).on("click", function (e) {
         bootbox.dialog({
             message: SANDBOX.core.content.serviceContent,
             title: "<span class='glyphicon glyphicon-wrench' style='padding-left:5px;'></span> Service Status",
@@ -68,7 +68,7 @@ SANDBOX.core.serviceView = function(e) {
                 close: {
                     label: "Close",
                     className: "btn-default",
-                    callback: function() {
+                    callback: function () {
 
                     }
                 }
@@ -77,14 +77,14 @@ SANDBOX.core.serviceView = function(e) {
     });
 };
 
-SANDBOX.core.socialTab = function() {
+SANDBOX.core.socialTab = function () {
     if (SANDBOX.core.viewId == null || SANDBOX.core.shareMode === 2) {
         $('#progress').show();
-        setTimeout(function() {
+        setTimeout(function () {
             var theme = $('#theme-selector').find(":selected").val() || 'xcode';
             $.post('/store', {code: SANDBOX.core.editor.getValue(), output:
                         SANDBOX.core.output, create_time: SANDBOX.core.create_time,
-                version: SANDBOX.core.version[1], type: SANDBOX.core.version[0], theme: theme, vType: 'c1'}, function(data) {
+                version: SANDBOX.core.version[1], type: SANDBOX.core.version[0], theme: theme, vType: 'c1'}, function (data) {
                 SANDBOX.core.viewId = data.viewId;
                 SANDBOX.core.viewLink = data.viewLink + data.viewId;
 
@@ -101,7 +101,7 @@ SANDBOX.core.socialTab = function() {
                 });
                 $('#social-links').show();
                 SANDBOX.utils.showEmbed();
-            }).fail(function() {
+            }).fail(function () {
                 $('#progress').hide();
                 SANDBOX.utils.closeModal(4000);
                 $('#social-error').show();
@@ -119,8 +119,8 @@ SANDBOX.core.socialTab = function() {
     }
 };
 
-SANDBOX.core.setSettings = function() {
-    $.post('/usr-slct', {theme: SANDBOX.core.theme, version: SANDBOX.core.version[1], type: SANDBOX.core.version[0]}, function(data) {
+SANDBOX.core.setSettings = function () {
+    $.post('/usr-slct', {theme: SANDBOX.core.theme, version: SANDBOX.core.version[1], type: SANDBOX.core.version[0]}, function (data) {
         SANDBOX.core.theme = data.theme;
         SANDBOX.core.version[1] = data.version;
         SANDBOX.core.version[0] = data.type;
@@ -129,7 +129,7 @@ SANDBOX.core.setSettings = function() {
     });
 };
 
-SANDBOX.core.runUpdate = function(b) {
+SANDBOX.core.runUpdate = function (b) {
     $("#run").attr('disabled', b);
 
     var se = ["#stop", "#loading"];
@@ -143,11 +143,11 @@ SANDBOX.core.runUpdate = function(b) {
     }
 };
 
-SANDBOX.core.getApiPayload = function() {
+SANDBOX.core.getApiPayload = function () {
     return {v: SANDBOX.core.version[1], code: SANDBOX.core.editor.getValue()};
 };
 
-SANDBOX.core.disableTabs = function(tabs) {
+SANDBOX.core.disableTabs = function (tabs) {
     for (var index in tabs) {
         $('#' + tabs[index]).removeClass('active').addClass('disabled');
         var tab = $('#' + tabs[index] + " a").attr('href');
@@ -156,11 +156,11 @@ SANDBOX.core.disableTabs = function(tabs) {
     }
 };
 
-SANDBOX.core.activateAllTabs = function() {
-    $('#tabs li').each(function()
+SANDBOX.core.activateAllTabs = function () {
+    $('#tabs li').each(function ()
     {
         $(this).removeClass('disabled');
-        $(this).find('a').each(function() {
+        $(this).find('a').each(function () {
             var tab = $(this).attr('href');
             if (typeof SANDBOX.core.content.tabBackup[tab] !== "undefined") {
                 $(tab).html(SANDBOX.core.content.tabBackup[tab]);
@@ -169,8 +169,8 @@ SANDBOX.core.activateAllTabs = function() {
     });
 }
 
-SANDBOX.core.getRefs = function(params) {
-    $.post('/api/code-ref', params, function(data) {
+SANDBOX.core.getRefs = function (params) {
+    $.post('/api/code-ref', params, function (data) {
         var content = '';
 
         for (var ref in data.output) {
@@ -184,8 +184,8 @@ SANDBOX.core.getRefs = function(params) {
     });
 };
 
-SANDBOX.core.getVLD = function(params) {
-    $.post('/api/vld-data', params, function(data) {
+SANDBOX.core.getVLD = function (params) {
+    $.post('/api/vld-data', params, function (data) {
         var content = '';
 
         content = data.output;
@@ -198,13 +198,13 @@ SANDBOX.core.getVLD = function(params) {
     });
 };
 
-SANDBOX.core.run = function() {
-    $("#stop").on("click", function() {
+SANDBOX.core.run = function () {
+    $("#stop").on("click", function () {
         SANDBOX.core.request.abort();
         SANDBOX.core.runUpdate(false);
     });
 
-    $("#run").on("click", function() {
+    $("#run").on("click", function () {
         SANDBOX.core.version = SANDBOX.utils.getSelection('#version-selector');
         SANDBOX.core.version = SANDBOX.core.version.split(" ");
 
@@ -213,7 +213,7 @@ SANDBOX.core.run = function() {
         var payload = SANDBOX.core.getApiPayload();
 
         SANDBOX.core.request = $.post('/api/' + SANDBOX.core.version[0].toLowerCase() + '/' + SANDBOX.core.version[1],
-                payload, function(output) {
+                payload, function (output) {
 
                     SANDBOX.core.runUpdate(false);
 
@@ -237,7 +237,7 @@ SANDBOX.core.run = function() {
     });
 };
 
-SANDBOX.core.tabControl = function(payload) {
+SANDBOX.core.tabControl = function (payload) {
     if (SANDBOX.core.version[0].toLowerCase() === 'php') {
         SANDBOX.core.activateAllTabs();
         SANDBOX.core.getRefs(payload);
@@ -249,12 +249,12 @@ SANDBOX.core.tabControl = function(payload) {
     SANDBOX.core.tabAutoFocus();
 };
 
-SANDBOX.core.tabAutoFocus = function() {
-    $('#tabs li').each(function()
+SANDBOX.core.tabAutoFocus = function () {
+    $('#tabs li').each(function ()
     {
         var status = $(this).attr('class');
         if (status !== "disabled") {
-            $(this).find('a').each(function() {
+            $(this).find('a').each(function () {
                 $(this).tab('show');
             });
             return false;
@@ -262,23 +262,23 @@ SANDBOX.core.tabAutoFocus = function() {
     });
 };
 
-SANDBOX.core.setUI = function() {
+SANDBOX.core.setUI = function () {
     $('#theme-selector').val(SANDBOX.core.theme);
     $('#version-selector').val(SANDBOX.core.version[0] + " " + SANDBOX.core.version[1]);
     $('.selectpicker').selectpicker('refresh');
 };
 
-SANDBOX.core.clearSettings = function() {
-    $.get('/usr-slct', {clear: true}, function() {
+SANDBOX.core.clearSettings = function () {
+    $.get('/usr-slct', {clear: true}, function () {
         return SANDBOX.core.setSettings();
     });
 };
 
-SANDBOX.utils.viewLoader = function(url, data, assign, interval) {
+SANDBOX.utils.viewLoader = function (url, data, assign, interval) {
     var time = interval || false;
 
-    var callback = function(url, data, assign) {
-        $.get(url, data, function(data) {
+    var callback = function (url, data, assign) {
+        $.get(url, data, function (data) {
             SANDBOX.core.content[assign] = data;
         });
     };
@@ -286,13 +286,34 @@ SANDBOX.utils.viewLoader = function(url, data, assign, interval) {
     callback(url, data, assign);
 
     if (time !== false) {
-        setInterval(function() {
+        setInterval(function () {
             callback(url, data, assign);
         }, (time));
     }
 };
 
-SANDBOX.core.setup = function() {
+SANDBOX.core.notices = function () {
+    $.get('/api/notice', function (response) {
+        if (response.message.length !== 0) {
+            $.noty.defaults['timeout'] = response.timeout;
+            var n = noty({
+                layout: response.position || 'top',
+                theme: response.theme || 'defaultTheme',
+                text: response.message,
+                type: response.type,
+                animation: {
+                    open: 'animated bounceInRight', // Animate.css class names
+                    close: 'animated bounceOutRight', // Animate.css class names
+                    easing: 'swing', // unavailable - no need
+                    speed: 500 // unavailable - no need
+                }
+            });
+        }
+    });
+
+}
+
+SANDBOX.core.setup = function () {
     $.ajaxSetup({
         headers: {
             'X-CSRF-Token': $('meta[name="_token"]').attr('content')
@@ -303,14 +324,14 @@ SANDBOX.core.setup = function() {
         $('#' + select).selectpicker(SANDBOX.core.selectors[select]);
     }
 
-    $('a[data-toggle="tab"]').on('click', function() {
+    $('a[data-toggle="tab"]').on('click', function () {
         if ($(this).parent('li').hasClass('disabled')) {
             return false;
         }
         ;
     });
 
-    $('#select_output').on('click', function() {
+    $('#select_output').on('click', function () {
         SANDBOX.selectOutput();
     });
 
@@ -323,7 +344,7 @@ SANDBOX.core.setup = function() {
     SANDBOX.utils.viewLoader('/view-social', {}, 'socialContent');
     SANDBOX.utils.viewLoader('/view-terms', {}, 'termsContent');
 
-    $('#theme-selector, #version-selector').change(function() {
+    $('#theme-selector, #version-selector').change(function () {
         SANDBOX.core.theme = SANDBOX.utils.getSelection('#theme-selector') || SANDBOX.core.theme;
         SANDBOX.core.version = SANDBOX.utils.getSelection('#version-selector');
         SANDBOX.core.version = SANDBOX.core.version.split(" ");
@@ -338,7 +359,7 @@ SANDBOX.core.setup = function() {
         SANDBOX.core.setSettings();
     }
 
-    $('#feedback').on("click", function(e) {
+    $('#feedback').on("click", function (e) {
         bootbox.dialog({
             message: SANDBOX.core.content.feedbackContent,
             title: "<span class='glyphicon glyphicon-hand-up' style='padding-left:5px;'></span> Send Feedback",
@@ -346,7 +367,7 @@ SANDBOX.core.setup = function() {
                 feedback: {
                     label: "Send",
                     className: "btn-success",
-                    callback: function() {
+                    callback: function () {
                         $('#feedback-form').trigger('submit');
                         return  false;
                     }
@@ -354,7 +375,7 @@ SANDBOX.core.setup = function() {
                 close: {
                     label: "Close",
                     className: "btn-default",
-                    callback: function() {
+                    callback: function () {
 
                     }
                 }
@@ -364,7 +385,7 @@ SANDBOX.core.setup = function() {
 
     SANDBOX.core.serviceView('#service');
 
-    $("#save_share").on("click", function() {
+    $("#save_share").on("click", function () {
         var shareTitle = "<span class='glyphicon glyphicon-globe' style='padding-left:5px;'></span> Save & Share";
 
         if (SANDBOX.core.viewId !== null) {
@@ -378,7 +399,7 @@ SANDBOX.core.setup = function() {
                 close: {
                     label: "Close",
                     className: "btn-default",
-                    callback: function() {
+                    callback: function () {
                     }
                 }
             }
@@ -389,7 +410,7 @@ SANDBOX.core.setup = function() {
         }
     });
 
-    $('#terms').on("click", function(e) {
+    $('#terms').on("click", function (e) {
         bootbox.dialog({
             message: SANDBOX.core.content.termsContent,
             title: "<span class='glyphicon glyphicon-th-list' style='padding-left:5px;'></span> Terms & Conditions",
@@ -397,23 +418,25 @@ SANDBOX.core.setup = function() {
                 close: {
                     label: "Close",
                     className: "btn-default",
-                    callback: function() {
+                    callback: function () {
 
                     }
                 }
             }
         });
     });
+
+    SANDBOX.core.notices();
 };
 
-SANDBOX.utils.closeModal = function(timeout) {
+SANDBOX.utils.closeModal = function (timeout) {
     timeout = typeof timeout !== 'undefined' ? timeout : 0;
-    window.setTimeout(function() {
+    window.setTimeout(function () {
         bootbox.hideAll();
     }, timeout);
 };
 
-SANDBOX.validation.issue = function() {
+SANDBOX.validation.issue = function () {
     $('#report-form').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -439,18 +462,18 @@ SANDBOX.validation.issue = function() {
                 }
             }
         }
-    }).on('success.form.bv', function(e) {
+    }).on('success.form.bv', function (e) {
         e.preventDefault();
 
         $.post("/report-issue", {email: $('#report-email').val(),
             subject: $('#report-subject').val(), issue: $('#report-issue').val(),
-            vType: 't1'}, function() {
+            vType: 't1'}, function () {
             $("button[data-bb-handler='report']").hide();
             $('#report-success').show();
             $('#report-form').hide();
             SANDBOX.utils.closeModal(3000);
         })
-                .fail(function() {
+                .fail(function () {
                     $("button[data-bb-handler='report']").prop("disabled", true);
                     $('#report-error').show();
                     $('#report-form').hide();
@@ -459,14 +482,14 @@ SANDBOX.validation.issue = function() {
     });
 };
 
-SANDBOX.utils.initEditor = function(t) {
+SANDBOX.utils.initEditor = function (t) {
     ace.require("ace/ext/language_tools");
     var dom = ace.require("ace/lib/dom");
 
     ace.require("ace/commands/default_commands").commands.push({
         name: "Toggle Fullscreen",
         bindKey: "F11",
-        exec: function(editor) {
+        exec: function (editor) {
             dom.toggleCssClass(document.body, "fullScreen");
             dom.toggleCssClass(editor.container, "fullScreen-editor");
             editor.resize();
@@ -486,7 +509,7 @@ SANDBOX.utils.initEditor = function(t) {
     return editor;
 };
 
-SANDBOX.validation.feedback = function() {
+SANDBOX.validation.feedback = function () {
     $('#feedback-form').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -502,15 +525,15 @@ SANDBOX.validation.feedback = function() {
                 }
             }
         }
-    }).on('success.form.bv', function(e) {
+    }).on('success.form.bv', function (e) {
         e.preventDefault();
 
-        $.post("/send-feedback", {feedback: $('#feedback-message').val(), vType: 'f1'}, function() {
+        $.post("/send-feedback", {feedback: $('#feedback-message').val(), vType: 'f1'}, function () {
             $("button[data-bb-handler='feedback']").hide();
             $('#feedback-success').show();
             $('#feedback-form').hide();
             SANDBOX.utils.closeModal(3000);
-        }).fail(function() {
+        }).fail(function () {
             $("button[data-bb-handler='feedback']").prop("disabled", true);
             $('#feedback-error').show();
             $('#feedback-form').hide();
@@ -519,7 +542,7 @@ SANDBOX.validation.feedback = function() {
     });
 };
 
-SANDBOX.selectOutput = function() {
+SANDBOX.selectOutput = function () {
     var doc = document
             , text = doc.getElementById('output')
             , range, selection
