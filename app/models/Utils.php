@@ -37,20 +37,18 @@ class Utils {
      */
     public static function curl($url, array $params = null, $method = self::CURL_GET) {
         $ch = curl_init();
-
-        if (!preg_match("@^[hf]tt?ps?://@", $params['url'])) {
-            $params['url'] = "http://" . $params['url'];
-        }
-
         $setParams = '';
+        
+        if (!empty($params)) {
 
-        foreach ($params as $key => $value) {
-            $setParams .= $key . "=" . urlencode($value) . "&";
+            foreach ($params as $key => $value) {
+                $setParams .= $key . "=" . urlencode($value) . "&";
+            }
+
+            $setParams = rtrim($setParams, "&");
+
+            $url .= strpos($url, "?") !== false ? $setParams : "?$setParams";
         }
-
-        $setParams = rtrim($setParams, "&");
-
-        $url .= strpos($url, "?") !== false ? $setParams : "?$setParams";
 
         //CURL Settings
         curl_setopt($ch, CURLOPT_URL, $url);

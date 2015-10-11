@@ -184,10 +184,6 @@ abstract class Sandbox {
      * @throws Exception
      */
     public function validate() {
-        if (!$this->isVersion($this->getVersion())) {
-            throw new \Exception('Requested version not avaialble :: ' . $this->getVersion());
-        }
-        
         $code = $this->getSourceCode();
         
         $code = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "", $code);
@@ -195,8 +191,6 @@ abstract class Sandbox {
         if (! preg_match('/^[<][?]php/i', $code) && ! preg_match('/^[<][?]/', $code)) {
             $this->setSourceCode("<?php " . $this->getSourceCode());
         }
-
-        $this->setSystemPath(self::$VERSIONS[$this->_type][$this->getVersion()]);
     }
     
     /**
