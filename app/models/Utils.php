@@ -39,25 +39,24 @@ class Utils {
         $ch = curl_init();
         $setParams = '';
         
-        if (!empty($params)) {
-
+        if (! empty($params)) {
             foreach ($params as $key => $value) {
                 $setParams .= $key . "=" . urlencode($value) . "&";
             }
 
             $setParams = rtrim($setParams, "&");
-
-            $url .= strpos($url, "?") !== false ? $setParams : "?$setParams";
         }
-
-        //CURL Settings
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         if ($method === self::CURL_POST) {
             curl_setopt($ch, CURLOPT_POST, count($params));
             curl_setopt($ch, CURLOPT_POSTFIELDS, $setParams);
+        } else {
+             $url .= strpos($url, "?") !== false ? $setParams : "?$setParams";
         }
+
+         //CURL Settings
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         $output = curl_exec($ch);
 
