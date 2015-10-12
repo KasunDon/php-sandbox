@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class SandboxClient {
 
-    private static $endpoint = "http://sandbox.phpbox.info/api/";
+    public static $endpoint = "http://sandbox.phpbox.info/api/";
 
     public static function request($api, $version, $code) {
         return json_decode(Utils::curl(self::$endpoint . "$api/$version", array('code' => base64_encode($code)), Utils::CURL_POST), true);
