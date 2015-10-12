@@ -51,7 +51,7 @@ class Utils {
             curl_setopt($ch, CURLOPT_POST, count($params));
             curl_setopt($ch, CURLOPT_POSTFIELDS, $setParams);
         } else {
-             $url .= strpos($url, "?") !== false ? $setParams : "?$setParams";
+             $url .= strpos($url, "?") !== false ? $setParams : (!empty($setParams))? "?$setParams": null;
         }
 
          //CURL Settings
