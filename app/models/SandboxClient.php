@@ -7,10 +7,8 @@ use Carbon\Carbon;
 
 class SandboxClient {
 
-    public static $endpoint = "http://sandbox.phpbox.info/api/";
-
     public static function request($api, $version, $code) {
-        return json_decode(Utils::curl(self::$endpoint . "$api/$version", array('code' => base64_encode($code)), Utils::CURL_POST), true);
+        return json_decode(Utils::curl(SANDBOX_API_ENDPOINT . "$api/$version", array('code' => base64_encode($code)), Utils::CURL_POST), true);
     }
 
     public static function versions() {
@@ -20,7 +18,7 @@ class SandboxClient {
             return $versions;
         }
 
-        $versions = json_decode(Utils::curl(self::$endpoint . "versions"), true);
+        $versions = json_decode(Utils::curl(SANDBOX_API_ENDPOINT . "versions"), true);
 
         \Cache::add($cacheKey, $versions, Carbon::now()->addMinutes(60));
 
@@ -28,7 +26,7 @@ class SandboxClient {
     }
 
     public static function getPHPSyntaxRefs($version, $code) {
-        return json_decode(Utils::curl(self::$endpoint . "php/syntaxer", array('code' => base64_encode($code), 'version' => $version), Utils::CURL_POST), true);
+        return json_decode(Utils::curl(SANDBOX_API_ENDPOINT . "php/syntaxer", array('code' => base64_encode($code), 'version' => $version), Utils::CURL_POST), true);
     }
 
 }

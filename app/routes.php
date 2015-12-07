@@ -46,7 +46,7 @@ Route::get('/api/notice', array('before' => 'csrf', function() {
     }));
 
 Route::post('/api/vld-data', array('before' => 'csrf', function() {
-        return Response::json(array('output' => App\Models\VLD::init(Input::get('code'))->execute()));
+        return Response::json(array());
     }));
 
         Route::post('/api/code-ref', array('before' => 'csrf', function() {

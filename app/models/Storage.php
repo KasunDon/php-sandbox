@@ -55,9 +55,7 @@ class Storage {
      * @param string $hostname
      * @param int $port
      */
-    public function __construct($collection = null, $hostname = "10.131.211.185", $port = 27017) {
-        
-        $hostname = (\App::make('app.config.env')->APP_ENV !== 'local')?  $hostname: '10.131.211.185';
+    public function __construct($collection = null, $hostname = "mongodb-store", $port = 27017) {
         
         $this->setClient(new \MongoClient("mongodb://$hostname:$port"));
 
@@ -65,7 +63,7 @@ class Storage {
         $this->setPort($port);
 
         //select database
-        $database = (\App::make('app.config.env')->APP_ENV !== 'local')? 'sandbox': 'sandbox_dev';
+        $database = 'sandbox';
         
         $this->setDbName($database);
         $this->setCollection($collection);

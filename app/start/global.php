@@ -73,11 +73,9 @@ App::down(function()
 |--------------------------------------------------------------------------
 | Initializing PHP Runtime versions when app loads
 */
-\App\Models\SandboxClient::$endpoint = (App::make('app.config.env')->APP_ENV !== 'local')? 
-        "http://sandbox.phpbox.info/api/": "http://sandbox-beta.phpbox.info/api/";
+define('SANDBOX_API_ENDPOINT', "http://sandbox-common.docker/api/");
 
-\App\Models\Code::$VIEW_LINK = (App::make('app.config.env')->APP_ENV !== 'local')?
-        'https://phpbox.info/': 'http://beta.phpbox.info/';
+\App\Models\Code::$VIEW_LINK = '';
 
 /*
 |--------------------------------------------------------------------------

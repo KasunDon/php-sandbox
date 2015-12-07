@@ -43,7 +43,7 @@
     </head>
     <body>
         <div id="fb-root"></div>
-        <script>(function(d, s, id) {
+        <script>(function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id))
         return;
@@ -190,106 +190,33 @@ echo 'hello world!';</pre>
             <br><br>
 
             <div class="row">
-            <div id="adzone">
-                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                <!-- software -->
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-9934334610290132"
-                     data-ad-slot="2993561801"
-                     data-ad-format="auto"></ins>
-            </div>
-            </div>
-<br>
-            <div class="row">
-                <div class="col-md-5" style="bottom: 4px;">
-                    <div class="fb-like"  data-href="https://www.facebook.com/pages/PHPBox-Sandbox/864368126975513" data-layout="standard" data-action="like" data-show-faces="false" data-share="false"></div>
-                </div>
-                <div class="col-md-6">
-                    <!-- Place this tag where you want the +1 button to render. -->
-                    <div class="g-plusone" data-annotation="inline" data-width="300" data-href="https://www.google.com/+PhpboxInfocloud" data-share="true"></div>
-
-                    <!-- Place this tag after the last +1 button tag. -->
-                    <script type="text/javascript">
-                        window.___gcfg = {lang: 'en-GB'};
-
-                        (function() {
-                            var po = document.createElement('script');
-                            po.type = 'text/javascript';
-                            po.async = true;
-                            po.src = 'https://apis.google.com/js/platform.js';
-                            var s = document.getElementsByTagName('script')[0];
-                            s.parentNode.insertBefore(po, s);
-                        })();
-                    </script>
-                </div>
-                <div class="col-md-1">
-                    <a class="twitter-share-button" href="https://twitter.com/php_box"
-                       data-related="twitterdev"
-                       data-count="horizontal">
-                        Tweet
-                    </a>
-                    <script>
-                        window.twttr = (function(d, s, id) {
-                            var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {};
-                            if (d.getElementById(id))
-                                return;
-                            js = d.createElement(s);
-                            js.id = id;
-                            js.src = "https://platform.twitter.com/widgets.js";
-                            fjs.parentNode.insertBefore(js, fjs);
-                            t._e = [];
-                            t.ready = function(f) {
-                                t._e.push(f);
-                            };
-                            return t;
-                        }(document, "script", "twitter-wjs"));
-                    </script>
+                <div id="adzone">
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- software -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-9934334610290132"
+                         data-ad-slot="2993561801"
+                         data-ad-format="auto"></ins>
                 </div>
             </div>
         </div>
-    <br><br><br><br>
-    <footer class="footer">
-        <div class="container-fluid">
-            <div class="row show-grid" style="margin-top: 5px;">
-                <div class="col-md-1"></div>
-                <div class="col-md-2 text-muted"><strong>PHPBox</strong> Sandbox</div>
-                <div class="col-md-2"><a id="service" style="cursor: pointer;">Service Status</a><span class="label label-success" style="margin-left: 10px;">OK</span></div>
-                <div class="col-md-2"><a id="feedback" style="cursor: pointer;">Send Feedback</a></div>
-                <div class="col-md-2"><a id="terms" style="cursor: pointer;">Terms & Conditions</a></div>
-                <div class="col-md-2">
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                        <input type="hidden" name="cmd" value="_s-xclick">
-                        <input type="hidden" name="hosted_button_id" value="NETPW44ZFYCQ6">
-                        <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
-                        <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-                        <small class="text-muted"> <strong>Help us to improve!.</strong></small> 
-                    </form>
+        <br><br><br><br>
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row show-grid" style="margin-top: 5px;">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2 text-muted"><strong>PHPBox</strong> Sandbox</div>
+                    <div class="col-md-2"><a id="service" style="cursor: pointer;">Service Status</a><span class="label label-success" style="margin-left: 10px;">OK</span></div>
+                    <div class="col-md-2"><a id="feedback" style="cursor: pointer;">Send Feedback</a></div>
+                    <div class="col-md-2"><a id="terms" style="cursor: pointer;">Terms & Conditions</a></div>
+                    <div class="col-md-2">
+                    </div>
                 </div>
             </div>
-        </div>
-</footer>
-<script>
-    @if (\App::make('app.config.env')->APP_ENV !== 'local')
-            (function(i, s, o, g, r, a, m) {
-                i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function() {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-                a = s.createElement(o),
-                        m = s.getElementsByTagName(o)[0];
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m)
-            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-    ga('create', 'UA-58231333-1', 'auto');
-    ga('send', 'pageview');
-            @endif
-            SANDBOX.core.setup();
-            window.setTimeout(function (){
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            }, 300);
-</script>
-</body>
+        </footer>
+        <script>
+SANDBOX.core.setup();
+        </script>
+    </body>
 </html>
