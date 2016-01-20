@@ -9,9 +9,7 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 
 # Define mountable directories.
-RUN mkdir -p /data/db
-#VOLUME ["/data/db"]
-
+VOLUME ["/data/db"]
 
 # Define default command.
 CMD ["mongod", "--smallfiles"]

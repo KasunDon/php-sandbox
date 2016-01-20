@@ -13,11 +13,11 @@ clean_store:
 	docker rm php-sandbox-store
 
 start_store:
-	docker run -d --name php-sandbox-store php-sandbox-store
+	docker run -d --name php-sandbox-store -v /tmp/mongo:/data/db php-sandbox-store
 
-start: stop
+start: 
 	@docker tag -f php-sandbox-common kasundon/php-sandbox-common ||:
-	docker run -d --name php-sandbox-common kasundon/php-sandbox-common
+	@docker run -d --name php-sandbox-common kasundon/php-sandbox-common
 	@docker tag -f php-sandbox-client kasundon/php-sandbox-client ||:
 	docker run -d --name php-sandbox-client \
 	    --link php-sandbox-common:sandbox-common.docker \
